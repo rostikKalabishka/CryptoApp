@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 
+import 'router/router.dart';
 import 'ui/theme/theme.dart';
-import 'futures/crypto_coin_list/view/crypto_coin_list.dart';
 
-class CryptoApp extends StatelessWidget {
+class CryptoApp extends StatefulWidget {
   const CryptoApp({super.key});
 
   @override
+  State<CryptoApp> createState() => _CryptoAppState();
+}
+
+class _CryptoAppState extends State<CryptoApp> {
+  final _appRouter = AppRouter();
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: darkTheme,
-      home: const CryptoCoinListScreen(),
+      routerConfig: _appRouter.config(),
     );
   }
 }
