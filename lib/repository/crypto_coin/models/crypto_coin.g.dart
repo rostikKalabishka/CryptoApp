@@ -1,35 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'crypto_coin_details_in_list.dart';
+part of 'crypto_coin.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CryptoCoinDetailsInList _$CryptoCoinDetailsInListFromJson(
-        Map<String, dynamic> json) =>
-    CryptoCoinDetailsInList(
+CryptoCoin _$CryptoCoinFromJson(Map<String, dynamic> json) => CryptoCoin(
       id: json['id'] as String,
       symbol: json['symbol'] as String,
       name: json['name'] as String,
       image: json['image'] as String,
-      currentPrice: json['current_price'] as int,
-      marketCap: json['market_cap'] as int,
-      marketCapRank: json['market_cap_rank'] as int,
-      fullyDilutedValuation: json['fully_diluted_valuation'] as int,
-      totalVolume: json['total_volume'] as int,
-      high24h: json['high_24h'] as int,
-      low24h: json['low_24h'] as int,
+      currentPrice: (json['current_price'] as num).toDouble(),
+      marketCap: (json['market_cap'] as num).toDouble(),
+      marketCapRank: (json['market_cap_rank'] as num).toDouble(),
+      totalVolume: (json['total_volume'] as num).toDouble(),
+      high24h: (json['high_24h'] as num).toDouble(),
+      low24h: (json['low_24h'] as num).toDouble(),
       priceChange24h: (json['price_change_24h'] as num).toDouble(),
       priceChangePercentage24h:
           (json['price_change_percentage_24h'] as num).toDouble(),
       marketCapChange24h: (json['market_cap_change_24h'] as num).toDouble(),
       marketCapChangePercentage24h:
           (json['market_cap_change_percentage_24h'] as num).toDouble(),
-      circulatingSupply: json['circulating_supply'] as int,
-      totalSupply: json['total_supply'] as int,
-      maxSupply: json['max_supply'] as int,
-      ath: json['ath'] as int,
+      circulatingSupply: (json['circulating_supply'] as num).toDouble(),
+      maxSupply: (json['max_supply'] as num?)?.toDouble(),
+      ath: (json['ath'] as num).toDouble(),
       athChangePercentage: (json['ath_change_percentage'] as num).toDouble(),
       athDate: json['ath_date'] as String,
       atl: (json['atl'] as num).toDouble(),
@@ -38,8 +34,7 @@ CryptoCoinDetailsInList _$CryptoCoinDetailsInListFromJson(
       lastUpdated: json['last_updated'] as String,
     );
 
-Map<String, dynamic> _$CryptoCoinDetailsInListToJson(
-        CryptoCoinDetailsInList instance) =>
+Map<String, dynamic> _$CryptoCoinToJson(CryptoCoin instance) =>
     <String, dynamic>{
       'id': instance.id,
       'symbol': instance.symbol,
@@ -48,7 +43,6 @@ Map<String, dynamic> _$CryptoCoinDetailsInListToJson(
       'current_price': instance.currentPrice,
       'market_cap': instance.marketCap,
       'market_cap_rank': instance.marketCapRank,
-      'fully_diluted_valuation': instance.fullyDilutedValuation,
       'total_volume': instance.totalVolume,
       'high_24h': instance.high24h,
       'low_24h': instance.low24h,
@@ -57,7 +51,6 @@ Map<String, dynamic> _$CryptoCoinDetailsInListToJson(
       'market_cap_change_24h': instance.marketCapChange24h,
       'market_cap_change_percentage_24h': instance.marketCapChangePercentage24h,
       'circulating_supply': instance.circulatingSupply,
-      'total_supply': instance.totalSupply,
       'max_supply': instance.maxSupply,
       'ath': instance.ath,
       'ath_change_percentage': instance.athChangePercentage,

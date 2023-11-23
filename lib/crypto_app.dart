@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'futures/crypto_coin_list/view/crypto_coin_list.dart';
+
 class CryptoApp extends StatelessWidget {
   const CryptoApp({super.key});
 
@@ -11,7 +13,7 @@ class CryptoApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Container(),
+      home: CryptoCoinListScreen(),
     );
   }
 }

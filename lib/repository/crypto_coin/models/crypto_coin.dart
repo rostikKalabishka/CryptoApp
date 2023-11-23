@@ -1,22 +1,22 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'crypto_coin_details_in_list.g.dart';
+part 'crypto_coin.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-class CryptoCoinDetailsInList extends Equatable {
+class CryptoCoin extends Equatable {
   final String id;
   final String symbol;
   final String name;
   final String image;
-  final int currentPrice;
-  final int marketCap;
-  final int marketCapRank;
-  final int fullyDilutedValuation;
-  final int totalVolume;
+  final double currentPrice;
+  final double marketCap;
+  final double marketCapRank;
+  // final double? fullyDilutedValuation;
+  final double totalVolume;
   @JsonKey(name: 'high_24h')
-  final int high24h;
+  final double high24h;
   @JsonKey(name: 'low_24h')
-  final int low24h;
+  final double low24h;
   @JsonKey(name: 'price_change_24h')
   final double priceChange24h;
 
@@ -29,17 +29,17 @@ class CryptoCoinDetailsInList extends Equatable {
   @JsonKey(name: 'market_cap_change_percentage_24h')
   final double marketCapChangePercentage24h;
 
-  final int circulatingSupply;
-  final int totalSupply;
-  final int maxSupply;
-  final int ath;
+  final double circulatingSupply;
+  // final double? totalSupply;
+  final double? maxSupply;
+  final double ath;
   final double athChangePercentage;
   final String athDate;
   final double atl;
   final double atlChangePercentage;
   final String atlDate;
   final String lastUpdated;
-  const CryptoCoinDetailsInList({
+  const CryptoCoin({
     required this.id,
     required this.symbol,
     required this.name,
@@ -47,7 +47,7 @@ class CryptoCoinDetailsInList extends Equatable {
     required this.currentPrice,
     required this.marketCap,
     required this.marketCapRank,
-    required this.fullyDilutedValuation,
+    // required this.fullyDilutedValuation,
     required this.totalVolume,
     required this.high24h,
     required this.low24h,
@@ -56,7 +56,7 @@ class CryptoCoinDetailsInList extends Equatable {
     required this.marketCapChange24h,
     required this.marketCapChangePercentage24h,
     required this.circulatingSupply,
-    required this.totalSupply,
+    // required this.totalSupply,
     required this.maxSupply,
     required this.ath,
     required this.athChangePercentage,
@@ -76,7 +76,7 @@ class CryptoCoinDetailsInList extends Equatable {
         currentPrice,
         marketCap,
         marketCapRank,
-        fullyDilutedValuation,
+        // fullyDilutedValuation,
         totalVolume,
         high24h,
         low24h,
@@ -85,7 +85,7 @@ class CryptoCoinDetailsInList extends Equatable {
         marketCapChange24h,
         marketCapChangePercentage24h,
         circulatingSupply,
-        totalSupply,
+        // totalSupply,
         maxSupply,
         ath,
         athChangePercentage,
@@ -96,8 +96,8 @@ class CryptoCoinDetailsInList extends Equatable {
         lastUpdated
       ];
 
-  factory CryptoCoinDetailsInList.fromJson(Map<String, dynamic> json) =>
-      _$CryptoCoinDetailsInListFromJson(json);
+  factory CryptoCoin.fromJson(Map<String, dynamic> json) =>
+      _$CryptoCoinFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CryptoCoinDetailsInListToJson(this);
+  Map<String, dynamic> toJson() => _$CryptoCoinToJson(this);
 }
