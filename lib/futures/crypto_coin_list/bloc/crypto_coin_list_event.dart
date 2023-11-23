@@ -6,3 +6,5 @@ sealed class CryptoCoinListEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class CryptoCoinListLoadEvent extends CryptoCoinListEvent {}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'ui/theme/theme.dart';
 import 'futures/crypto_coin_list/view/crypto_coin_list.dart';
 
 class CryptoApp extends StatelessWidget {
@@ -8,12 +9,10 @@ class CryptoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: CryptoCoinListScreen(),
+      theme: darkTheme,
+      home: const CryptoCoinListScreen(),
     );
   }
 }
