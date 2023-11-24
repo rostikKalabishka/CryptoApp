@@ -13,6 +13,7 @@ class CryptoCoinListBloc
     extends Bloc<CryptoCoinListEvent, CryptoCoinListState> {
   final AbstractCoinRepository coinRepository;
   List<CryptoCoin> coinList = [];
+  bool isLoading = false;
 
   CryptoCoinListBloc(this.coinRepository) : super(CryptoCoinListInitial()) {
     on<CryptoCoinListEvent>(_loadCryptoCoinList);
@@ -23,22 +24,27 @@ class CryptoCoinListBloc
     int page = 1;
     try {
       if (event is CryptoCoinListLoadNextPageEvent) {
+        isLoading = true;
         final nextPageList = await coinRepository.getCryptoCoinList(page: page);
 
         coinList.addAll(nextPageList);
-        emit(CryptoCoinListLoaded(cryptoCoinList: coinList));
         page++;
+        emit(CryptoCoinListLoaded(cryptoCoinList: coinList));
       } else {
+        isLoading = true;
         coinList.clear();
 
         final firstPageList =
             await coinRepository.getCryptoCoinList(page: page);
         coinList.addAll(firstPageList);
         emit(CryptoCoinListLoaded(cryptoCoinList: List.from(coinList)));
+        isLoading = false;
       }
     } catch (e) {
       log('error: $e');
       emit(CryptoCoinListFailure(error: e));
-    } finally {}
+    } finally {
+      isLoading = false;
+    }
   }
 }
