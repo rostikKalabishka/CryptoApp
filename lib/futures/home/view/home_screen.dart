@@ -20,23 +20,36 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  List<Widget> pages = const [CryptoCoinListScreen(), SearchCoinScreen()];
+  List<Widget> pages = const [
+    CryptoCoinListScreen(),
+    SearchCoinScreen(),
+    Text('Portfolio'),
+    Text('Settings'),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: bottomNavigationBar(),
-      body: pages[_indexPage],
+      body: IndexedStack(
+        index: _indexPage,
+        children: pages,
+      ),
     );
   }
 
   BottomNavigationBar bottomNavigationBar() {
     return BottomNavigationBar(
       onTap: onPageChanged,
+      unselectedItemColor: Colors.white,
       currentIndex: _indexPage,
       selectedItemColor: Colors.blue[800],
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Market'),
-        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search')
+        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.backpack_outlined), label: 'Portfolio'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined), label: 'Settings')
       ],
     );
   }

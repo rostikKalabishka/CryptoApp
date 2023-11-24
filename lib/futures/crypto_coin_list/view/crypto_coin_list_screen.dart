@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,11 +16,23 @@ class CryptoCoinListScreen extends StatefulWidget {
 
 class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
   final _cryptoListBloc = CryptoCoinListBloc(GetIt.I<AbstractCoinRepository>());
+  ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     _cryptoListBloc.add(CryptoCoinListLoadEvent());
-
+    _scrollController.addListener(() {
+      if (_scrollController.position.maxScrollExtent ==
+          _scrollController.offset) {
+        _cryptoListBloc.add(CryptoCoinListLoadNextPageEvent());
+      }
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -31,35 +42,54 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
         bloc: _cryptoListBloc,
         builder: (BuildContext context, CryptoCoinListState state) {
           if (state is CryptoCoinListLoaded) {
-            return CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  centerTitle: true,
-                  leading: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.notification_add_outlined),
-                  ),
-                  title: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Text('data')],
-                  ),
-                  actions: [
-                    IconButton(
+            return RefreshIndicator.adaptive(
+              onRefresh: () async {
+                _cryptoListBloc.add(CryptoCoinListLoadEvent());
+              },
+              child: CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  SliverAppBar(
+                    centerTitle: true,
+                    leading: IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.search_outlined),
+                      icon: const Icon(Icons.notification_add_outlined),
                     ),
-                  ],
-                ),
-                SliverList.separated(
-                    itemCount: state.cryptoCoinList.length,
-                    itemBuilder: (context, index) {
-                      final coin = state.cryptoCoinList[index];
-                      return CryptoListTile(
-                        coin: coin,
-                      );
-                    },
-                    separatorBuilder: (context, i) => const Divider())
-              ],
+                    title: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [Text('Crypto App')],
+                    ),
+                    actions: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.search_outlined),
+                      ),
+                    ],
+                  ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 15,
+                    ),
+                  ),
+                  SliverList.separated(
+                      itemCount: state.cryptoCoinList.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index < state.cryptoCoinList.length) {
+                          final coin = state.cryptoCoinList[index];
+                          return CryptoListTile(
+                            coin: coin,
+                          );
+                        } else {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 32),
+                            child: Center(
+                                child: CircularProgressIndicator.adaptive()),
+                          );
+                        }
+                      },
+                      separatorBuilder: (context, i) => const Divider())
+                ],
+              ),
             );
           }
           return const Center(child: CircularProgressIndicator.adaptive());

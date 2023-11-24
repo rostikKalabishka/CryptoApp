@@ -8,3 +8,5 @@ sealed class CryptoCoinListEvent extends Equatable {
 }
 
 class CryptoCoinListLoadEvent extends CryptoCoinListEvent {}
+
+class CryptoCoinListLoadNextPageEvent extends CryptoCoinListEvent {}
