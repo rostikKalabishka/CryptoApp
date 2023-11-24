@@ -14,6 +14,7 @@ class CryptoCoinListBloc
   final AbstractCoinRepository coinRepository;
   List<CryptoCoin> coinList = [];
   bool isLoading = false;
+  int page = 1;
 
   CryptoCoinListBloc(this.coinRepository) : super(CryptoCoinListInitial()) {
     on<CryptoCoinListEvent>(_loadCryptoCoinList);
@@ -21,19 +22,21 @@ class CryptoCoinListBloc
 
   Future<void> _loadCryptoCoinList(
       CryptoCoinListEvent event, Emitter<CryptoCoinListState> emit) async {
-    int page = 1;
     try {
       if (event is CryptoCoinListLoadNextPageEvent) {
         isLoading = true;
+        page += 1;
         final nextPageList = await coinRepository.getCryptoCoinList(page: page);
 
         coinList.addAll(nextPageList);
-        page++;
-        emit(CryptoCoinListLoaded(cryptoCoinList: coinList));
-      } else {
+
+        emit(CryptoCoinListLoaded(cryptoCoinList: List.from(coinList)));
+        // coinList.clear();
+        isLoading = false;
+      } else if (event is CryptoCoinListLoadEvent) {
         isLoading = true;
         coinList.clear();
-
+        page = 1;
         final firstPageList =
             await coinRepository.getCryptoCoinList(page: page);
         coinList.addAll(firstPageList);
