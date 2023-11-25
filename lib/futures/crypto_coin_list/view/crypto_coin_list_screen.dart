@@ -66,32 +66,19 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                       ),
                     ],
                   ),
-                  // const SliverToBoxAdapter(
-                  //   child: SizedBox(
-                  //     height: 15,
-                  //   ),
-                  // ),
                   SliverToBoxAdapter(
                     child: Container(
                       padding: const EdgeInsets.all(8.0),
                       height: MediaQuery.of(context).size.height * 0.05,
                       child:
                           ListView(scrollDirection: Axis.horizontal, children: [
-                        //      Padding(
-                        //   padding: EdgeInsets.symmetric(
-                        //       horizontal:
-                        //           MediaQuery.of(context).size.width * 0.01),
-                        //   child: ElevatedButton(
-                        //     onPressed: () {},
-                        //     child: const Text('BTC/USD'),
-                        //   ),
-                        // ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.005),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () => _cryptoListBloc
+                                .add(CryptoCoinListLoadTopFiftyCoinEvent()),
                             child: const Text('Top 50'),
                           ),
                         ),
@@ -100,7 +87,8 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.005),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () =>
+                                _cryptoListBloc.add(CryptoCoinListLoadEvent()),
                             child: const Row(
                               children: [Text('Top 100')],
                             ),
@@ -111,20 +99,10 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.005),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () => _cryptoListBloc.add(
+                                CryptoCoinListLoadTopTwoHundredFiftyCoinEvent()),
                             child: const Row(
                               children: [Text('Top 250')],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.005),
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: const Row(
-                              children: [Text('Top 100')],
                             ),
                           ),
                         ),

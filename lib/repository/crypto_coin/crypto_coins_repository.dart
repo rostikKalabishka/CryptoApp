@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 
 import '../abstract_coin_repository.dart';
@@ -11,7 +9,7 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
   @override
   Future<List<CryptoCoin>> getCryptoCoinList({
     //   required String currency,
-    // required int count,
+    required int perPage,
     required int page,
     // required String locale
   }) async {
@@ -22,7 +20,7 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
           'vs_currency': 'usd',
           'sparkline': true.toString(),
           'locale': 'en',
-          'per_page': 20.toString(),
+          'per_page': perPage.toString(),
           'order': 'market_cap_desc',
           'page': page,
         });

@@ -18,3 +18,8 @@ class CryptoCoinListSorByMarketCupEvent extends CryptoCoinListEvent {}
 class CryptoCoinListSorByPriceEvent extends CryptoCoinListEvent {}
 
 class CryptoCoinListSorByPercentChangeEvent extends CryptoCoinListEvent {}
+
+class CryptoCoinListLoadTopFiftyCoinEvent extends CryptoCoinListEvent {}
+
+class CryptoCoinListLoadTopTwoHundredFiftyCoinEvent
+    extends CryptoCoinListEvent {}
