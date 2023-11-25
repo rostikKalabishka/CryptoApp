@@ -66,9 +66,117 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                       ),
                     ],
                   ),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 15,
+                  // const SliverToBoxAdapter(
+                  //   child: SizedBox(
+                  //     height: 15,
+                  //   ),
+                  // ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      child:
+                          ListView(scrollDirection: Axis.horizontal, children: [
+                        //      Padding(
+                        //   padding: EdgeInsets.symmetric(
+                        //       horizontal:
+                        //           MediaQuery.of(context).size.width * 0.01),
+                        //   child: ElevatedButton(
+                        //     onPressed: () {},
+                        //     child: const Text('BTC/USD'),
+                        //   ),
+                        // ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.005),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: const Text('Top 50'),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.005),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: const Row(
+                              children: [Text('Top 100')],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.005),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: const Row(
+                              children: [Text('Top 250')],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.005),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: const Row(
+                              children: [Text('Top 100')],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.005),
+                          child: ElevatedButton(
+                            onPressed: () => _cryptoListBloc
+                                .add(CryptoCoinListSorByRankEvent()),
+                            child: const Row(
+                              children: [Text('Sort By Rank')],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.005),
+                          child: ElevatedButton(
+                            onPressed: () => _cryptoListBloc
+                                .add(CryptoCoinListSorByMarketCupEvent()),
+                            child: const Row(
+                              children: [Text('Sort By Market Cap')],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.005),
+                          child: ElevatedButton(
+                            onPressed: () => _cryptoListBloc
+                                .add(CryptoCoinListSorByPercentChangeEvent()),
+                            child: const Row(
+                              children: [Text('Sort By % Change')],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.005),
+                          child: ElevatedButton(
+                            onPressed: () => _cryptoListBloc
+                                .add(CryptoCoinListSorByPriceEvent()),
+                            child: const Row(
+                              children: [Text('Sort By Price')],
+                            ),
+                          ),
+                        ),
+                      ]),
                     ),
                   ),
                   SliverList.separated(
@@ -96,5 +204,25 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
         },
       ),
     );
+  }
+
+  void _sorByRank() {
+    _cryptoListBloc.add(CryptoCoinListSorByRankEvent());
+    // _cryptoListBloc.isSorted = !_cryptoListBloc.isSorted;
+  }
+
+  void _sorByPrice() {
+    _cryptoListBloc.add(CryptoCoinListSorByPriceEvent());
+    // _cryptoListBloc.isSorted = !_cryptoListBloc.isSorted;
+  }
+
+  void _sorByMarketCup() {
+    _cryptoListBloc.add(CryptoCoinListSorByMarketCupEvent());
+    // _cryptoListBloc.isSorted = !_cryptoListBloc.isSorted;
+  }
+
+  void _sorByChangePercent() {
+    _cryptoListBloc.add(CryptoCoinListSorByPercentChangeEvent());
+    // _cryptoListBloc.isSorted = !_cryptoListBloc.isSorted;
   }
 }

@@ -10,3 +10,11 @@ sealed class CryptoCoinListEvent extends Equatable {
 class CryptoCoinListLoadEvent extends CryptoCoinListEvent {}
 
 class CryptoCoinListLoadNextPageEvent extends CryptoCoinListEvent {}
+
+class CryptoCoinListSorByRankEvent extends CryptoCoinListEvent {}
+
+class CryptoCoinListSorByMarketCupEvent extends CryptoCoinListEvent {}
+
+class CryptoCoinListSorByPriceEvent extends CryptoCoinListEvent {}
+
+class CryptoCoinListSorByPercentChangeEvent extends CryptoCoinListEvent {}

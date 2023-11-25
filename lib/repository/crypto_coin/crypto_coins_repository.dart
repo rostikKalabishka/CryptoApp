@@ -17,15 +17,25 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
   }) async {
     //per_page=100
     final Response response = await dio.get(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=$page&sparkline=true&locale=en');
+        'https://api.coingecko.com/api/v3/coins/markets',
+        queryParameters: {
+          'vs_currency': 'usd',
+          'sparkline': true.toString(),
+          'locale': 'en',
+          'per_page': 20.toString(),
+          'order': 'market_cap_desc',
+          'page': page,
+        });
 
     if (response.statusCode == 200) {
       List<dynamic> responseData = response.data as List<dynamic>;
       List<CryptoCoin> coins = responseData
           .map((e) => CryptoCoin.fromJson(e as Map<String, dynamic>))
           .toList();
-      log('$coins');
+      // log('$coins');
       return coins;
+    } else if (response.statusCode == 429) {
+      throw Exception('You\'ve exceeded the Rate Limit');
     } else {
       throw Exception('Failed to fetch data');
     }
