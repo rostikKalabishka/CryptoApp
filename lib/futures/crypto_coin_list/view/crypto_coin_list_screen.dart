@@ -16,7 +16,7 @@ class CryptoCoinListScreen extends StatefulWidget {
 
 class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
   final _cryptoListBloc = CryptoCoinListBloc(GetIt.I<AbstractCoinRepository>());
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     _cryptoListBloc.add(CryptoCoinListLoadEvent());
@@ -34,6 +34,8 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
     _scrollController.dispose();
     super.dispose();
   }
+
+  List<Widget> arr = [];
 
   @override
   Widget build(BuildContext context) {
@@ -182,25 +184,5 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
         },
       ),
     );
-  }
-
-  void _sorByRank() {
-    _cryptoListBloc.add(CryptoCoinListSorByRankEvent());
-    // _cryptoListBloc.isSorted = !_cryptoListBloc.isSorted;
-  }
-
-  void _sorByPrice() {
-    _cryptoListBloc.add(CryptoCoinListSorByPriceEvent());
-    // _cryptoListBloc.isSorted = !_cryptoListBloc.isSorted;
-  }
-
-  void _sorByMarketCup() {
-    _cryptoListBloc.add(CryptoCoinListSorByMarketCupEvent());
-    // _cryptoListBloc.isSorted = !_cryptoListBloc.isSorted;
-  }
-
-  void _sorByChangePercent() {
-    _cryptoListBloc.add(CryptoCoinListSorByPercentChangeEvent());
-    // _cryptoListBloc.isSorted = !_cryptoListBloc.isSorted;
   }
 }

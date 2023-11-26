@@ -7,6 +7,8 @@ sealed class CryptoCoinListState extends Equatable {
   List<Object> get props => [];
 }
 
+enum buttonStateEnum { enable, disable }
+
 final class CryptoCoinListInitial extends CryptoCoinListState {}
 
 final class CryptoCoinListLoading extends CryptoCoinListState {}

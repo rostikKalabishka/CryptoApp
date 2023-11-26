@@ -9,6 +9,8 @@ import '../../../repository/crypto_coin/models/model.dart';
 part 'crypto_coin_list_event.dart';
 part 'crypto_coin_list_state.dart';
 
+enum SortFilters { rank, price, marketCap, percentChange }
+
 class CryptoCoinListBloc
     extends Bloc<CryptoCoinListEvent, CryptoCoinListState> {
   final AbstractCoinRepository coinRepository;
@@ -25,83 +27,66 @@ class CryptoCoinListBloc
   CryptoCoinListBloc(this.coinRepository) : super(CryptoCoinListInitial()) {
     on<CryptoCoinListEvent>(_loadCryptoCoinList);
 
-    on<CryptoCoinListSorByRankEvent>(_sortByRank);
-    on<CryptoCoinListSorByPriceEvent>(_sortByPrice);
-    on<CryptoCoinListSorByMarketCupEvent>(_sortByMarketCup);
-    on<CryptoCoinListSorByPercentChangeEvent>(_sortByPercentChange);
+    on<CryptoCoinListSorByRankEvent>((event, emit) => _sortByFilters(
+          emit,
+          SortFilters.rank,
+        ));
+    on<CryptoCoinListSorByPriceEvent>((event, emit) => _sortByFilters(
+          emit,
+          SortFilters.price,
+        ));
+    on<CryptoCoinListSorByMarketCupEvent>((event, emit) => _sortByFilters(
+          emit,
+          SortFilters.marketCap,
+        ));
+    on<CryptoCoinListSorByPercentChangeEvent>((event, emit) => _sortByFilters(
+          emit,
+          SortFilters.percentChange,
+        ));
 
     on<CryptoCoinListLoadTopFiftyCoinEvent>(_loadTopFiftyCoin);
     on<CryptoCoinListLoadTopTwoHundredFiftyCoinEvent>(
         _loadTopTwoHundredFiftyCoin);
   }
 
-  void _sortByRank(
-      CryptoCoinListEvent event, Emitter<CryptoCoinListState> emit) {
+  void _sortByFilters(Emitter<CryptoCoinListState> emit, SortFilters filter) {
     try {
-      log('$coinList');
-
-      if (_isSortedByRank == false) {
-        coinList.sort((a, b) => b.marketCapRank.compareTo(a.marketCapRank));
-      } else if (_isSortedByRank == true) {
-        coinList.sort((a, b) => a.marketCapRank.compareTo(b.marketCapRank));
+      switch (filter) {
+        case SortFilters.rank:
+          _isSortedByRank == false
+              ? coinList.sort(sorters[SortFilters.rank])
+              : coinList.sort((a, b) => sorters[SortFilters.rank]!(b, a));
+          _isSortedByRank = !_isSortedByRank;
+        case SortFilters.price:
+          _isSortedByPrice == false
+              ? coinList.sort(sorters[SortFilters.price])
+              : coinList.sort((a, b) => sorters[SortFilters.price]!(b, a));
+          _isSortedByPrice = !_isSortedByPrice;
+        case SortFilters.marketCap:
+          _isSortedByMarketCup == false
+              ? coinList.sort(sorters[SortFilters.marketCap])
+              : coinList.sort((a, b) => sorters[SortFilters.marketCap]!(b, a));
+          _isSortedByMarketCup = !_isSortedByMarketCup;
+        case SortFilters.percentChange:
+          _isSortedByPercentChange == false
+              ? coinList.sort(sorters[SortFilters.percentChange])
+              : coinList
+                  .sort((a, b) => sorters[SortFilters.percentChange]!(b, a));
+          _isSortedByPercentChange = !_isSortedByPercentChange;
       }
       emit(CryptoCoinListLoaded(cryptoCoinList: List.from(coinList)));
-      _isSortedByRank = !_isSortedByRank;
     } catch (e) {
       emit(CryptoCoinListFailure(error: e));
     }
   }
 
-  void _sortByPrice(
-      CryptoCoinListEvent event, Emitter<CryptoCoinListState> emit) {
-    try {
-      log('$coinList');
-
-      if (_isSortedByPrice == false) {
-        coinList.sort((a, b) => b.currentPrice.compareTo(a.currentPrice));
-      } else if (_isSortedByPrice == true) {
-        coinList.sort((a, b) => a.currentPrice.compareTo(b.currentPrice));
-      }
-      emit(CryptoCoinListLoaded(cryptoCoinList: List.from(coinList)));
-      _isSortedByPrice = !_isSortedByPrice;
-    } catch (e) {
-      emit(CryptoCoinListFailure(error: e));
-    }
-  }
-
-  void _sortByMarketCup(
-      CryptoCoinListEvent event, Emitter<CryptoCoinListState> emit) {
-    try {
-      log('$coinList');
-
-      if (_isSortedByMarketCup == false) {
-        coinList.sort((a, b) => b.marketCap.compareTo(a.marketCap));
-      } else if (_isSortedByMarketCup == true) {
-        coinList.sort((a, b) => a.marketCap.compareTo(b.marketCap));
-      }
-      emit(CryptoCoinListLoaded(cryptoCoinList: List.from(coinList)));
-      _isSortedByMarketCup = !_isSortedByMarketCup;
-    } catch (e) {
-      emit(CryptoCoinListFailure(error: e));
-    }
-  }
-
-  void _sortByPercentChange(
-      CryptoCoinListEvent event, Emitter<CryptoCoinListState> emit) {
-    try {
-      if (_isSortedByPercentChange == false) {
-        coinList.sort((a, b) =>
-            b.priceChangePercentage24h.compareTo(a.priceChangePercentage24h));
-      } else if (_isSortedByPercentChange == true) {
-        coinList.sort((a, b) =>
-            a.priceChangePercentage24h.compareTo(b.priceChangePercentage24h));
-      }
-      emit(CryptoCoinListLoaded(cryptoCoinList: List.from(coinList)));
-      _isSortedByPercentChange = !_isSortedByPercentChange;
-    } catch (e) {
-      emit(CryptoCoinListFailure(error: e));
-    }
-  }
+  Map<SortFilters, int Function(CryptoCoin a, CryptoCoin b)> sorters = {
+    SortFilters.rank: (a, b) => b.marketCapRank.compareTo(a.marketCapRank),
+    SortFilters.marketCap: (a, b) => b.marketCap.compareTo(a.marketCap),
+    SortFilters.price: (a, b) => b.currentPrice.compareTo(a.currentPrice),
+    SortFilters.percentChange: (a, b) =>
+        b.priceChangePercentage24h.compareTo(a.priceChangePercentage24h),
+  };
 
   Future<void> _loadCryptoCoinList(
       CryptoCoinListEvent event, Emitter<CryptoCoinListState> emit) async {
