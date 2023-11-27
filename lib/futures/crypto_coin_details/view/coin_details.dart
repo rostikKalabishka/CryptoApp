@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class CryptoCoinDetailsScreen extends StatefulWidget {
-  const CryptoCoinDetailsScreen({super.key});
-
+  const CryptoCoinDetailsScreen({super.key, required this.id});
+  final String id;
   @override
   State<CryptoCoinDetailsScreen> createState() =>
       _CryptoCoinDetailsScreenState();
@@ -13,6 +13,8 @@ class CryptoCoinDetailsScreen extends StatefulWidget {
 class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text('biba'),
+    );
   }
 }

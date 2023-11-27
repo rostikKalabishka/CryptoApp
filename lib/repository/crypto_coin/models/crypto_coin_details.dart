@@ -286,7 +286,8 @@ class Image {
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class MarketData {
   final CurrentPrice currentPrice;
-
+  @JsonKey(name: 'sparkline_7d')
+  final Sparkline7d sparkline7d;
   final Ath ath;
   final AthChangePercentage athChangePercentage;
   final AthDate athDate;
@@ -341,43 +342,43 @@ class MarketData {
   final int maxSupply;
   final int circulatingSupply;
   final String lastUpdated;
-  MarketData({
-    required this.currentPrice,
-    required this.ath,
-    required this.athChangePercentage,
-    required this.athDate,
-    required this.atl,
-    required this.atlChangePercentage,
-    required this.atlDate,
-    required this.marketCap,
-    required this.marketCapRank,
-    required this.fullyDilutedValuation,
-    required this.marketCapFdvRatio,
-    required this.totalVolume,
-    required this.high24h,
-    required this.low24h,
-    required this.priceChange24h,
-    required this.priceChangePercentage24h,
-    required this.priceChangePercentage7d,
-    required this.priceChangePercentage14d,
-    required this.priceChangePercentage30d,
-    required this.priceChangePercentage60d,
-    required this.priceChangePercentage200d,
-    required this.priceChangePercentage1y,
-    required this.marketCapChange24h,
-    required this.marketCapChangePercentage24h,
-    required this.priceChange24hInCurrency,
-    required this.priceChangePercentage1hInCurrency,
-    required this.priceChangePercentage24hInCurrency,
-    required this.priceChangePercentage7dInCurrency,
-    required this.priceChangePercentage14dInCurrency,
-    required this.priceChangePercentage30dInCurrency,
-    required this.priceChangePercentage60dInCurrency,
-    required this.totalSupply,
-    required this.maxSupply,
-    required this.circulatingSupply,
-    required this.lastUpdated,
-  });
+  MarketData(
+      {required this.currentPrice,
+      required this.ath,
+      required this.athChangePercentage,
+      required this.athDate,
+      required this.atl,
+      required this.atlChangePercentage,
+      required this.atlDate,
+      required this.marketCap,
+      required this.marketCapRank,
+      required this.fullyDilutedValuation,
+      required this.marketCapFdvRatio,
+      required this.totalVolume,
+      required this.high24h,
+      required this.low24h,
+      required this.priceChange24h,
+      required this.priceChangePercentage24h,
+      required this.priceChangePercentage7d,
+      required this.priceChangePercentage14d,
+      required this.priceChangePercentage30d,
+      required this.priceChangePercentage60d,
+      required this.priceChangePercentage200d,
+      required this.priceChangePercentage1y,
+      required this.marketCapChange24h,
+      required this.marketCapChangePercentage24h,
+      required this.priceChange24hInCurrency,
+      required this.priceChangePercentage1hInCurrency,
+      required this.priceChangePercentage24hInCurrency,
+      required this.priceChangePercentage7dInCurrency,
+      required this.priceChangePercentage14dInCurrency,
+      required this.priceChangePercentage30dInCurrency,
+      required this.priceChangePercentage60dInCurrency,
+      required this.totalSupply,
+      required this.maxSupply,
+      required this.circulatingSupply,
+      required this.lastUpdated,
+      required this.sparkline7d});
   factory MarketData.fromJson(Map<String, dynamic> json) =>
       _$MarketDataFromJson(json);
 
@@ -2903,4 +2904,17 @@ class PriceChangePercentage60dInCurrency {
 
   Map<String, dynamic> toJson() =>
       _$PriceChangePercentage60dInCurrencyToJson(this);
+}
+
+@JsonSerializable()
+class Sparkline7d {
+  final List<double> price;
+  Sparkline7d({
+    required this.price,
+  });
+
+  factory Sparkline7d.fromJson(Map<String, dynamic> json) =>
+      _$Sparkline7dFromJson(json);
+
+  Map<String, dynamic> toJson() => _$Sparkline7dToJson(this);
 }

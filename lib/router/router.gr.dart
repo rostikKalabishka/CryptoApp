@@ -16,9 +16,13 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     CryptoCoinDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<CryptoCoinDetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const CryptoCoinDetailsScreen(),
+        child: CryptoCoinDetailsScreen(
+          key: args.key,
+          id: args.id,
+        ),
       );
     },
     CryptoCoinListRoute.name: (routeData) {
@@ -44,16 +48,40 @@ abstract class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [CryptoCoinDetailsScreen]
-class CryptoCoinDetailsRoute extends PageRouteInfo<void> {
-  const CryptoCoinDetailsRoute({List<PageRouteInfo>? children})
-      : super(
+class CryptoCoinDetailsRoute extends PageRouteInfo<CryptoCoinDetailsRouteArgs> {
+  CryptoCoinDetailsRoute({
+    Key? key,
+    required String id,
+    List<PageRouteInfo>? children,
+  }) : super(
           CryptoCoinDetailsRoute.name,
+          args: CryptoCoinDetailsRouteArgs(
+            key: key,
+            id: id,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'CryptoCoinDetailsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<CryptoCoinDetailsRouteArgs> page =
+      PageInfo<CryptoCoinDetailsRouteArgs>(name);
+}
+
+class CryptoCoinDetailsRouteArgs {
+  const CryptoCoinDetailsRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
+
+  final String id;
+
+  @override
+  String toString() {
+    return 'CryptoCoinDetailsRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for

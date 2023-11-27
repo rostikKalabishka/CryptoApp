@@ -350,11 +350,14 @@ MarketData _$MarketDataFromJson(Map<String, dynamic> json) => MarketData(
       maxSupply: json['max_supply'] as int,
       circulatingSupply: json['circulating_supply'] as int,
       lastUpdated: json['last_updated'] as String,
+      sparkline7d:
+          Sparkline7d.fromJson(json['sparkline_7d'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MarketDataToJson(MarketData instance) =>
     <String, dynamic>{
       'current_price': instance.currentPrice.toJson(),
+      'sparkline_7d': instance.sparkline7d.toJson(),
       'ath': instance.ath.toJson(),
       'ath_change_percentage': instance.athChangePercentage.toJson(),
       'ath_date': instance.athDate.toJson(),
@@ -2868,4 +2871,15 @@ Map<String, dynamic> _$PriceChangePercentage60dInCurrencyToJson(
       'bits': instance.bits,
       'link': instance.link,
       'sats': instance.sats,
+    };
+
+Sparkline7d _$Sparkline7dFromJson(Map<String, dynamic> json) => Sparkline7d(
+      price: (json['price'] as List<dynamic>)
+          .map((e) => (e as num).toDouble())
+          .toList(),
+    );
+
+Map<String, dynamic> _$Sparkline7dToJson(Sparkline7d instance) =>
+    <String, dynamic>{
+      'price': instance.price,
     };

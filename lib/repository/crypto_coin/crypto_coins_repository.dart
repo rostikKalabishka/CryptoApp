@@ -1,3 +1,4 @@
+import 'package:crypto_app/repository/crypto_coin/models/crypto_coin_details.dart';
 import 'package:dio/dio.dart';
 
 import '../abstract_coin_repository.dart';
@@ -34,5 +35,11 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
     } else {
       throw Exception('Failed to fetch data');
     }
+  }
+
+  @override
+  Future<CryptoCoinDetails> getCryptoCoinDetails({required String id}) {
+    // TODO: implement getCryptoCoinDetails
+    throw UnimplementedError();
   }
 }
