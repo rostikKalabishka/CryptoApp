@@ -1,13 +1,16 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-class CoinDetails extends StatefulWidget {
-  const CoinDetails({super.key});
+@RoutePage()
+class CryptoCoinDetailsScreen extends StatefulWidget {
+  const CryptoCoinDetailsScreen({super.key});
 
   @override
-  State<CoinDetails> createState() => _CoinDetailsState();
+  State<CryptoCoinDetailsScreen> createState() =>
+      _CryptoCoinDetailsScreenState();
 }
 
-class _CoinDetailsState extends State<CoinDetails> {
+class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Container();

@@ -34,7 +34,6 @@ class CryptoListTile extends StatelessWidget {
         ),
       ),
       title: Row(
-        // mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.25,

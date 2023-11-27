@@ -17,6 +17,9 @@ class CryptoCoinListScreen extends StatefulWidget {
 class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
   final _cryptoListBloc = CryptoCoinListBloc(GetIt.I<AbstractCoinRepository>());
   final ScrollController _scrollController = ScrollController();
+  bool topFiftyButtonEnabled = true;
+  bool topHundredButtonEnabled = false;
+  bool topTwoHundredFiftyButtonEnabled = true;
   @override
   void initState() {
     _cryptoListBloc.add(CryptoCoinListLoadEvent());
@@ -32,10 +35,9 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
   @override
   void dispose() {
     _scrollController.dispose();
+
     super.dispose();
   }
-
-  List<Widget> arr = [];
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +81,9 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.005),
                           child: ElevatedButton(
-                            onPressed: () => _cryptoListBloc
-                                .add(CryptoCoinListLoadTopFiftyCoinEvent()),
+                            onPressed: topFiftyButtonEnabled
+                                ? () => buttonEnabled(1)
+                                : null,
                             child: const Text('Top 50'),
                           ),
                         ),
@@ -89,8 +92,9 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.005),
                           child: ElevatedButton(
-                            onPressed: () =>
-                                _cryptoListBloc.add(CryptoCoinListLoadEvent()),
+                            onPressed: topHundredButtonEnabled
+                                ? () => buttonEnabled(2)
+                                : null,
                             child: const Row(
                               children: [Text('Top 100')],
                             ),
@@ -101,8 +105,9 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.005),
                           child: ElevatedButton(
-                            onPressed: () => _cryptoListBloc.add(
-                                CryptoCoinListLoadTopTwoHundredFiftyCoinEvent()),
+                            onPressed: topTwoHundredFiftyButtonEnabled
+                                ? () => buttonEnabled(3)
+                                : null,
                             child: const Row(
                               children: [Text('Top 250')],
                             ),
@@ -184,5 +189,31 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
         },
       ),
     );
+  }
+
+  void buttonEnabled(int index) {
+    switch (index) {
+      case 1:
+        setState(() {
+          topFiftyButtonEnabled = false;
+          topHundredButtonEnabled = true;
+          topTwoHundredFiftyButtonEnabled = true;
+        });
+        _cryptoListBloc.add(CryptoCoinListLoadTopFiftyCoinEvent());
+      case 2:
+        setState(() {
+          topFiftyButtonEnabled = true;
+          topHundredButtonEnabled = false;
+          topTwoHundredFiftyButtonEnabled = true;
+        });
+        _cryptoListBloc.add(CryptoCoinListLoadEvent());
+      case 3:
+        setState(() {
+          topFiftyButtonEnabled = true;
+          topHundredButtonEnabled = true;
+          topTwoHundredFiftyButtonEnabled = false;
+        });
+        _cryptoListBloc.add(CryptoCoinListLoadTopTwoHundredFiftyCoinEvent());
+    }
   }
 }

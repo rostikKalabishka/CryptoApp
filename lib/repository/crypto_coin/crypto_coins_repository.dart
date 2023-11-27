@@ -8,12 +8,9 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
   final Dio dio;
   @override
   Future<List<CryptoCoin>> getCryptoCoinList({
-    //   required String currency,
     required int perPage,
     required int page,
-    // required String locale
   }) async {
-    //per_page=100
     final Response response = await dio.get(
         'https://api.coingecko.com/api/v3/coins/markets',
         queryParameters: {
