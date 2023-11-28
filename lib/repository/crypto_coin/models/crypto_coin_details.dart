@@ -4,11 +4,11 @@ part 'crypto_coin_details.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class CryptoCoinDetails {
   final String id;
-  final String symbol;
-  final String name;
-  final String webSlug;
+  final String? symbol;
+  final String? name;
+  final String? webSlug;
   final int blockTimeInMinutes;
-  final String hashingAlgorithm;
+  final String? hashingAlgorithm;
   final List<String> categories;
   final bool previewListing;
 
@@ -16,8 +16,8 @@ class CryptoCoinDetails {
   final Description description;
   final Links links;
   final Image image;
-  final String countryOrigin;
-  final String genesisDate;
+  final String? countryOrigin;
+  final String? genesisDate;
   final double sentimentVotesUpPercentage;
   final double sentimentVotesDownPercentage;
   final int watchlistPortfolioUsers;
@@ -28,10 +28,10 @@ class CryptoCoinDetails {
   final double communityScore;
   final double liquidityScore;
   final double publicInterestScore;
-  final MarketData marketData;
+  // final MarketData marketData;
 
   final List<dynamic> statusUpdates;
-  final String lastUpdated;
+  final String? lastUpdated;
 
   CryptoCoinDetails({
     required this.id,
@@ -58,7 +58,7 @@ class CryptoCoinDetails {
     required this.communityScore,
     required this.liquidityScore,
     required this.publicInterestScore,
-    required this.marketData,
+    // required this.marketData,
     required this.statusUpdates,
     required this.lastUpdated,
   });
@@ -72,73 +72,73 @@ class CryptoCoinDetails {
 class Localization {
   final String en;
   final String de;
-  final String es;
-  final String fr;
-  final String it;
-  final String pl;
-  final String ro;
-  final String hu;
-  final String nl;
-  final String pt;
-  final String sv;
-  final String vi;
-  final String tr;
-  final String ru;
-  final String ja;
-  final String zh;
-  final String zhTw;
-  final String ko;
-  final String ar;
-  final String th;
-  final String id;
-  final String cs;
-  final String da;
-  final String el;
-  final String hi;
-  final String no;
-  final String sk;
-  final String uk;
-  final String he;
-  final String fi;
-  final String bg;
-  final String hr;
-  final String lt;
-  final String sl;
+  // final String es;
+  // final String fr;
+  // final String it;
+  // final String pl;
+  // final String ro;
+  // final String hu;
+  // final String nl;
+  // final String pt;
+  // final String sv;
+  // final String vi;
+  // final String tr;
+  // final String ru;
+  // final String ja;
+  // final String zh;
+  // final String zhTw;
+  // final String ko;
+  // final String ar;
+  // final String th;
+  // final String id;
+  // final String cs;
+  // final String da;
+  // final String el;
+  // final String hi;
+  // final String no;
+  // final String sk;
+  // final String uk;
+  // final String he;
+  // final String fi;
+  // final String bg;
+  // final String hr;
+  // final String lt;
+  // final String sl;
   Localization({
     required this.en,
     required this.de,
-    required this.es,
-    required this.fr,
-    required this.it,
-    required this.pl,
-    required this.ro,
-    required this.hu,
-    required this.nl,
-    required this.pt,
-    required this.sv,
-    required this.vi,
-    required this.tr,
-    required this.ru,
-    required this.ja,
-    required this.zh,
-    required this.zhTw,
-    required this.ko,
-    required this.ar,
-    required this.th,
-    required this.id,
-    required this.cs,
-    required this.da,
-    required this.el,
-    required this.hi,
-    required this.no,
-    required this.sk,
-    required this.uk,
-    required this.he,
-    required this.fi,
-    required this.bg,
-    required this.hr,
-    required this.lt,
-    required this.sl,
+    // required this.es,
+    // required this.fr,
+    // required this.it,
+    // required this.pl,
+    // required this.ro,
+    // required this.hu,
+    // required this.nl,
+    // required this.pt,
+    // required this.sv,
+    // required this.vi,
+    // required this.tr,
+    // required this.ru,
+    // required this.ja,
+    // required this.zh,
+    // required this.zhTw,
+    // required this.ko,
+    // required this.ar,
+    // required this.th,
+    // required this.id,
+    // required this.cs,
+    // required this.da,
+    // required this.el,
+    // required this.hi,
+    // required this.no,
+    // required this.sk,
+    // required this.uk,
+    // required this.he,
+    // required this.fi,
+    // required this.bg,
+    // required this.hr,
+    // required this.lt,
+    // required this.sl,
   });
   factory Localization.fromJson(Map<String, dynamic> json) =>
       _$LocalizationFromJson(json);
@@ -150,73 +150,73 @@ class Localization {
 class Description {
   final String en;
   final String de;
-  final String es;
-  final String fr;
-  final String it;
-  final String pl;
-  final String ro;
-  final String hu;
-  final String nl;
-  final String pt;
-  final String sv;
-  final String vi;
-  final String tr;
-  final String ru;
-  final String ja;
-  final String zh;
-  final String zhTw;
-  final String ko;
-  final String ar;
-  final String th;
-  final String id;
-  final String cs;
-  final String da;
-  final String el;
-  final String hi;
-  final String no;
-  final String sk;
-  final String uk;
-  final String he;
-  final String fi;
-  final String bg;
-  final String hr;
-  final String lt;
-  final String sl;
+  // final String? es;
+  // final String? fr;
+  // final String? it;
+  // final String? pl;
+  // final String? ro;
+  // final String? hu;
+  // final String? nl;
+  // final String? pt;
+  // final String? sv;
+  // final String? vi;
+  // final String? tr;
+  // final String? ru;
+  // final String? ja;
+  // final String? zh;
+  // final String? zhTw;
+  // final String? ko;
+  // final String? ar;
+  // final String? th;
+  // final String? id;
+  // final String? cs;
+  // final String? da;
+  // final String? el;
+  // final String? hi;
+  // final String? no;
+  // final String? sk;
+  // final String? uk;
+  // final String? he;
+  // final String? fi;
+  // final String? bg;
+  // final String? hr;
+  // final String? lt;
+  // final String? sl;
   Description({
     required this.en,
     required this.de,
-    required this.es,
-    required this.fr,
-    required this.it,
-    required this.pl,
-    required this.ro,
-    required this.hu,
-    required this.nl,
-    required this.pt,
-    required this.sv,
-    required this.vi,
-    required this.tr,
-    required this.ru,
-    required this.ja,
-    required this.zh,
-    required this.zhTw,
-    required this.ko,
-    required this.ar,
-    required this.th,
-    required this.id,
-    required this.cs,
-    required this.da,
-    required this.el,
-    required this.hi,
-    required this.no,
-    required this.sk,
-    required this.uk,
-    required this.he,
-    required this.fi,
-    required this.bg,
-    required this.hr,
-    required this.lt,
-    required this.sl,
+    // required this.es,
+    // required this.fr,
+    // required this.it,
+    // required this.pl,
+    // required this.ro,
+    // required this.hu,
+    // required this.nl,
+    // required this.pt,
+    // required this.sv,
+    // required this.vi,
+    // required this.tr,
+    // required this.ru,
+    // required this.ja,
+    // required this.zh,
+    // required this.zhTw,
+    // required this.ko,
+    // required this.ar,
+    // required this.th,
+    // required this.id,
+    // required this.cs,
+    // required this.da,
+    // required this.el,
+    // required this.hi,
+    // required this.no,
+    // required this.sk,
+    // required this.uk,
+    // required this.he,
+    // required this.fi,
+    // required this.bg,
+    // required this.hr,
+    // required this.lt,
+    // required this.sl,
   });
   factory Description.fromJson(Map<String, dynamic> json) =>
       _$DescriptionFromJson(json);
@@ -270,9 +270,9 @@ class ReposUrl {
 
 @JsonSerializable()
 class Image {
-  final String thumb;
-  final String small;
-  final String large;
+  final String? thumb;
+  final String? small;
+  final String? large;
   Image({
     required this.thumb,
     required this.small,
