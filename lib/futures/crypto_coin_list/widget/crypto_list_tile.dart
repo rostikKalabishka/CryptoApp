@@ -14,7 +14,7 @@ class CryptoListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        AutoRouter.of(context).push(CryptoCoinDetailsRoute(id: coin.id));
+        AutoRouter.of(context).push(CryptoCoinDetailsRoute(coin: coin));
       },
       leading: SizedBox(
         width: MediaQuery.of(context).size.width * 0.1,

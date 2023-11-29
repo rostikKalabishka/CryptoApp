@@ -6,3 +6,12 @@ sealed class CryptoCoinDetailsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class CryptoCoinDetailsLoadEvent extends CryptoCoinDetailsEvent {
+  final String id;
+
+  const CryptoCoinDetailsLoadEvent({required this.id});
+
+  @override
+  List<Object> get props => super.props..add(id);
+}

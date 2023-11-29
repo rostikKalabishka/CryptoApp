@@ -1,11 +1,12 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'crypto_coin_details.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-class CryptoCoinDetails {
+class CryptoCoinDetails extends Equatable {
   final String id;
   final String? symbol;
-  final String? name;
+  final String name;
   final String? webSlug;
   final int blockTimeInMinutes;
   final String? hashingAlgorithm;
@@ -28,12 +29,12 @@ class CryptoCoinDetails {
   final double communityScore;
   final double liquidityScore;
   final double publicInterestScore;
-  // final MarketData marketData;
+  final MarketData marketData;
 
   final List<dynamic> statusUpdates;
   final String? lastUpdated;
 
-  CryptoCoinDetails({
+  const CryptoCoinDetails({
     required this.id,
     required this.symbol,
     required this.name,
@@ -58,18 +59,49 @@ class CryptoCoinDetails {
     required this.communityScore,
     required this.liquidityScore,
     required this.publicInterestScore,
-    // required this.marketData,
     required this.statusUpdates,
     required this.lastUpdated,
+    required this.marketData,
   });
   factory CryptoCoinDetails.fromJson(Map<String, dynamic> json) =>
       _$CryptoCoinDetailsFromJson(json);
 
   Map<String, dynamic> toJson() => _$CryptoCoinDetailsToJson(this);
+
+  @override
+  List<Object?> get props => [
+        id,
+        symbol,
+        name,
+        webSlug,
+        blockTimeInMinutes,
+        hashingAlgorithm,
+        categories,
+        previewListing,
+        localization,
+        description,
+        links,
+        image,
+        countryOrigin,
+        genesisDate,
+        sentimentVotesUpPercentage,
+        sentimentVotesDownPercentage,
+        watchlistPortfolioUsers,
+        marketCapRank,
+        coingeckoRank,
+        coingeckoScore,
+        developerScore,
+        communityScore,
+        liquidityScore,
+        publicInterestScore,
+        statusUpdates,
+        lastUpdated,
+        marketData
+      ];
 }
 
 @JsonSerializable()
-class Localization {
+class Localization extends Equatable {
   final String en;
   final String de;
   // final String es;
@@ -104,7 +136,7 @@ class Localization {
   // final String hr;
   // final String lt;
   // final String sl;
-  Localization({
+  const Localization({
     required this.en,
     required this.de,
     // required this.es,
@@ -144,10 +176,13 @@ class Localization {
       _$LocalizationFromJson(json);
 
   Map<String, dynamic> toJson() => _$LocalizationToJson(this);
+
+  @override
+  List<Object?> get props => [en, de];
 }
 
 @JsonSerializable()
-class Description {
+class Description extends Equatable {
   final String en;
   final String de;
   // final String? es;
@@ -182,7 +217,7 @@ class Description {
   // final String? hr;
   // final String? lt;
   // final String? sl;
-  Description({
+  const Description({
     required this.en,
     required this.de,
     // required this.es,
@@ -222,10 +257,13 @@ class Description {
       _$DescriptionFromJson(json);
 
   Map<String, dynamic> toJson() => _$DescriptionToJson(this);
+
+  @override
+  List<Object?> get props => [en, de];
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-class Links {
+class Links extends Equatable {
   final List<String> homepage;
   final List<String> blockchainSite;
   final List<String> officialForumUrl;
@@ -237,7 +275,7 @@ class Links {
   final String telegramChannelIdentifier;
   final String subredditUrl;
   final ReposUrl reposUrl;
-  Links({
+  const Links({
     required this.homepage,
     required this.blockchainSite,
     required this.officialForumUrl,
@@ -252,13 +290,27 @@ class Links {
   factory Links.fromJson(Map<String, dynamic> json) => _$LinksFromJson(json);
 
   Map<String, dynamic> toJson() => _$LinksToJson(this);
+
+  @override
+  List<Object?> get props => [
+        homepage,
+        blockchainSite,
+        officialForumUrl,
+        chatUrl,
+        announcementUrl,
+        twitterScreenName,
+        facebookUsername,
+        telegramChannelIdentifier,
+        subredditUrl,
+        reposUrl,
+      ];
 }
 
 @JsonSerializable()
-class ReposUrl {
+class ReposUrl extends Equatable {
   final List<String> github;
   final List<dynamic> bitbucket;
-  ReposUrl({
+  const ReposUrl({
     required this.github,
     required this.bitbucket,
   });
@@ -266,14 +318,17 @@ class ReposUrl {
       _$ReposUrlFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReposUrlToJson(this);
+
+  @override
+  List<Object?> get props => [github, bitbucket];
 }
 
 @JsonSerializable()
-class Image {
+class Image extends Equatable {
   final String? thumb;
   final String? small;
   final String? large;
-  Image({
+  const Image({
     required this.thumb,
     required this.small,
     required this.large,
@@ -281,174 +336,220 @@ class Image {
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
 
   Map<String, dynamic> toJson() => _$ImageToJson(this);
+
+  @override
+  List<Object?> get props => [
+        thumb,
+        small,
+        large,
+      ];
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-class MarketData {
+class MarketData extends Equatable {
   final CurrentPrice currentPrice;
   @JsonKey(name: 'sparkline_7d')
-  final Sparkline7d sparkline7d;
+  final SparkLine7d sparkLine7d;
   final Ath ath;
   final AthChangePercentage athChangePercentage;
-  final AthDate athDate;
-  final Atl atl;
-  final AtlChangePercentage atlChangePercentage;
-  final AtlDate atlDate;
+  // final AthDate athDate;
+  // final Atl atl;
+  // final AtlChangePercentage atlChangePercentage;
+
   final MarketCap marketCap;
   final int marketCapRank;
   final FullyDilutedValuation fullyDilutedValuation;
-  final double marketCapFdvRatio;
+  // final double marketCapFdvRatio;
   final TotalVolume totalVolume;
-  @JsonKey(name: 'high_24h')
-  final High24h high24h;
-  @JsonKey(name: 'low_24h')
-  final Low24h low24h;
+  // @JsonKey(name: 'high_24h')
+  // final High24h high24h;
+  // @JsonKey(name: 'low_24h')
+  // final Low24h low24h;
   @JsonKey(name: 'price_change_24h')
   final double priceChange24h;
-  @JsonKey(name: 'price_change_percentage_24h')
-  final double priceChangePercentage24h;
-  @JsonKey(name: 'price_change_percentage_7d')
-  final double priceChangePercentage7d;
-  @JsonKey(name: 'price_change_percentage_14d')
-  final double priceChangePercentage14d;
-  @JsonKey(name: 'price_change_percentage_30d')
-  final double priceChangePercentage30d;
-  @JsonKey(name: 'price_change_percentage_60d')
-  final double priceChangePercentage60d;
-  @JsonKey(name: 'price_change_percentage_200d')
-  final double priceChangePercentage200d;
-  @JsonKey(name: 'price_change_percentage_1y')
-  final double priceChangePercentage1y;
-  @JsonKey(name: 'market_cap_change_24h')
-  final double marketCapChange24h;
-  @JsonKey(name: 'market_cap_change_percentage_24h')
-  final double marketCapChangePercentage24h;
-  @JsonKey(name: 'price_change_24h_in_currency')
-  final PriceChange24hInCurrency priceChange24hInCurrency;
-  @JsonKey(name: 'price_change_percentage_1h_in_currency')
-  final PriceChangePercentage1hInCurrency priceChangePercentage1hInCurrency;
-  @JsonKey(name: 'price_change_percentage_24h_in_currency')
-  final PriceChangePercentage24hInCurrency priceChangePercentage24hInCurrency;
-  @JsonKey(name: 'price_change_percentage_7d_in_currency')
-  final PriceChangePercentage7dInCurrency priceChangePercentage7dInCurrency;
-  @JsonKey(name: 'price_change_percentage_14d_in_currency')
-  final PriceChangePercentage14dInCurrency priceChangePercentage14dInCurrency;
-  @JsonKey(name: 'price_change_percentage_30d_in_currency')
-  final PriceChangePercentage30dInCurrency priceChangePercentage30dInCurrency;
-  @JsonKey(name: 'price_change_percentage_60d_in_currency')
-  final PriceChangePercentage60dInCurrency priceChangePercentage60dInCurrency;
+  // @JsonKey(name: 'price_change_percentage_24h')
+  // final double priceChangePercentage24h;
+  // @JsonKey(name: 'price_change_percentage_7d')
+  // final double priceChangePercentage7d;
+  // @JsonKey(name: 'price_change_percentage_14d')
+  // final double priceChangePercentage14d;
+  // @JsonKey(name: 'price_change_percentage_30d')
+  // final double priceChangePercentage30d;
+  // @JsonKey(name: 'price_change_percentage_60d')
+  // final double priceChangePercentage60d;
+  // @JsonKey(name: 'price_change_percentage_200d')
+  // final double priceChangePercentage200d;
+  // @JsonKey(name: 'price_change_percentage_1y')
+  // final double priceChangePercentage1y;
+  // @JsonKey(name: 'market_cap_change_24h')
+  // final double marketCapChange24h;
+  // @JsonKey(name: 'market_cap_change_percentage_24h')
+  // final double marketCapChangePercentage24h;
+  // @JsonKey(name: 'price_change_24h_in_currency')
+  // final PriceChange24hInCurrency priceChange24hInCurrency;
+  // @JsonKey(name: 'price_change_percentage_1h_in_currency')
+  // final PriceChangePercentage1hInCurrency priceChangePercentage1hInCurrency;
+  // @JsonKey(name: 'price_change_percentage_24h_in_currency')
+  // final PriceChangePercentage24hInCurrency priceChangePercentage24hInCurrency;
+  // @JsonKey(name: 'price_change_percentage_7d_in_currency')
+  // final PriceChangePercentage7dInCurrency priceChangePercentage7dInCurrency;
+  // @JsonKey(name: 'price_change_percentage_14d_in_currency')
+  // final PriceChangePercentage14dInCurrency priceChangePercentage14dInCurrency;
+  // @JsonKey(name: 'price_change_percentage_30d_in_currency')
+  // final PriceChangePercentage30dInCurrency priceChangePercentage30dInCurrency;
+  // @JsonKey(name: 'price_change_percentage_60d_in_currency')
+  // final PriceChangePercentage60dInCurrency priceChangePercentage60dInCurrency;
 
-  final int totalSupply;
-  final int maxSupply;
-  final int circulatingSupply;
-  final String lastUpdated;
-  MarketData(
+  // final int totalSupply;
+  // final int maxSupply;
+  // final int circulatingSupply;
+  // final String lastUpdated;
+  const MarketData(
       {required this.currentPrice,
       required this.ath,
       required this.athChangePercentage,
-      required this.athDate,
-      required this.atl,
-      required this.atlChangePercentage,
-      required this.atlDate,
+      // required this.athDate,
+      // required this.atl,
+      // required this.atlChangePercentage,
+      // required this.atlDate,
       required this.marketCap,
       required this.marketCapRank,
       required this.fullyDilutedValuation,
-      required this.marketCapFdvRatio,
+      // required this.marketCapFdvRatio,
       required this.totalVolume,
-      required this.high24h,
-      required this.low24h,
+      // required this.high24h,
+      // required this.low24h,
       required this.priceChange24h,
-      required this.priceChangePercentage24h,
-      required this.priceChangePercentage7d,
-      required this.priceChangePercentage14d,
-      required this.priceChangePercentage30d,
-      required this.priceChangePercentage60d,
-      required this.priceChangePercentage200d,
-      required this.priceChangePercentage1y,
-      required this.marketCapChange24h,
-      required this.marketCapChangePercentage24h,
-      required this.priceChange24hInCurrency,
-      required this.priceChangePercentage1hInCurrency,
-      required this.priceChangePercentage24hInCurrency,
-      required this.priceChangePercentage7dInCurrency,
-      required this.priceChangePercentage14dInCurrency,
-      required this.priceChangePercentage30dInCurrency,
-      required this.priceChangePercentage60dInCurrency,
-      required this.totalSupply,
-      required this.maxSupply,
-      required this.circulatingSupply,
-      required this.lastUpdated,
-      required this.sparkline7d});
+      // required this.priceChangePercentage24h,
+      // required this.priceChangePercentage7d,
+      // required this.priceChangePercentage14d,
+      // required this.priceChangePercentage30d,
+      // required this.priceChangePercentage60d,
+      // required this.priceChangePercentage200d,
+      // required this.priceChangePercentage1y,
+      // required this.marketCapChange24h,
+      // required this.marketCapChangePercentage24h,
+      // required this.priceChange24hInCurrency,
+      // required this.priceChangePercentage1hInCurrency,
+      // required this.priceChangePercentage24hInCurrency,
+      // required this.priceChangePercentage7dInCurrency,
+      // required this.priceChangePercentage14dInCurrency,
+      // required this.priceChangePercentage30dInCurrency,
+      // required this.priceChangePercentage60dInCurrency,
+      // required this.totalSupply,
+      // required this.maxSupply,
+      // required this.circulatingSupply,
+      // required this.lastUpdated,
+      required this.sparkLine7d});
   factory MarketData.fromJson(Map<String, dynamic> json) =>
       _$MarketDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$MarketDataToJson(this);
+
+  @override
+  List<Object?> get props => [
+        currentPrice,
+        ath,
+        athChangePercentage,
+        //athDate,
+        // atl,
+        // atlChangePercentage,
+        marketCap,
+        marketCapRank,
+        fullyDilutedValuation,
+        // marketCapFdvRatio,
+        totalVolume,
+        // high24h,
+        // low24h,
+        priceChange24h,
+        // priceChangePercentage24h,
+        // priceChangePercentage7d,
+        // priceChangePercentage14d,
+        // priceChangePercentage30d,
+        // priceChangePercentage60d,
+        // priceChangePercentage200d,
+        // priceChangePercentage1y,
+        // marketCapChange24h,
+        // marketCapChangePercentage24h,
+        // priceChange24hInCurrency,
+        // priceChangePercentage1hInCurrency,
+        // priceChangePercentage24hInCurrency,
+        // priceChangePercentage7dInCurrency,
+        // priceChangePercentage14dInCurrency,
+        // priceChangePercentage30dInCurrency,
+        // priceChangePercentage60dInCurrency,
+        // totalSupply,
+        // maxSupply,
+        // circulatingSupply,
+        // lastUpdated,
+        sparkLine7d
+      ];
 }
 
 @JsonSerializable()
-class CurrentPrice {
-  final int aed;
-  final int ars;
-  final int aud;
-  final double bch;
-  final int bdt;
-  final double bhd;
-  final int bmd;
-  final double bnb;
-  final int brl;
-  final int btc;
-  final int cad;
-  final int chf;
-  final int clp;
-  final int cny;
-  final int czk;
-  final int dkk;
-  final int dot;
-  final int eos;
-  final double eth;
-  final int eur;
-  final int gbp;
-  final int hkd;
-  final int huf;
-  final int idr;
-  final int ils;
-  final int inr;
-  final int jpy;
-  final int krw;
-  final double kwd;
-  final int lkr;
-  final double ltc;
-  final int mmk;
-  final int mxn;
-  final int myr;
-  final int ngn;
-  final int nok;
-  final int nzd;
-  final int php;
-  final int pkr;
-  final int pln;
-  final int rub;
-  final int sar;
-  final int sek;
-  final int sgd;
-  final int thb;
-  final int tTry;
-  final int twd;
-  final int uah;
-  final int usd;
-  final double vef;
-  final int vnd;
-  final double xag;
-  final double xau;
-  final int xdr;
-  final int xlm;
-  final int xrp;
-  final double yfi;
-  final int zar;
-  final int bits;
-  final int link;
-  final int sats;
-  CurrentPrice({
+class CurrentPrice extends Equatable {
+  final double? aed;
+  final double? ars;
+  final double? aud;
+  final double? bch;
+  final double? bdt;
+  final double? bhd;
+  final double? bmd;
+  final double? bnb;
+  final double? brl;
+  final double? btc;
+  final double? cad;
+  final double? chf;
+  final double? clp;
+  final double? cny;
+  final double? czk;
+  final double? dkk;
+  final double? dot;
+  final double? eos;
+  final double? eth;
+  final double? eur;
+  final double? gbp;
+  final double? hkd;
+  final double? huf;
+  final double? idr;
+  final double? ils;
+  final double? inr;
+  final double? jpy;
+  final double? krw;
+  final double? kwd;
+  final double? lkr;
+  final double? ltc;
+  final double? mmk;
+  final double? mxn;
+  final double? myr;
+  final double? ngn;
+  final double? nok;
+  final double? nzd;
+  final double? php;
+  final double? pkr;
+  final double? pln;
+  final double? rub;
+  final double? sar;
+  final double? sek;
+  final double? sgd;
+  final double? thb;
+  final double? tTry;
+  final double? twd;
+  final double? uah;
+  final double? usd;
+  final double? vef;
+  final double? vnd;
+  final double? xag;
+  final double? xau;
+  final double? xdr;
+  final double? xlm;
+  final double? xrp;
+  final double? yfi;
+  final double? zar;
+  final double? bits;
+  final double? link;
+  final double? sats;
+  const CurrentPrice({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -515,72 +616,137 @@ class CurrentPrice {
       _$CurrentPriceFromJson(json);
 
   Map<String, dynamic> toJson() => _$CurrentPriceToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class Ath {
-  final int aed;
-  final int ars;
-  final int aud;
-  final double bch;
-  final int bdt;
-  final int bhd;
-  final int bmd;
-  final int bnb;
-  final int brl;
-  final double btc;
-  final int cad;
-  final int chf;
-  final int clp;
-  final int cny;
-  final int czk;
-  final int dkk;
-  final int dot;
-  final int eos;
-  final double eth;
-  final int eur;
-  final int gbp;
-  final int hkd;
-  final int huf;
-  final int idr;
-  final int ils;
-  final int inr;
-  final int jpy;
-  final int krw;
-  final int kwd;
-  final int lkr;
-  final double ltc;
-  final int mmk;
-  final int mxn;
-  final int myr;
-  final int ngn;
-  final int nok;
-  final int nzd;
-  final int php;
-  final int pkr;
-  final int pln;
-  final int rub;
-  final int sar;
-  final int sek;
-  final int sgd;
-  final int thb;
-  final int tTry;
-  final int twd;
-  final int uah;
-  final int usd;
-  final int vef;
-  final int vnd;
-  final double xag;
-  final double xau;
-  final int xdr;
-  final int xlm;
-  final int xrp;
-  final double yfi;
-  final int zar;
-  final int bits;
-  final int link;
-  final int sats;
-  Ath({
+class Ath extends Equatable {
+  final double? aed;
+  final double? ars;
+  final double? aud;
+  final double? bch;
+  final double? bdt;
+  final double? bhd;
+  final double? bmd;
+  final double? bnb;
+  final double? brl;
+  final double? btc;
+  final double? cad;
+  final double? chf;
+  final double? clp;
+  final double? cny;
+  final double? czk;
+  final double? dkk;
+  final double? dot;
+  final double? eos;
+  final double? eth;
+  final double? eur;
+  final double? gbp;
+  final double? hkd;
+  final double? huf;
+  final double? idr;
+  final double? ils;
+  final double? inr;
+  final double? jpy;
+  final double? krw;
+  final double? kwd;
+  final double? lkr;
+  final double? ltc;
+  final double? mmk;
+  final double? mxn;
+  final double? myr;
+  final double? ngn;
+  final double? nok;
+  final double? nzd;
+  final double? php;
+  final double? pkr;
+  final double? pln;
+  final double? rub;
+  final double? sar;
+  final double? sek;
+  final double? sgd;
+  final double? thb;
+  final double? tTry;
+  final double? twd;
+  final double? uah;
+  final double? usd;
+  final double? vef;
+  final double? vnd;
+  final double? xag;
+  final double? xau;
+  final double? xdr;
+  final double? xlm;
+  final double? xrp;
+  final double? yfi;
+  final double? zar;
+  final double? bits;
+  final double? link;
+  final double? sats;
+  const Ath({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -646,72 +812,137 @@ class Ath {
   factory Ath.fromJson(Map<String, dynamic> json) => _$AthFromJson(json);
 
   Map<String, dynamic> toJson() => _$AthToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class AthChangePercentage {
-  final double aed;
-  final double ars;
-  final double aud;
-  final double bch;
-  final double bdt;
-  final double bhd;
-  final double bmd;
-  final double bnb;
-  final double brl;
-  final double btc;
-  final double cad;
-  final double chf;
-  final double clp;
-  final double cny;
-  final double czk;
-  final double dkk;
-  final double dot;
-  final double eos;
-  final double eth;
-  final double eur;
-  final double gbp;
-  final double hkd;
-  final double huf;
-  final double idr;
-  final double ils;
-  final double inr;
-  final double jpy;
-  final double krw;
-  final double kwd;
-  final double lkr;
-  final double ltc;
-  final double mmk;
-  final double mxn;
-  final double myr;
-  final double ngn;
-  final double nok;
-  final double nzd;
-  final double php;
-  final double pkr;
-  final double pln;
-  final double rub;
-  final double sar;
-  final double sek;
-  final double sgd;
-  final double thb;
-  final double tTry;
-  final double twd;
-  final double uah;
-  final double usd;
-  final double vef;
-  final double vnd;
-  final double xag;
-  final double xau;
-  final double xdr;
-  final double xlm;
-  final double xrp;
-  final double yfi;
-  final double zar;
-  final double bits;
-  final double link;
-  final double sats;
-  AthChangePercentage({
+class AthChangePercentage extends Equatable {
+  final double? aed;
+  final double? ars;
+  final double? aud;
+  final double? bch;
+  final double? bdt;
+  final double? bhd;
+  final double? bmd;
+  final double? bnb;
+  final double? brl;
+  final double? btc;
+  final double? cad;
+  final double? chf;
+  final double? clp;
+  final double? cny;
+  final double? czk;
+  final double? dkk;
+  final double? dot;
+  final double? eos;
+  final double? eth;
+  final double? eur;
+  final double? gbp;
+  final double? hkd;
+  final double? huf;
+  final double? idr;
+  final double? ils;
+  final double? inr;
+  final double? jpy;
+  final double? krw;
+  final double? kwd;
+  final double? lkr;
+  final double? ltc;
+  final double? mmk;
+  final double? mxn;
+  final double? myr;
+  final double? ngn;
+  final double? nok;
+  final double? nzd;
+  final double? php;
+  final double? pkr;
+  final double? pln;
+  final double? rub;
+  final double? sar;
+  final double? sek;
+  final double? sgd;
+  final double? thb;
+  final double? tTry;
+  final double? twd;
+  final double? uah;
+  final double? usd;
+  final double? vef;
+  final double? vnd;
+  final double? xag;
+  final double? xau;
+  final double? xdr;
+  final double? xlm;
+  final double? xrp;
+  final double? yfi;
+  final double? zar;
+  final double? bits;
+  final double? link;
+  final double? sats;
+  const AthChangePercentage({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -778,10 +1009,75 @@ class AthChangePercentage {
       _$AthChangePercentageFromJson(json);
 
   Map<String, dynamic> toJson() => _$AthChangePercentageToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class AthDate {
+class AthDate extends Equatable {
   final String aed;
   final String ars;
   final String aud;
@@ -843,7 +1139,7 @@ class AthDate {
   final String bits;
   final String link;
   final String sats;
-  AthDate({
+  const AthDate({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -910,72 +1206,137 @@ class AthDate {
       _$AthDateFromJson(json);
 
   Map<String, dynamic> toJson() => _$AthDateToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class Atl {
-  final double aed;
-  final double ars;
-  final double aud;
-  final double bch;
-  final double bdt;
-  final double bhd;
-  final double bmd;
-  final double bnb;
-  final double brl;
-  final double btc;
-  final double cad;
-  final double chf;
-  final int clp;
-  final double cny;
-  final double czk;
-  final double dkk;
-  final double dot;
-  final double eos;
-  final double eth;
-  final double eur;
-  final double gbp;
-  final double hkd;
-  final int huf;
-  final int idr;
-  final double ils;
-  final double inr;
-  final double jpy;
-  final int krw;
-  final double kwd;
-  final int lkr;
-  final double ltc;
-  final int mmk;
-  final double mxn;
-  final double myr;
-  final double ngn;
-  final double nok;
-  final double nzd;
-  final double php;
-  final double pkr;
-  final double pln;
-  final double rub;
-  final double sar;
-  final double sek;
-  final double sgd;
-  final double thb;
-  final double tTry;
-  final double twd;
-  final double uah;
-  final double usd;
-  final double vef;
-  final int vnd;
-  final double xag;
-  final double xau;
-  final double xdr;
-  final int xlm;
-  final int xrp;
-  final double yfi;
-  final double zar;
-  final int bits;
-  final double link;
-  final int sats;
-  Atl({
+class Atl extends Equatable {
+  final double? aed;
+  final double? ars;
+  final double? aud;
+  final double? bch;
+  final double? bdt;
+  final double? bhd;
+  final double? bmd;
+  final double? bnb;
+  final double? brl;
+  final double? btc;
+  final double? cad;
+  final double? chf;
+  final double? clp;
+  final double? cny;
+  final double? czk;
+  final double? dkk;
+  final double? dot;
+  final double? eos;
+  final double? eth;
+  final double? eur;
+  final double? gbp;
+  final double? hkd;
+  final double? huf;
+  final double? idr;
+  final double? ils;
+  final double? inr;
+  final double? jpy;
+  final double? krw;
+  final double? kwd;
+  final double? lkr;
+  final double? ltc;
+  final double? mmk;
+  final double? mxn;
+  final double? myr;
+  final double? ngn;
+  final double? nok;
+  final double? nzd;
+  final double? php;
+  final double? pkr;
+  final double? pln;
+  final double? rub;
+  final double? sar;
+  final double? sek;
+  final double? sgd;
+  final double? thb;
+  final double? tTry;
+  final double? twd;
+  final double? uah;
+  final double? usd;
+  final double? vef;
+  final double? vnd;
+  final double? xag;
+  final double? xau;
+  final double? xdr;
+  final double? xlm;
+  final double? xrp;
+  final double? yfi;
+  final double? zar;
+  final double? bits;
+  final double? link;
+  final double? sats;
+  const Atl({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -1041,72 +1402,137 @@ class Atl {
   factory Atl.fromJson(Map<String, dynamic> json) => _$AtlFromJson(json);
 
   Map<String, dynamic> toJson() => _$AtlToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class AtlChangePercentage {
-  final double aed;
-  final double ars;
-  final double aud;
-  final double bch;
-  final double bdt;
-  final double bhd;
-  final double bmd;
-  final double bnb;
-  final double brl;
-  final double btc;
-  final double cad;
-  final double chf;
-  final double clp;
-  final double cny;
-  final double czk;
-  final double dkk;
-  final double dot;
-  final double eos;
-  final double eth;
-  final double eur;
-  final double gbp;
-  final double hkd;
-  final double huf;
-  final double idr;
-  final double ils;
-  final double inr;
-  final double jpy;
-  final double krw;
-  final double kwd;
-  final double lkr;
-  final double ltc;
-  final double mmk;
-  final double mxn;
-  final double myr;
-  final double ngn;
-  final double nok;
-  final double nzd;
-  final double php;
-  final double pkr;
-  final double pln;
-  final double rub;
-  final double sar;
-  final double sek;
-  final double sgd;
-  final double thb;
-  final double tTry;
-  final double twd;
-  final double uah;
-  final double usd;
-  final double vef;
-  final double vnd;
-  final double xag;
-  final double xau;
-  final double xdr;
-  final double xlm;
-  final double xrp;
-  final double yfi;
-  final double zar;
-  final double bits;
-  final double link;
-  final double sats;
-  AtlChangePercentage({
+class AtlChangePercentage extends Equatable {
+  final double? aed;
+  final double? ars;
+  final double? aud;
+  final double? bch;
+  final double? bdt;
+  final double? bhd;
+  final double? bmd;
+  final double? bnb;
+  final double? brl;
+  final double? btc;
+  final double? cad;
+  final double? chf;
+  final double? clp;
+  final double? cny;
+  final double? czk;
+  final double? dkk;
+  final double? dot;
+  final double? eos;
+  final double? eth;
+  final double? eur;
+  final double? gbp;
+  final double? hkd;
+  final double? huf;
+  final double? idr;
+  final double? ils;
+  final double? inr;
+  final double? jpy;
+  final double? krw;
+  final double? kwd;
+  final double? lkr;
+  final double? ltc;
+  final double? mmk;
+  final double? mxn;
+  final double? myr;
+  final double? ngn;
+  final double? nok;
+  final double? nzd;
+  final double? php;
+  final double? pkr;
+  final double? pln;
+  final double? rub;
+  final double? sar;
+  final double? sek;
+  final double? sgd;
+  final double? thb;
+  final double? tTry;
+  final double? twd;
+  final double? uah;
+  final double? usd;
+  final double? vef;
+  final double? vnd;
+  final double? xag;
+  final double? xau;
+  final double? xdr;
+  final double? xlm;
+  final double? xrp;
+  final double? yfi;
+  final double? zar;
+  final double? bits;
+  final double? link;
+  final double? sats;
+  const AtlChangePercentage({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -1173,10 +1599,75 @@ class AtlChangePercentage {
       _$AtlChangePercentageFromJson(json);
 
   Map<String, dynamic> toJson() => _$AtlChangePercentageToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class AtlDate {
+class AtlDate extends Equatable {
   final String aed;
   final String ars;
   final String aud;
@@ -1238,7 +1729,7 @@ class AtlDate {
   final String bits;
   final String link;
   final String sats;
-  AtlDate({
+  const AtlDate({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -1305,72 +1796,137 @@ class AtlDate {
       _$AtlDateFromJson(json);
 
   Map<String, dynamic> toJson() => _$AtlDateToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class MarketCap {
-  final int aed;
-  final int ars;
-  final int aud;
-  final int bch;
-  final int bdt;
-  final int bhd;
-  final int bmd;
-  final int bnb;
-  final int brl;
-  final int btc;
-  final int cad;
-  final int chf;
-  final int clp;
-  final int cny;
-  final int czk;
-  final int dkk;
-  final int dot;
-  final int eos;
-  final int eth;
-  final int eur;
-  final int gbp;
-  final int hkd;
-  final int huf;
-  final int idr;
-  final int ils;
-  final int inr;
-  final int jpy;
-  final int krw;
-  final int kwd;
-  final int lkr;
-  final int ltc;
-  final int mmk;
-  final int mxn;
-  final int myr;
-  final int ngn;
-  final int nok;
-  final int nzd;
-  final int php;
-  final int pkr;
-  final int pln;
-  final int rub;
-  final int sar;
-  final int sek;
-  final int sgd;
-  final int thb;
-  final int tTry;
-  final int twd;
-  final int uah;
-  final int usd;
-  final int vef;
-  final int vnd;
-  final int xag;
-  final int xau;
-  final int xdr;
-  final int xlm;
-  final int xrp;
-  final int yfi;
-  final int zar;
-  final int bits;
-  final int link;
-  final int sats;
-  MarketCap({
+class MarketCap extends Equatable {
+  final int? aed;
+  final int? ars;
+  final int? aud;
+  final int? bch;
+  final int? bdt;
+  final int? bhd;
+  final int? bmd;
+  final int? bnb;
+  final int? brl;
+  final int? btc;
+  final int? cad;
+  final int? chf;
+  final int? clp;
+  final int? cny;
+  final int? czk;
+  final int? dkk;
+  final int? dot;
+  final int? eos;
+  final int? eth;
+  final int? eur;
+  final int? gbp;
+  final int? hkd;
+  final int? huf;
+  final int? idr;
+  final int? ils;
+  final int? inr;
+  final int? jpy;
+  final int? krw;
+  final int? kwd;
+  final int? lkr;
+  final int? ltc;
+  final int? mmk;
+  final int? mxn;
+  final int? myr;
+  final int? ngn;
+  final int? nok;
+  final int? nzd;
+  final int? php;
+  final int? pkr;
+  final int? pln;
+  final int? rub;
+  final int? sar;
+  final int? sek;
+  final int? sgd;
+  final int? thb;
+  final int? tTry;
+  final int? twd;
+  final int? uah;
+  final int? usd;
+  final int? vef;
+  final int? vnd;
+  final int? xag;
+  final int? xau;
+  final int? xdr;
+  final int? xlm;
+  final int? xrp;
+  final int? yfi;
+  final int? zar;
+  final int? bits;
+  final int? link;
+  final int? sats;
+  const MarketCap({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -1437,72 +1993,137 @@ class MarketCap {
       _$MarketCapFromJson(json);
 
   Map<String, dynamic> toJson() => _$MarketCapToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class FullyDilutedValuation {
-  final int aed;
-  final int ars;
-  final int aud;
-  final int bch;
-  final int bdt;
-  final int bhd;
-  final int bmd;
-  final int bnb;
-  final int brl;
-  final int btc;
-  final int cad;
-  final int chf;
-  final int clp;
-  final int cny;
-  final int czk;
-  final int dkk;
-  final int dot;
-  final int eos;
-  final int eth;
-  final int eur;
-  final int gbp;
-  final int hkd;
-  final int huf;
-  final int idr;
-  final int ils;
-  final int inr;
-  final int jpy;
-  final int krw;
-  final int kwd;
-  final int lkr;
-  final int ltc;
-  final int mmk;
-  final int mxn;
-  final int myr;
-  final int ngn;
-  final int nok;
-  final int nzd;
-  final int php;
-  final int pkr;
-  final int pln;
-  final int rub;
-  final int sar;
-  final int sek;
-  final int sgd;
-  final int thb;
-  final int tTry;
-  final int twd;
-  final int uah;
-  final int usd;
-  final int vef;
-  final int vnd;
-  final int xag;
-  final int xau;
-  final int xdr;
-  final int xlm;
-  final int xrp;
-  final int yfi;
-  final int zar;
-  final int bits;
-  final int link;
-  final int sats;
-  FullyDilutedValuation({
+class FullyDilutedValuation extends Equatable {
+  final int? aed;
+  final int? ars;
+  final int? aud;
+  final int? bch;
+  final int? bdt;
+  final int? bhd;
+  final int? bmd;
+  final int? bnb;
+  final int? brl;
+  final int? btc;
+  final int? cad;
+  final int? chf;
+  final int? clp;
+  final int? cny;
+  final int? czk;
+  final int? dkk;
+  final int? dot;
+  final int? eos;
+  final int? eth;
+  final int? eur;
+  final int? gbp;
+  final int? hkd;
+  final int? huf;
+  final int? idr;
+  final int? ils;
+  final int? inr;
+  final int? jpy;
+  final int? krw;
+  final int? kwd;
+  final int? lkr;
+  final int? ltc;
+  final int? mmk;
+  final int? mxn;
+  final int? myr;
+  final int? ngn;
+  final int? nok;
+  final int? nzd;
+  final int? php;
+  final int? pkr;
+  final int? pln;
+  final int? rub;
+  final int? sar;
+  final int? sek;
+  final int? sgd;
+  final int? thb;
+  final int? tTry;
+  final int? twd;
+  final int? uah;
+  final int? usd;
+  final int? vef;
+  final int? vnd;
+  final int? xag;
+  final int? xau;
+  final int? xdr;
+  final int? xlm;
+  final int? xrp;
+  final int? yfi;
+  final int? zar;
+  final int? bits;
+  final int? link;
+  final int? sats;
+  const FullyDilutedValuation({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -1569,72 +2190,137 @@ class FullyDilutedValuation {
       _$FullyDilutedValuationFromJson(json);
 
   Map<String, dynamic> toJson() => _$FullyDilutedValuationToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class TotalVolume {
-  final int aed;
-  final int ars;
-  final int aud;
-  final int bch;
-  final int bdt;
-  final int bhd;
-  final int bmd;
-  final int bnb;
-  final int brl;
-  final int btc;
-  final int cad;
-  final int chf;
-  final int clp;
-  final int cny;
-  final int czk;
-  final int dkk;
-  final int dot;
-  final int eos;
-  final int eth;
-  final int eur;
-  final int gbp;
-  final int hkd;
-  final int huf;
-  final int idr;
-  final int ils;
-  final int inr;
-  final int jpy;
-  final int krw;
-  final int kwd;
-  final int lkr;
-  final int ltc;
-  final int mmk;
-  final int mxn;
-  final int myr;
-  final int ngn;
-  final int nok;
-  final int nzd;
-  final int php;
-  final int pkr;
-  final int pln;
-  final int rub;
-  final int sar;
-  final int sek;
-  final int sgd;
-  final int thb;
-  final int tTry;
-  final int twd;
-  final int uah;
-  final int usd;
-  final int vef;
-  final int vnd;
-  final int xag;
-  final int xau;
-  final int xdr;
-  final int xlm;
-  final int xrp;
-  final int yfi;
-  final int zar;
-  final int bits;
-  final int link;
-  final int sats;
-  TotalVolume({
+class TotalVolume extends Equatable {
+  final int? aed;
+  final int? ars;
+  final int? aud;
+  final int? bch;
+  final int? bdt;
+  final int? bhd;
+  final int? bmd;
+  final int? bnb;
+  final int? brl;
+  final int? btc;
+  final int? cad;
+  final int? chf;
+  final int? clp;
+  final int? cny;
+  final int? czk;
+  final int? dkk;
+  final int? dot;
+  final int? eos;
+  final int? eth;
+  final int? eur;
+  final int? gbp;
+  final int? hkd;
+  final int? huf;
+  final int? idr;
+  final int? ils;
+  final int? inr;
+  final int? jpy;
+  final int? krw;
+  final int? kwd;
+  final int? lkr;
+  final int? ltc;
+  final int? mmk;
+  final int? mxn;
+  final int? myr;
+  final int? ngn;
+  final int? nok;
+  final int? nzd;
+  final int? php;
+  final int? pkr;
+  final int? pln;
+  final int? rub;
+  final int? sar;
+  final int? sek;
+  final int? sgd;
+  final int? thb;
+  final int? tTry;
+  final int? twd;
+  final int? uah;
+  final int? usd;
+  final int? vef;
+  final int? vnd;
+  final int? xag;
+  final int? xau;
+  final int? xdr;
+  final int? xlm;
+  final int? xrp;
+  final int? yfi;
+  final int? zar;
+  final int? bits;
+  final int? link;
+  final int? sats;
+  const TotalVolume({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -1702,72 +2388,137 @@ class TotalVolume {
       _$TotalVolumeFromJson(json);
 
   Map<String, dynamic> toJson() => _$TotalVolumeToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class High24h {
-  final int aed;
-  final int ars;
-  final int aud;
+class High24h extends Equatable {
+  final double aed;
+  final double ars;
+  final double aud;
   final double bch;
-  final int bdt;
+  final double bdt;
   final double bhd;
-  final int bmd;
+  final double bmd;
   final double bnb;
-  final int brl;
-  final int btc;
-  final int cad;
-  final int chf;
-  final int clp;
-  final int cny;
-  final int czk;
-  final int dkk;
-  final int dot;
-  final int eos;
+  final double brl;
+  final double btc;
+  final double cad;
+  final double chf;
+  final double clp;
+  final double cny;
+  final double czk;
+  final double dkk;
+  final double dot;
+  final double eos;
   final double eth;
-  final int eur;
-  final int gbp;
-  final int hkd;
-  final int huf;
-  final int idr;
-  final int ils;
-  final int inr;
-  final int jpy;
-  final int krw;
+  final double eur;
+  final double gbp;
+  final double hkd;
+  final double huf;
+  final double idr;
+  final double ils;
+  final double inr;
+  final double jpy;
+  final double krw;
   final double kwd;
-  final int lkr;
+  final double lkr;
   final double ltc;
-  final int mmk;
-  final int mxn;
-  final int myr;
-  final int ngn;
-  final int nok;
-  final int nzd;
-  final int php;
-  final int pkr;
-  final int pln;
-  final int rub;
-  final int sar;
-  final int sek;
-  final int sgd;
-  final int thb;
-  final int tTry;
-  final int twd;
-  final int uah;
-  final int usd;
+  final double mmk;
+  final double mxn;
+  final double myr;
+  final double ngn;
+  final double nok;
+  final double nzd;
+  final double php;
+  final double pkr;
+  final double pln;
+  final double rub;
+  final double sar;
+  final double sek;
+  final double sgd;
+  final double thb;
+  final double tTry;
+  final double twd;
+  final double uah;
+  final double usd;
   final double vef;
-  final int vnd;
+  final double vnd;
   final double xag;
   final double xau;
-  final int xdr;
-  final int xlm;
-  final int xrp;
+  final double xdr;
+  final double xlm;
+  final double xrp;
   final double yfi;
-  final int zar;
-  final int bits;
-  final int link;
-  final int sats;
-  High24h({
+  final double zar;
+  final double bits;
+  final double link;
+  final double sats;
+  const High24h({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -1834,72 +2585,137 @@ class High24h {
       _$High24hFromJson(json);
 
   Map<String, dynamic> toJson() => _$High24hToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class Low24h {
-  final int aed;
-  final int ars;
-  final int aud;
+class Low24h extends Equatable {
+  final double aed;
+  final double ars;
+  final double aud;
   final double bch;
-  final int bdt;
+  final double bdt;
   final double bhd;
-  final int bmd;
+  final double bmd;
   final double bnb;
-  final int brl;
-  final int btc;
-  final int cad;
-  final int chf;
-  final int clp;
-  final int cny;
-  final int czk;
-  final int dkk;
-  final int dot;
-  final int eos;
+  final double brl;
+  final double btc;
+  final double cad;
+  final double chf;
+  final double clp;
+  final double cny;
+  final double czk;
+  final double dkk;
+  final double dot;
+  final double eos;
   final double eth;
-  final int eur;
-  final int gbp;
-  final int hkd;
-  final int huf;
-  final int idr;
-  final int ils;
-  final int inr;
-  final int jpy;
-  final int krw;
+  final double eur;
+  final double gbp;
+  final double hkd;
+  final double huf;
+  final double idr;
+  final double ils;
+  final double inr;
+  final double jpy;
+  final double krw;
   final double kwd;
-  final int lkr;
+  final double lkr;
   final double ltc;
-  final int mmk;
-  final int mxn;
-  final int myr;
-  final int ngn;
-  final int nok;
-  final int nzd;
-  final int php;
-  final int pkr;
-  final int pln;
-  final int rub;
-  final int sar;
-  final int sek;
-  final int sgd;
-  final int thb;
-  final int tTry;
-  final int twd;
-  final int uah;
-  final int usd;
+  final double mmk;
+  final double mxn;
+  final double myr;
+  final double ngn;
+  final double nok;
+  final double nzd;
+  final double php;
+  final double pkr;
+  final double pln;
+  final double rub;
+  final double sar;
+  final double sek;
+  final double sgd;
+  final double thb;
+  final double tTry;
+  final double twd;
+  final double uah;
+  final double usd;
   final double vef;
-  final int vnd;
+  final double vnd;
   final double xag;
   final double xau;
-  final int xdr;
-  final int xlm;
-  final int xrp;
+  final double xdr;
+  final double xlm;
+  final double xrp;
   final double yfi;
-  final int zar;
-  final int bits;
-  final int link;
-  final int sats;
-  Low24h({
+  final double zar;
+  final double bits;
+  final double link;
+  final double sats;
+  const Low24h({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -1965,10 +2781,75 @@ class Low24h {
   factory Low24h.fromJson(Map<String, dynamic> json) => _$Low24hFromJson(json);
 
   Map<String, dynamic> toJson() => _$Low24hToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class PriceChange24hInCurrency {
+class PriceChange24hInCurrency extends Equatable {
   final double aed;
   final double ars;
   final double aud;
@@ -1978,7 +2859,7 @@ class PriceChange24hInCurrency {
   final double bmd;
   final double bnb;
   final double brl;
-  final int btc;
+  final double btc;
   final double cad;
   final double chf;
   final double clp;
@@ -2023,14 +2904,14 @@ class PriceChange24hInCurrency {
   final double xag;
   final double xau;
   final double xdr;
-  final int xlm;
-  final int xrp;
+  final double xlm;
+  final double xrp;
   final double yfi;
   final double zar;
   final double bits;
   final double link;
   final double sats;
-  PriceChange24hInCurrency({
+  const PriceChange24hInCurrency({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -2097,10 +2978,75 @@ class PriceChange24hInCurrency {
       _$PriceChange24hInCurrencyFromJson(json);
 
   Map<String, dynamic> toJson() => _$PriceChange24hInCurrencyToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class PriceChangePercentage1hInCurrency {
+class PriceChangePercentage1hInCurrency extends Equatable {
   final double aed;
   final double ars;
   final double aud;
@@ -2110,7 +3056,7 @@ class PriceChangePercentage1hInCurrency {
   final double bmd;
   final double bnb;
   final double brl;
-  final int btc;
+  final double btc;
   final double cad;
   final double chf;
   final double clp;
@@ -2162,7 +3108,7 @@ class PriceChangePercentage1hInCurrency {
   final double bits;
   final double link;
   final double sats;
-  PriceChangePercentage1hInCurrency({
+  const PriceChangePercentage1hInCurrency({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -2232,10 +3178,75 @@ class PriceChangePercentage1hInCurrency {
 
   Map<String, dynamic> toJson() =>
       _$PriceChangePercentage1hInCurrencyToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class PriceChangePercentage24hInCurrency {
+class PriceChangePercentage24hInCurrency extends Equatable {
   final double aed;
   final double ars;
   final double aud;
@@ -2245,7 +3256,7 @@ class PriceChangePercentage24hInCurrency {
   final double bmd;
   final double bnb;
   final double brl;
-  final int btc;
+  final double btc;
   final double cad;
   final double chf;
   final double clp;
@@ -2297,7 +3308,7 @@ class PriceChangePercentage24hInCurrency {
   final double bits;
   final double link;
   final double sats;
-  PriceChangePercentage24hInCurrency({
+  const PriceChangePercentage24hInCurrency({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -2366,10 +3377,75 @@ class PriceChangePercentage24hInCurrency {
 
   Map<String, dynamic> toJson() =>
       _$PriceChangePercentage24hInCurrencyToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class PriceChangePercentage7dInCurrency {
+class PriceChangePercentage7dInCurrency extends Equatable {
   final double aed;
   final double ars;
   final double aud;
@@ -2379,7 +3455,7 @@ class PriceChangePercentage7dInCurrency {
   final double bmd;
   final double bnb;
   final double brl;
-  final int btc;
+  final double btc;
   final double cad;
   final double chf;
   final double clp;
@@ -2431,7 +3507,7 @@ class PriceChangePercentage7dInCurrency {
   final double bits;
   final double link;
   final double sats;
-  PriceChangePercentage7dInCurrency({
+  const PriceChangePercentage7dInCurrency({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -2500,10 +3576,75 @@ class PriceChangePercentage7dInCurrency {
 
   Map<String, dynamic> toJson() =>
       _$PriceChangePercentage7dInCurrencyToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class PriceChangePercentage14dInCurrency {
+class PriceChangePercentage14dInCurrency extends Equatable {
   final double aed;
   final double ars;
   final double aud;
@@ -2513,7 +3654,7 @@ class PriceChangePercentage14dInCurrency {
   final double bmd;
   final double bnb;
   final double brl;
-  final int btc;
+  final double btc;
   final double cad;
   final double chf;
   final double clp;
@@ -2565,7 +3706,7 @@ class PriceChangePercentage14dInCurrency {
   final double bits;
   final double link;
   final double sats;
-  PriceChangePercentage14dInCurrency({
+  const PriceChangePercentage14dInCurrency({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -2635,10 +3776,75 @@ class PriceChangePercentage14dInCurrency {
 
   Map<String, dynamic> toJson() =>
       _$PriceChangePercentage14dInCurrencyToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class PriceChangePercentage30dInCurrency {
+class PriceChangePercentage30dInCurrency extends Equatable {
   final double aed;
   final double ars;
   final double aud;
@@ -2648,7 +3854,7 @@ class PriceChangePercentage30dInCurrency {
   final double bmd;
   final double bnb;
   final double brl;
-  final int btc;
+  final double btc;
   final double cad;
   final double chf;
   final double clp;
@@ -2700,7 +3906,7 @@ class PriceChangePercentage30dInCurrency {
   final double bits;
   final double link;
   final double sats;
-  PriceChangePercentage30dInCurrency({
+  const PriceChangePercentage30dInCurrency({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -2769,10 +3975,75 @@ class PriceChangePercentage30dInCurrency {
 
   Map<String, dynamic> toJson() =>
       _$PriceChangePercentage30dInCurrencyToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class PriceChangePercentage60dInCurrency {
+class PriceChangePercentage60dInCurrency extends Equatable {
   final double aed;
   final double ars;
   final double aud;
@@ -2782,7 +4053,7 @@ class PriceChangePercentage60dInCurrency {
   final double bmd;
   final double bnb;
   final double brl;
-  final int btc;
+  final double btc;
   final double cad;
   final double chf;
   final double clp;
@@ -2834,7 +4105,7 @@ class PriceChangePercentage60dInCurrency {
   final double bits;
   final double link;
   final double sats;
-  PriceChangePercentage60dInCurrency({
+  const PriceChangePercentage60dInCurrency({
     required this.aed,
     required this.ars,
     required this.aud,
@@ -2904,17 +4175,85 @@ class PriceChangePercentage60dInCurrency {
 
   Map<String, dynamic> toJson() =>
       _$PriceChangePercentage60dInCurrencyToJson(this);
+
+  @override
+  List<Object?> get props => [
+        aed,
+        ars,
+        aud,
+        bch,
+        bdt,
+        bhd,
+        bmd,
+        bnb,
+        brl,
+        btc,
+        cad,
+        chf,
+        clp,
+        cny,
+        czk,
+        dkk,
+        dot,
+        eos,
+        eth,
+        eur,
+        gbp,
+        hkd,
+        huf,
+        idr,
+        ils,
+        inr,
+        jpy,
+        krw,
+        kwd,
+        lkr,
+        ltc,
+        mmk,
+        mxn,
+        myr,
+        ngn,
+        nok,
+        nzd,
+        php,
+        pkr,
+        pln,
+        rub,
+        sar,
+        sek,
+        sgd,
+        thb,
+        tTry,
+        twd,
+        uah,
+        usd,
+        vef,
+        vnd,
+        xag,
+        xau,
+        xdr,
+        xlm,
+        xrp,
+        yfi,
+        zar,
+        bits,
+        link,
+        sats,
+      ];
 }
 
 @JsonSerializable()
-class Sparkline7d {
+class SparkLine7d extends Equatable {
   final List<double> price;
-  Sparkline7d({
+  const SparkLine7d({
     required this.price,
   });
 
-  factory Sparkline7d.fromJson(Map<String, dynamic> json) =>
-      _$Sparkline7dFromJson(json);
+  factory SparkLine7d.fromJson(Map<String, dynamic> json) =>
+      _$SparkLine7dFromJson(json);
 
-  Map<String, dynamic> toJson() => _$Sparkline7dToJson(this);
+  Map<String, dynamic> toJson() => _$SparkLine7dToJson(this);
+
+  @override
+  List<Object?> get props => [price];
 }
