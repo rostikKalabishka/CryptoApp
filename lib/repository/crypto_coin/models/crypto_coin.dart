@@ -11,7 +11,8 @@ class CryptoCoin extends Equatable {
   final double currentPrice;
   final double marketCap;
   final double marketCapRank;
-  // final double? fullyDilutedValuation;
+  @JsonKey(name: 'fully_diluted_valuation')
+  final double? fullyDilutedValuation;
   final double totalVolume;
   @JsonKey(name: 'high_24h')
   final double high24h;
@@ -47,7 +48,7 @@ class CryptoCoin extends Equatable {
     required this.currentPrice,
     required this.marketCap,
     required this.marketCapRank,
-    // required this.fullyDilutedValuation,
+    required this.fullyDilutedValuation,
     required this.totalVolume,
     required this.high24h,
     required this.low24h,
@@ -76,7 +77,7 @@ class CryptoCoin extends Equatable {
         currentPrice,
         marketCap,
         marketCapRank,
-        // fullyDilutedValuation,
+        fullyDilutedValuation,
         totalVolume,
         high24h,
         low24h,

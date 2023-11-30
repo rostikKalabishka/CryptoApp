@@ -14,6 +14,8 @@ CryptoCoin _$CryptoCoinFromJson(Map<String, dynamic> json) => CryptoCoin(
       currentPrice: (json['current_price'] as num).toDouble(),
       marketCap: (json['market_cap'] as num).toDouble(),
       marketCapRank: (json['market_cap_rank'] as num).toDouble(),
+      fullyDilutedValuation:
+          (json['fully_diluted_valuation'] as num?)?.toDouble(),
       totalVolume: (json['total_volume'] as num).toDouble(),
       high24h: (json['high_24h'] as num).toDouble(),
       low24h: (json['low_24h'] as num).toDouble(),
@@ -43,6 +45,7 @@ Map<String, dynamic> _$CryptoCoinToJson(CryptoCoin instance) =>
       'current_price': instance.currentPrice,
       'market_cap': instance.marketCap,
       'market_cap_rank': instance.marketCapRank,
+      'fully_diluted_valuation': instance.fullyDilutedValuation,
       'total_volume': instance.totalVolume,
       'high_24h': instance.high24h,
       'low_24h': instance.low24h,

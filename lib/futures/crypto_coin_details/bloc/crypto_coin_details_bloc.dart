@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:crypto_app/repository/abstract_coin_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -20,12 +18,12 @@ class CryptoCoinDetailsBloc
   Future<void> _getCoinDetailsLoad(CryptoCoinDetailsLoadEvent event,
       Emitter<CryptoCoinDetailsState> emit) async {
     try {
-      // if (state is! CryptoCoinDetailsLoaded) {
-      //   emit(CryptoCoinDetailsLoading());
-      // }
+      if (state is! CryptoCoinDetailsLoaded) {
+        emit(CryptoCoinDetailsLoading());
+      }
       final coin =
           await abstractCoinRepository.getCryptoCoinDetails(id: event.id);
-      log('${event.id}');
+
       emit(CryptoCoinDetailsLoaded(coin: coin));
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));

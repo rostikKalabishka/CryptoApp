@@ -14,7 +14,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
 
   const CryptoCoinDetailsLoaded({required this.coin});
   @override
-  List<Object> get props => super.props..add(coin);
+  List<Object> get props => [coin];
 }
 
 class CryptoCoinDetailsLoading extends CryptoCoinDetailsState {}

@@ -325,9 +325,9 @@ class ReposUrl extends Equatable {
 
 @JsonSerializable()
 class Image extends Equatable {
-  final String? thumb;
-  final String? small;
-  final String? large;
+  final String thumb;
+  final String small;
+  final String large;
   const Image({
     required this.thumb,
     required this.small,
@@ -400,8 +400,8 @@ class MarketData extends Equatable {
   // @JsonKey(name: 'price_change_percentage_60d_in_currency')
   // final PriceChangePercentage60dInCurrency priceChangePercentage60dInCurrency;
 
-  // final int totalSupply;
-  // final int maxSupply;
+  final double? totalSupply;
+  final double? maxSupply;
   // final int circulatingSupply;
   // final String lastUpdated;
   const MarketData(
@@ -436,8 +436,8 @@ class MarketData extends Equatable {
       // required this.priceChangePercentage14dInCurrency,
       // required this.priceChangePercentage30dInCurrency,
       // required this.priceChangePercentage60dInCurrency,
-      // required this.totalSupply,
-      // required this.maxSupply,
+      required this.totalSupply,
+      required this.maxSupply,
       // required this.circulatingSupply,
       // required this.lastUpdated,
       required this.sparkLine7d});
@@ -478,8 +478,8 @@ class MarketData extends Equatable {
         // priceChangePercentage14dInCurrency,
         // priceChangePercentage30dInCurrency,
         // priceChangePercentage60dInCurrency,
-        // totalSupply,
-        // maxSupply,
+        totalSupply,
+        maxSupply,
         // circulatingSupply,
         // lastUpdated,
         sparkLine7d

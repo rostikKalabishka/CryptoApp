@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import '../../../repository/abstract_coin_repository.dart';
 import '../../../repository/crypto_coin/models/crypto_coin.dart';
 import '../bloc/crypto_coin_details_bloc.dart';
+import '../widget/widgets.dart';
 
 @RoutePage()
 class CryptoCoinDetailsScreen extends StatefulWidget {
@@ -26,20 +27,73 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: BlocBuilder<CryptoCoinDetailsBloc, CryptoCoinDetailsState>(
         bloc: _blocDetails,
         builder: (context, state) {
           if (state is CryptoCoinDetailsLoaded) {
-            RefreshIndicator.adaptive(
-              onRefresh: () async {},
+            return RefreshIndicator.adaptive(
+              onRefresh: () async {
+                _blocDetails
+                    .add(CryptoCoinDetailsLoadEvent(id: widget.coin.id));
+              },
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
                     centerTitle: true,
                     title: Row(
-                      children: [Text(state.coin.name)],
+                      children: [
+                        Image.network(
+                          state.coin.image.small,
+                          width: 25,
+                          height: 25,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.02,
+                        ),
+                        Text(state.coin.name)
+                      ],
                     ),
+                  ),
+                  SliverToBoxAdapter(
+                      child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      '\$${widget.coin.currentPrice}',
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                  )),
+
+//chart
+
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: CardDateWidget(
+                        coinDetails: state.coin,
+                        coinInfoFromList: widget.coin,
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Description',
+                              style: theme.textTheme.bodyLarge,
+                            ),
+                            Text(
+                              state.coin.description.en,
+                              maxLines: 15,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        )),
                   )
                 ],
               ),
@@ -47,21 +101,21 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
           } else if (state is CryptoCoinDetailsFailure) {
             return Center(
                 child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('Error'),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(state.error.toString()),
+                ),
                 OutlinedButton(onPressed: () {}, child: const Text('Try Again'))
               ],
             ));
           }
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator.adaptive(),
           );
         },
       ),
     );
   }
-
-  // void setup(id) async {
-  //   await GetIt.I<AbstractCoinRepository>().getCryptoCoinDetails(id: id);
-  // }
 }

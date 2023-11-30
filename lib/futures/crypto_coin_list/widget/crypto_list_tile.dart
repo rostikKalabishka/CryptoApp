@@ -12,6 +12,7 @@ class CryptoListTile extends StatelessWidget {
   final CryptoCoin coin;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListTile(
       onTap: () {
         AutoRouter.of(context).push(CryptoCoinDetailsRoute(coin: coin));
@@ -42,7 +43,11 @@ class CryptoListTile extends StatelessWidget {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.25,
-            child: Text('\$${coin.currentPrice}', textAlign: TextAlign.end),
+            child: Text(
+              '\$${coin.currentPrice}',
+              textAlign: TextAlign.end,
+              style: theme.textTheme.bodyMedium,
+            ),
           ),
           const Spacer(
             flex: 1,
@@ -51,8 +56,7 @@ class CryptoListTile extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.11,
             child: Text(
               '${coin.priceChangePercentage24h.toStringAsFixed(1)} %',
-              style: TextStyle(
-                  fontSize: 15,
+              style: theme.textTheme.bodyMedium?.copyWith(
                   color: coin.priceChangePercentage24h < 0
                       ? Colors.red
                       : Colors.green),
@@ -63,6 +67,7 @@ class CryptoListTile extends StatelessWidget {
             child: Text(
               '\$${coin.marketCap}',
               textAlign: TextAlign.end,
+              style: theme.textTheme.bodyMedium,
             ),
           )
         ],

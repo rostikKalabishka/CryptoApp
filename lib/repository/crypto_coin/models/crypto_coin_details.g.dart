@@ -143,9 +143,9 @@ Map<String, dynamic> _$ReposUrlToJson(ReposUrl instance) => <String, dynamic>{
     };
 
 Image _$ImageFromJson(Map<String, dynamic> json) => Image(
-      thumb: json['thumb'] as String?,
-      small: json['small'] as String?,
-      large: json['large'] as String?,
+      thumb: json['thumb'] as String,
+      small: json['small'] as String,
+      large: json['large'] as String,
     );
 
 Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
@@ -167,6 +167,8 @@ MarketData _$MarketDataFromJson(Map<String, dynamic> json) => MarketData(
       totalVolume:
           TotalVolume.fromJson(json['total_volume'] as Map<String, dynamic>),
       priceChange24h: (json['price_change_24h'] as num).toDouble(),
+      totalSupply: (json['total_supply'] as num?)?.toDouble(),
+      maxSupply: (json['max_supply'] as num?)?.toDouble(),
       sparkLine7d:
           SparkLine7d.fromJson(json['sparkline_7d'] as Map<String, dynamic>),
     );
@@ -182,6 +184,8 @@ Map<String, dynamic> _$MarketDataToJson(MarketData instance) =>
       'fully_diluted_valuation': instance.fullyDilutedValuation.toJson(),
       'total_volume': instance.totalVolume.toJson(),
       'price_change_24h': instance.priceChange24h,
+      'total_supply': instance.totalSupply,
+      'max_supply': instance.maxSupply,
     };
 
 CurrentPrice _$CurrentPriceFromJson(Map<String, dynamic> json) => CurrentPrice(
