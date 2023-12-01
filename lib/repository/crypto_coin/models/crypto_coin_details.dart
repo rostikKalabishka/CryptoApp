@@ -5,7 +5,7 @@ part 'crypto_coin_details.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class CryptoCoinDetails extends Equatable {
   final String id;
-  final String? symbol;
+  final String symbol;
   final String name;
   final String? webSlug;
   final int blockTimeInMinutes;

@@ -9,7 +9,7 @@ part of 'crypto_coin_details.dart';
 CryptoCoinDetails _$CryptoCoinDetailsFromJson(Map<String, dynamic> json) =>
     CryptoCoinDetails(
       id: json['id'] as String,
-      symbol: json['symbol'] as String?,
+      symbol: json['symbol'] as String,
       name: json['name'] as String,
       webSlug: json['web_slug'] as String?,
       blockTimeInMinutes: json['block_time_in_minutes'] as int,
