@@ -65,111 +65,13 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                     ),
                   )),
 
-                  // SliverToBoxAdapter(
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //     children: [
-                  //       Card(
-                  //         child: Row(
-                  //           mainAxisSize: MainAxisSize.min,
-                  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //           children: [
-                  //             SizedBox(
-                  //               width: MediaQuery.of(context).size.width * 0.2,
-                  //               height:
-                  //                   MediaQuery.of(context).size.height * 0.03,
-                  //               child: Padding(
-                  //                 padding:
-                  //                     const EdgeInsets.symmetric(horizontal: 3),
-                  //                 child: TextFormField(
-                  //                   maxLines: 1,
-                  //                   textAlign: TextAlign.start,
-                  //                   decoration: const InputDecoration(
-                  //                     border: OutlineInputBorder(
-                  //                       borderSide: BorderSide.none,
-                  //                     ),
-                  //                   ),
-                  //                   style: const TextStyle(fontSize: 12),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             Container(
-                  //               width: 1,
-                  //               height:
-                  //                   MediaQuery.of(context).size.height * 0.03,
-                  //               color: Colors.grey, // Цвет разделителя
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 children: [
-                  //                   Image.network(
-                  //                     state.coin.image.small,
-                  //                     width: 20,
-                  //                     height: 20,
-                  //                   ),
-                  //                   const SizedBox(width: 10),
-                  //                   Text(state.coin.symbol.toUpperCase()),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       Card(
-                  //         child: Row(
-                  //           mainAxisSize: MainAxisSize.min,
-                  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //           children: [
-                  //             SizedBox(
-                  //               width: MediaQuery.of(context).size.width * 0.2,
-                  //               height:
-                  //                   MediaQuery.of(context).size.height * 0.03,
-                  //               child: Padding(
-                  //                 padding: const EdgeInsets.symmetric(
-                  //                     horizontal: 10),
-                  //                 child: TextFormField(
-                  //                   decoration: const InputDecoration(
-                  //                     border: OutlineInputBorder(
-                  //                       borderSide: BorderSide.none,
-                  //                     ),
-                  //                   ),
-                  //                   style: const TextStyle(fontSize: 12),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             Container(
-                  //               width: 1,
-                  //               height:
-                  //                   MediaQuery.of(context).size.height * 0.03,
-                  //               color: Colors.grey, // Цвет разделителя
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Row(
-                  //                 children: [
-                  //                   Image.network(
-                  //                     state.coin.image.small,
-                  //                     width: 20,
-                  //                     height: 20,
-                  //                   ),
-                  //                   const SizedBox(width: 10),
-                  //                   Text(state.coin.symbol.toUpperCase()),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                   SliverToBoxAdapter(
                       child: CryptoCalculator(
                     image: state.coin.image.small,
                     symbol: state.coin.symbol,
+                    currentPrice: state.coin.marketData.currentPrice,
                   )),
-//chart
+
 //chart
                   const SliverToBoxAdapter(
                     child: CryptoChart(),

@@ -488,129 +488,129 @@ class MarketData extends Equatable {
 
 @JsonSerializable()
 class CurrentPrice extends Equatable {
-  final double? aed;
-  final double? ars;
-  final double? aud;
-  final double? bch;
-  final double? bdt;
-  final double? bhd;
-  final double? bmd;
-  final double? bnb;
-  final double? brl;
-  final double? btc;
-  final double? cad;
-  final double? chf;
-  final double? clp;
-  final double? cny;
-  final double? czk;
-  final double? dkk;
-  final double? dot;
-  final double? eos;
-  final double? eth;
-  final double? eur;
-  final double? gbp;
-  final double? hkd;
-  final double? huf;
-  final double? idr;
-  final double? ils;
-  final double? inr;
-  final double? jpy;
-  final double? krw;
-  final double? kwd;
-  final double? lkr;
-  final double? ltc;
-  final double? mmk;
-  final double? mxn;
-  final double? myr;
-  final double? ngn;
-  final double? nok;
-  final double? nzd;
-  final double? php;
-  final double? pkr;
-  final double? pln;
-  final double? rub;
-  final double? sar;
-  final double? sek;
-  final double? sgd;
-  final double? thb;
-  final double? tTry;
-  final double? twd;
-  final double? uah;
-  final double? usd;
-  final double? vef;
-  final double? vnd;
-  final double? xag;
-  final double? xau;
-  final double? xdr;
-  final double? xlm;
-  final double? xrp;
-  final double? yfi;
-  final double? zar;
-  final double? bits;
-  final double? link;
-  final double? sats;
+  // final double aed;
+  // final double ars;
+  // final double aud;
+  // final double bch;
+  // final double bdt;
+  // final double bhd;
+  // final double bmd;
+  final double bnb;
+  // final double brl;
+  final double btc;
+  // final double cad;
+  // final double chf;
+  // final double clp;
+  // final double cny;
+  final double czk;
+  final double dkk;
+  final double dot;
+  final double eos;
+  final double eth;
+  final double eur;
+  // final double gbp;
+  // final double hkd;
+  // final double huf;
+  // final double idr;
+  // final double ils;
+  // final double inr;
+  final double jpy;
+  // final double krw;
+  // final double kwd;
+  // final double lkr;
+  // final double ltc;
+  // final double mmk;
+  // final double mxn;
+  // final double myr;
+  // final double ngn;
+  // final double nok;
+  // final double nzd;
+  // final double php;
+  // final double pkr;
+  // final double pln;
+  // final double rub;
+  // final double sar;
+  // final double sek;
+  // final double sgd;
+  // final double thb;
+  // final double tTry;
+  // final double twd;
+  final double uah;
+  final double usd;
+  // final double vef;
+  // final double vnd;
+  // final double xag;
+  // final double xau;
+  // final double xdr;
+  // final double xlm;
+  // final double xrp;
+  // final double yfi;
+  // final double zar;
+  // final double bits;
+  // final double link;
+  // final double sats;
   const CurrentPrice({
-    required this.aed,
-    required this.ars,
-    required this.aud,
-    required this.bch,
-    required this.bdt,
-    required this.bhd,
-    required this.bmd,
+    // required this.aed,
+    // required this.ars,
+    // required this.aud,
+    // required this.bch,
+    // required this.bdt,
+    // required this.bhd,
+    // required this.bmd,
     required this.bnb,
-    required this.brl,
+    // required this.brl,
     required this.btc,
-    required this.cad,
-    required this.chf,
-    required this.clp,
-    required this.cny,
+    // required this.cad,
+    // required this.chf,
+    // required this.clp,
+    // required this.cny,
     required this.czk,
     required this.dkk,
     required this.dot,
     required this.eos,
     required this.eth,
     required this.eur,
-    required this.gbp,
-    required this.hkd,
-    required this.huf,
-    required this.idr,
-    required this.ils,
-    required this.inr,
+    // required this.gbp,
+    // required this.hkd,
+    // required this.huf,
+    // required this.idr,
+    // required this.ils,
+    // required this.inr,
     required this.jpy,
-    required this.krw,
-    required this.kwd,
-    required this.lkr,
-    required this.ltc,
-    required this.mmk,
-    required this.mxn,
-    required this.myr,
-    required this.ngn,
-    required this.nok,
-    required this.nzd,
-    required this.php,
-    required this.pkr,
-    required this.pln,
-    required this.rub,
-    required this.sar,
-    required this.sek,
-    required this.sgd,
-    required this.thb,
-    required this.tTry,
-    required this.twd,
+    // required this.krw,
+    // required this.kwd,
+    // required this.lkr,
+    // required this.ltc,
+    // required this.mmk,
+    // required this.mxn,
+    // required this.myr,
+    // required this.ngn,
+    // required this.nok,
+    // required this.nzd,
+    // required this.php,
+    // required this.pkr,
+    // required this.pln,
+    // required this.rub,
+    // required this.sar,
+    // required this.sek,
+    // required this.sgd,
+    // required this.thb,
+    // required this.tTry,
+    // required this.twd,
     required this.uah,
     required this.usd,
-    required this.vef,
-    required this.vnd,
-    required this.xag,
-    required this.xau,
-    required this.xdr,
-    required this.xlm,
-    required this.xrp,
-    required this.yfi,
-    required this.zar,
-    required this.bits,
-    required this.link,
-    required this.sats,
+    // required this.vef,
+    // required this.vnd,
+    // required this.xag,
+    // required this.xau,
+    // required this.xdr,
+    // required this.xlm,
+    // required this.xrp,
+    // required this.yfi,
+    // required this.zar,
+    // required this.bits,
+    // required this.link,
+    // required this.sats,
   });
   factory CurrentPrice.fromJson(Map<String, dynamic> json) =>
       _$CurrentPriceFromJson(json);
@@ -619,67 +619,67 @@ class CurrentPrice extends Equatable {
 
   @override
   List<Object?> get props => [
-        aed,
-        ars,
-        aud,
-        bch,
-        bdt,
-        bhd,
-        bmd,
+        // aed,
+        // ars,
+        // aud,
+        // bch,
+        // bdt,
+        // bhd,
+        // bmd,
         bnb,
-        brl,
+        // brl,
         btc,
-        cad,
-        chf,
-        clp,
-        cny,
+        // cad,
+        // chf,
+        // clp,
+        // cny,
         czk,
         dkk,
         dot,
         eos,
         eth,
         eur,
-        gbp,
-        hkd,
-        huf,
-        idr,
-        ils,
-        inr,
+        // gbp,
+        // hkd,
+        // huf,
+        // idr,
+        // ils,
+        // inr,
         jpy,
-        krw,
-        kwd,
-        lkr,
-        ltc,
-        mmk,
-        mxn,
-        myr,
-        ngn,
-        nok,
-        nzd,
-        php,
-        pkr,
-        pln,
-        rub,
-        sar,
-        sek,
-        sgd,
-        thb,
-        tTry,
-        twd,
-        uah,
+        // krw,
+        // kwd,
+        // lkr,
+        // ltc,
+        // mmk,
+        // mxn,
+        // myr,
+        // ngn,
+        // nok,
+        // nzd,
+        // php,
+        // pkr,
+        // pln,
+        // rub,
+        // sar,
+        // sek,
+        // sgd,
+        // thb,
+        // tTry,
+        // twd,
+        // uah,
         usd,
-        vef,
-        vnd,
-        xag,
-        xau,
-        xdr,
-        xlm,
-        xrp,
-        yfi,
-        zar,
-        bits,
-        link,
-        sats,
+        // vef,
+        // vnd,
+        // xag,
+        // xau,
+        // xdr,
+        // xlm,
+        // xrp,
+        // yfi,
+        // zar,
+        // bits,
+        // link,
+        // sats,
       ];
 }
 
