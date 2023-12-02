@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../repository/crypto_coin/models/crypto_coin_details.dart';
+// typedef
 
 class DropdownButtonMenu extends StatefulWidget {
   const DropdownButtonMenu({

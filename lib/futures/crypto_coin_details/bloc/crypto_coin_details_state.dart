@@ -26,3 +26,11 @@ class CryptoCoinDetailsFailure extends CryptoCoinDetailsState {
   @override
   List<Object> get props => super.props..add(error);
 }
+
+class CryptoCoinDropDownMenu extends CryptoCoinDetailsState {
+  final CurrentPrice currentPrice;
+
+  const CryptoCoinDropDownMenu({required this.currentPrice});
+  @override
+  List<Object> get props => [currentPrice];
+}

@@ -4,17 +4,35 @@ import 'package:flutter/material.dart';
 
 import 'drop_down_menu.dart';
 
-class CryptoCalculator extends StatelessWidget {
+class CryptoCalculator extends StatefulWidget {
   const CryptoCalculator({
     Key? key,
     required this.symbol,
     required this.image,
     required this.currentPrice,
+    required this.price,
   }) : super(key: key);
 
   final String symbol;
   final String image;
   final CurrentPrice currentPrice;
+  final double price;
+
+  @override
+  State<CryptoCalculator> createState() => _CryptoCalculatorState();
+}
+
+class _CryptoCalculatorState extends State<CryptoCalculator> {
+  late final TextEditingController coinCountController;
+  late final TextEditingController currencyController;
+
+  @override
+  void initState() {
+    coinCountController = TextEditingController(text: 1.0.toString());
+    currencyController = TextEditingController(
+        text: (num.parse(coinCountController.text) * widget.price).toString());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +48,8 @@ class CryptoCalculator extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
+                    // onChanged: () {},
+                    controller: coinCountController,
                     keyboardType: TextInputType.number,
                     maxLines: 1,
                     textAlign: TextAlign.start,
@@ -53,12 +73,12 @@ class CryptoCalculator extends StatelessWidget {
                 child: Row(
                   children: [
                     Image.network(
-                      image,
+                      widget.image,
                       width: 20,
                       height: 20,
                     ),
                     const SizedBox(width: 10),
-                    Text(symbol.toUpperCase()),
+                    Text(widget.symbol.toUpperCase()),
                   ],
                 ),
               ),
@@ -74,6 +94,8 @@ class CryptoCalculator extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
+                    onChanged: (text) {},
+                    controller: currencyController,
                     keyboardType: TextInputType.number,
                     maxLines: 1,
                     textAlign: TextAlign.start,
@@ -95,7 +117,7 @@ class CryptoCalculator extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: DropdownButtonMenu(
-                  currentPrice: currentPrice,
+                  currentPrice: widget.currentPrice,
                 ),
               ),
             ],
