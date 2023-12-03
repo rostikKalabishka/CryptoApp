@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'crypto_coin_details_bloc.dart';
 
 sealed class CryptoCoinDetailsEvent extends Equatable {
@@ -21,18 +20,17 @@ class CryptoCoinDropDownMenuEvent extends CryptoCoinDetailsEvent {
   const CryptoCoinDropDownMenuEvent();
 }
 
-class CryptoCoinConvertCoinToCurrency extends CryptoCoinDetailsEvent {
-  // final CurrentPrice currentPrice;
-  const CryptoCoinConvertCoinToCurrency(
-      // {required this.currentPrice}
-      );
-
-  // @override
-  // List<Object> get props => super.props..add(currentPrice);
+class CryptoCoinConvertCoinToCurrencyEvent extends CryptoCoinDetailsEvent {
+  final String text;
+  const CryptoCoinConvertCoinToCurrencyEvent({required this.text});
 }
 
-class CryptoCoinConvertCurrencyToCoin extends CryptoCoinDetailsEvent {
-  const CryptoCoinConvertCurrencyToCoin();
+class CryptoCoinConvertCurrencyToCoinEvent extends CryptoCoinDetailsEvent {
+  const CryptoCoinConvertCurrencyToCoinEvent();
+}
+
+class CryptoCoinSaveSelectedItem extends CryptoCoinDetailsEvent {
+  const CryptoCoinSaveSelectedItem();
 }
 
 class CryptoCoinCurrencySelectedEvent extends CryptoCoinDetailsEvent {
@@ -41,5 +39,5 @@ class CryptoCoinCurrencySelectedEvent extends CryptoCoinDetailsEvent {
   const CryptoCoinCurrencySelectedEvent({required this.selectedCurrency});
 
   @override
-  List<Object> get props => [selectedCurrency];
+  List<Object> get props => super.props..add(selectedCurrency);
 }

@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+// import 'package:crypto_app/repository/abstract_coin_repository.dart';
 import 'package:crypto_app/repository/crypto_coin/models/crypto_coin_details.dart';
 import 'package:flutter/material.dart';
+// import 'package:get_it/get_it.dart';
 
 import '../../../repository/crypto_coin/models/model.dart';
+// import '../bloc/crypto_coin_details_bloc.dart';
 
 class CardDateWidget extends StatelessWidget {
   const CardDateWidget({
@@ -13,6 +16,7 @@ class CardDateWidget extends StatelessWidget {
 
   final CryptoCoinDetails coinDetails;
   final CryptoCoin coinInfoFromList;
+
   @override
   Widget build(BuildContext context) {
     return Card(

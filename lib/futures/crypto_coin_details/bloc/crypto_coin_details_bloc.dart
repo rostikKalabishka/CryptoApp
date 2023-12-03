@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:crypto_app/repository/abstract_coin_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -9,19 +11,19 @@ part 'crypto_coin_details_state.dart';
 
 class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
-  late CurrentPrice currentPrice;
-  late String selectedCurrency;
+  late String selectedCurrency = 'usd';
+
   final AbstractCoinRepository abstractCoinRepository;
   CryptoCoinDetailsBloc(this.abstractCoinRepository)
       : super(CryptoCoinDetailsInitial()) {
     on<CryptoCoinDetailsLoadEvent>(_getCoinDetailsLoad);
-    on<CryptoCoinConvertCoinToCurrency>(_currency);
-    on<CryptoCoinConvertCurrencyToCoin>(_coinCount);
-    // on<CryptoCoinCurrencySelectedEvent>(_currencySelected);
+    on<CryptoCoinConvertCoinToCurrencyEvent>(_currency);
+    on<CryptoCoinConvertCurrencyToCoinEvent>(_coinCount);
+    on<CryptoCoinCurrencySelectedEvent>(_getSelectedItem);
   }
 
   Future<void> _coinCount(
-    CryptoCoinConvertCurrencyToCoin event,
+    CryptoCoinConvertCurrencyToCoinEvent event,
     Emitter<CryptoCoinDetailsState> emit,
     //  String value
   ) async {
@@ -30,10 +32,18 @@ class CryptoCoinDetailsBloc
     }
   }
 
-  Future<void> _currency(CryptoCoinConvertCoinToCurrency event,
+  Future<void> _currency(CryptoCoinConvertCoinToCurrencyEvent event,
       Emitter<CryptoCoinDetailsState> emit) async {
     try {
-// var boba = CurrentPrice.toJson().entries.map((key, value) => null)
+      if (state is CryptoCoinDetailsLoaded) {
+        final coinState = state as CryptoCoinDetailsLoaded;
+        final double currency =
+            coinState.coin.marketData.currentPrice.toJson()[selectedCurrency];
+
+        emit((CryptoCoinCounterToCurrency(currency: currency)));
+        log('$currency');
+        // boba = currency.toString();
+      }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
     }
@@ -54,28 +64,19 @@ class CryptoCoinDetailsBloc
     }
   }
 
-  // Future<void> _handleDropDownMenu(CryptoCoinCurrencySelectedEvent event,
-  //     Emitter<CryptoCoinDetailsState> emit) async {
-  //   try {
-  //     if (state is CryptoCoinDetailsLoaded) {
-  //       final coinState = state as CryptoCoinDetailsLoaded;
-  //       currentPrice = coinState.coin.marketData.currentPrice;
-  //       emit(CryptoCoinDropDownMenu(currentPrice: currentPrice));
-  //     }
-  //   } catch (e) {
-  //     emit(CryptoCoinDetailsFailure(error: e));
-  //   }
-  // }
+  Future<void> _getSelectedItem(CryptoCoinCurrencySelectedEvent event,
+      Emitter<CryptoCoinDetailsState> emit) async {
+    try {
+      selectedCurrency = event.selectedCurrency;
+      emit(CryptoCoinDropDownMenuSelectedItem(selectedItem: selectedCurrency));
+// виправити віджети (Я КЛОУН)
+      // final double currency = state.coin.marketData.currentPrice.jpy;
 
-  // Future<void> _currency(CryptoCoinConvertCoinToCurrency event,
-  //     Emitter<CryptoCoinDetailsState> emit) async {
-  //   try {
-  //     // Используем selectedCurrency для нахождения соответствующей цены
-  //     final convertedPrice = currentPrice.toJson()[selectedCurrency];
-  //     // Здесь можно отправить событие для обновления текстового поля с ценой
-  //     emit(CryptoCoinConvertSuccess(convertedPrice: convertedPrice));
-  //   } catch (e) {
-  //     emit(CryptoCoinDetailsFailure(error: e));
-  //   }
-  // }
+      // emit(CryptoCoinCounterToCurrency(currency: currency));
+
+      log(selectedCurrency);
+    } catch (e) {
+      emit(CryptoCoinDetailsFailure(error: e));
+    }
+  }
 }

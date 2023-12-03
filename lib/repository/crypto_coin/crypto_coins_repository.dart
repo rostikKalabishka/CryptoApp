@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:crypto_app/repository/crypto_coin/models/crypto_coin_details.dart';
 import 'package:dio/dio.dart';
 
@@ -49,7 +51,7 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
         Map<String, dynamic> responseData =
             response.data as Map<String, dynamic>;
         CryptoCoinDetails coin = CryptoCoinDetails.fromJson(responseData);
-        print(coin);
+        // log('${coin.marketData.currentPrice.toJson()['btc']}');
         return coin;
       } else if (response.statusCode == 429) {
         throw Exception('You\'ve exceeded the Rate Limit');

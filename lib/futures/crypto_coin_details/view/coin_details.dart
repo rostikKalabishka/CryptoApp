@@ -67,6 +67,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
 
                   SliverToBoxAdapter(
                       child: CryptoCalculator(
+                          blocDetails: _blocDetails,
                           image: state.coin.image.small,
                           symbol: state.coin.symbol,
                           currentPrice: state.coin.marketData.currentPrice,
