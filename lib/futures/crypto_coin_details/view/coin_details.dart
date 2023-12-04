@@ -19,10 +19,24 @@ class CryptoCoinDetailsScreen extends StatefulWidget {
 
 class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
   final _blocDetails = CryptoCoinDetailsBloc(GetIt.I<AbstractCoinRepository>());
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.coin.id));
+  // }
+
+  late final TextEditingController coinCountController;
+  late final TextEditingController currencyController;
+  // double currentPrice = widget.coin.currentPrice;
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
     _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.coin.id));
+
+    coinCountController = TextEditingController(text: '1.0');
+    currencyController = TextEditingController(
+        text: (num.parse(coinCountController.text) * widget.coin.currentPrice)
+            .toString());
+    super.didChangeDependencies();
   }
 
   @override
@@ -66,12 +80,34 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                   )),
 
                   SliverToBoxAdapter(
-                      child: CryptoCalculator(
-                          blocDetails: _blocDetails,
-                          image: state.coin.image.small,
-                          symbol: state.coin.symbol,
-                          currentPrice: state.coin.marketData.currentPrice,
-                          price: widget.coin.currentPrice)),
+                    child: CryptoCalculator(
+                      coinCountController: coinCountController,
+                      currencyController: currencyController,
+                      blocDetails: _blocDetails,
+                      image: state.coin.image.small,
+                      symbol: state.coin.symbol,
+                      // dropdownValueFunc: (String dropdownValue) {
+                      //   _blocDetails.add(CryptoCoinCurrencySelectedEvent(
+                      //       selectedCurrency: dropdownValue));
+                      // },
+                      func: (text) {
+                        _blocDetails.add(
+                          CryptoCoinConvertCoinToCurrencyEvent(
+                            text: text,
+                          ),
+                        );
+                      },
+                      // currentPrice: state.coin.marketData.currentPrice,
+                      price: widget.coin.currentPrice,
+                      list: state.coin.marketData.currentPrice
+                          .toJson()
+                          .keys
+                          .toList()
+                          .reversed
+                          .map((e) => e.toString())
+                          .toList(),
+                    ),
+                  ),
 
 //chart
                   const SliverToBoxAdapter(
@@ -120,7 +156,12 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(state.error.toString()),
                 ),
-                OutlinedButton(onPressed: () {}, child: const Text('Try Again'))
+                OutlinedButton(
+                    onPressed: () async {
+                      _blocDetails
+                          .add(CryptoCoinDetailsLoadEvent(id: widget.coin.id));
+                    },
+                    child: const Text('Try Again'))
               ],
             ));
           }

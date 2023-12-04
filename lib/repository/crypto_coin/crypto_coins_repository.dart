@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:crypto_app/repository/crypto_coin/models/crypto_coin_details.dart';
 import 'package:dio/dio.dart';
 

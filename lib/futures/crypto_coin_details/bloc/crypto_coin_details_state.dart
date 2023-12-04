@@ -51,10 +51,10 @@ class CryptoCoinCounterToCurrency extends CryptoCoinDetailsState {
   List<Object> get props => [currency];
 }
 
-class CryptoCoinDropDownMenu extends CryptoCoinDetailsState {
-  final CurrentPrice currentPrice;
+// class CryptoCoinDropDownMenu extends CryptoCoinDetailsState {
+//   final CurrentPrice currentPrice;
 
-  const CryptoCoinDropDownMenu({required this.currentPrice});
-  @override
-  List<Object> get props => [currentPrice];
-}
+//   const CryptoCoinDropDownMenu({required this.currentPrice});
+//   @override
+//   List<Object> get props => [currentPrice];
+// }

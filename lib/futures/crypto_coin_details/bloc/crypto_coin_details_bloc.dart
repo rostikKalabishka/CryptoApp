@@ -12,6 +12,7 @@ part 'crypto_coin_details_state.dart';
 class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
   late String selectedCurrency = 'usd';
+  late String price = '0';
 
   final AbstractCoinRepository abstractCoinRepository;
   CryptoCoinDetailsBloc(this.abstractCoinRepository)
@@ -41,11 +42,12 @@ class CryptoCoinDetailsBloc
             coinState.coin.marketData.currentPrice.toJson()[selectedCurrency];
 
         emit((CryptoCoinCounterToCurrency(currency: currency)));
+        price = currency.toString();
         log('$currency');
-        // boba = currency.toString();
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
+      log('$e');
     }
   }
 
@@ -69,14 +71,11 @@ class CryptoCoinDetailsBloc
     try {
       selectedCurrency = event.selectedCurrency;
       emit(CryptoCoinDropDownMenuSelectedItem(selectedItem: selectedCurrency));
-// виправити віджети (Я КЛОУН)
-      // final double currency = state.coin.marketData.currentPrice.jpy;
-
-      // emit(CryptoCoinCounterToCurrency(currency: currency));
 
       log(selectedCurrency);
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
+      log('$e');
     }
   }
 }
