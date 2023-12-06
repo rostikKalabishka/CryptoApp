@@ -74,15 +74,15 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                       child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Text(
-                      '\$${widget.coin.currentPrice}',
+                      '\$${_blocDetails.price}',
                       style: theme.textTheme.bodyLarge,
                     ),
                   )),
 
                   SliverToBoxAdapter(
                     child: CryptoCalculator(
-                      coinCountController: coinCountController,
-                      currencyController: currencyController,
+                      // coinCountController: coinCountController,
+                      // currencyController: currencyController,
                       blocDetails: _blocDetails,
                       image: state.coin.image.small,
                       symbol: state.coin.symbol,
@@ -98,7 +98,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                         );
                       },
                       // currentPrice: state.coin.marketData.currentPrice,
-                      price: widget.coin.currentPrice,
+                      price: state.price,
                       list: state.coin.marketData.currentPrice
                           .toJson()
                           .keys

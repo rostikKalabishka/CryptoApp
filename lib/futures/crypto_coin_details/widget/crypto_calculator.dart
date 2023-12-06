@@ -14,8 +14,8 @@ class CryptoCalculator extends StatefulWidget {
     required this.list,
     required this.price,
     required this.blocDetails,
-    required this.coinCountController,
-    required this.currencyController,
+    // required this.coinCountController,
+    // required this.currencyController,
   }) : super(key: key);
 
   final String symbol;
@@ -24,17 +24,31 @@ class CryptoCalculator extends StatefulWidget {
   final Function(String text)? func;
   // final Function(String text)? dropdownValueFunc;
   final List<String> list;
-  final double price;
+  final String price;
   final CryptoCoinDetailsBloc blocDetails;
-  final TextEditingController coinCountController;
-  final TextEditingController currencyController;
+  // TextEditingController coinCountController;
+  // TextEditingController currencyController;
 
   @override
   State<CryptoCalculator> createState() => _CryptoCalculatorState();
 }
 
 class _CryptoCalculatorState extends State<CryptoCalculator> {
+  late final TextEditingController coinCountController;
+  late final TextEditingController currencyController;
   @override
+  void didChangeDependencies() {
+    coinCountController = TextEditingController(text: '1.0');
+    currencyController = TextEditingController(
+        text:
+            (num.parse(coinCountController.text) * (double.parse(widget.price)))
+                .toString());
+
+    widget.blocDetails.add(CryptoCoinSaveValueInTextFieldEvent(
+        saveValue: currencyController.text));
+    setState(() {});
+    super.didChangeDependencies();
+  }
   // void didChangeDependencies() {
   //   coinCountController = TextEditingController(text: '1.0');
   //   currencyController = TextEditingController(
@@ -57,7 +71,7 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
                     // onChanged: () {},
-                    controller: widget.coinCountController,
+                    controller: coinCountController,
                     keyboardType: TextInputType.number,
                     maxLines: 1,
                     textAlign: TextAlign.start,
@@ -102,8 +116,11 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextFormField(
-                    // onChanged: widget.func,
-                    controller: widget.currencyController,
+                    onChanged: (text) {
+                      // text = widget.price;
+                      // currencyController.text = text;
+                    },
+                    controller: currencyController,
                     keyboardType: TextInputType.number,
                     maxLines: 1,
                     textAlign: TextAlign.start,
@@ -132,7 +149,7 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
                     widget.blocDetails.add(CryptoCoinCurrencySelectedEvent(
                         selectedCurrency: dropdownValue));
                   },
-                  blocDetails: widget.blocDetails,
+                  // blocDetails: widget.blocDetails,
                   list: widget.list,
                   // currentPrice: widget.currentPrice,
                 ),

@@ -11,10 +11,17 @@ final class CryptoCoinDetailsInitial extends CryptoCoinDetailsState {}
 
 class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
   final CryptoCoinDetails coin;
+  final String selectedItem;
 
-  const CryptoCoinDetailsLoaded({required this.coin});
+  final String price;
+
+  const CryptoCoinDetailsLoaded({
+    required this.coin,
+    required this.selectedItem,
+    required this.price,
+  });
   @override
-  List<Object> get props => [coin];
+  List<Object> get props => [coin, selectedItem, price];
 }
 
 class CryptoCoinDetailsLoading extends CryptoCoinDetailsState {}
@@ -27,29 +34,29 @@ class CryptoCoinDetailsFailure extends CryptoCoinDetailsState {
   List<Object> get props => super.props..add(error);
 }
 
-class CryptoCoinDropDownMenuSelectedItem extends CryptoCoinDetailsState {
-  final String selectedItem;
+// class CryptoCoinDropDownMenuSelectedItem extends CryptoCoinDetailsState {
+//   final String selectedItem;
 
-  const CryptoCoinDropDownMenuSelectedItem({required this.selectedItem});
-  @override
-  List<Object> get props => [selectedItem];
-}
+//   const CryptoCoinDropDownMenuSelectedItem({required this.selectedItem});
+//   @override
+//   List<Object> get props => [selectedItem];
+// }
 
-class CryptoCoinCurrencyToCoinCounter extends CryptoCoinDetailsState {
-  final double coinCounter;
+// class CryptoCoinCurrencyToCoinCounter extends CryptoCoinDetailsState {
+//   final double coinCounter;
 
-  const CryptoCoinCurrencyToCoinCounter({required this.coinCounter});
-  @override
-  List<Object> get props => [coinCounter];
-}
+//   const CryptoCoinCurrencyToCoinCounter({required this.coinCounter});
+//   @override
+//   List<Object> get props => [coinCounter];
+// }
 
-class CryptoCoinCounterToCurrency extends CryptoCoinDetailsState {
-  final double currency;
+// class CryptoCoinCounterToCurrency extends CryptoCoinDetailsState {
+//   final double currency;
 
-  const CryptoCoinCounterToCurrency({required this.currency});
-  @override
-  List<Object> get props => [currency];
-}
+//   const CryptoCoinCounterToCurrency({required this.currency});
+//   @override
+//   List<Object> get props => [currency];
+// }
 
 // class CryptoCoinDropDownMenu extends CryptoCoinDetailsState {
 //   final CurrentPrice currentPrice;

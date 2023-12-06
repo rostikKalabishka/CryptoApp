@@ -29,8 +29,11 @@ class CryptoCoinConvertCurrencyToCoinEvent extends CryptoCoinDetailsEvent {
   const CryptoCoinConvertCurrencyToCoinEvent();
 }
 
-class CryptoCoinSaveSelectedItem extends CryptoCoinDetailsEvent {
-  const CryptoCoinSaveSelectedItem();
+class CryptoCoinSaveValueInTextFieldEvent extends CryptoCoinDetailsEvent {
+  final String saveValue;
+  const CryptoCoinSaveValueInTextFieldEvent({required this.saveValue});
+  @override
+  List<Object> get props => super.props..add(saveValue);
 }
 
 class CryptoCoinCurrencySelectedEvent extends CryptoCoinDetailsEvent {

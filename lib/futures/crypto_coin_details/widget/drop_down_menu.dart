@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../bloc/crypto_coin_details_bloc.dart';
-
 class DropdownButtonMenu extends StatefulWidget {
   const DropdownButtonMenu({
     Key? key,
     required this.list,
-    required this.blocDetails,
+    // required this.blocDetails,
     required this.func,
   }) : super(key: key);
   final List<String> list;
-  final CryptoCoinDetailsBloc blocDetails;
+  // final CryptoCoinDetailsBloc blocDetails;
   final Function(String value) func;
 
   @override
