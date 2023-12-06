@@ -41,152 +41,163 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<CryptoCoinListBloc, CryptoCoinListState>(
-        bloc: _cryptoListBloc,
-        builder: (BuildContext context, CryptoCoinListState state) {
-          if (state is CryptoCoinListLoaded) {
-            return RefreshIndicator.adaptive(
-              onRefresh: () async {
-                _cryptoListBloc.add(CryptoCoinListLoadEvent());
-              },
-              child: CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  SliverAppBar(
-                    centerTitle: true,
-                    leading: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.notification_add_outlined),
-                    ),
-                    title: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Text('Crypto App')],
-                    ),
-                    actions: [
-                      IconButton(
+    return BlocProvider(
+      create: (context) => _cryptoListBloc,
+      child: Scaffold(
+        body: BlocBuilder<CryptoCoinListBloc, CryptoCoinListState>(
+          // bloc: _cryptoListBloc,
+          builder: (BuildContext context, CryptoCoinListState state) {
+            if (state is CryptoCoinListLoaded) {
+              return RefreshIndicator.adaptive(
+                onRefresh: () async {
+                  _cryptoListBloc.add(CryptoCoinListLoadEvent());
+                },
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    SliverAppBar(
+                      centerTitle: true,
+                      leading: IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.search_outlined),
+                        icon: const Icon(Icons.notification_add_outlined),
                       ),
-                    ],
-                  ),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      child:
-                          ListView(scrollDirection: Axis.horizontal, children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.005),
-                          child: ElevatedButton(
-                            onPressed: topFiftyButtonEnabled
-                                ? () => buttonEnabled(1)
-                                : null,
-                            child: const Text('Top 50'),
-                          ),
+                      title: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [Text('Crypto App')],
+                      ),
+                      actions: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.search_outlined),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.005),
-                          child: ElevatedButton(
-                            onPressed: topHundredButtonEnabled
-                                ? () => buttonEnabled(2)
-                                : null,
-                            child: const Row(
-                              children: [Text('Top 100')],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.005),
-                          child: ElevatedButton(
-                            onPressed: topTwoHundredFiftyButtonEnabled
-                                ? () => buttonEnabled(3)
-                                : null,
-                            child: const Row(
-                              children: [Text('Top 250')],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.005),
-                          child: ElevatedButton(
-                            onPressed: () => _cryptoListBloc
-                                .add(CryptoCoinListSorByRankEvent()),
-                            child: const Row(
-                              children: [Text('Sort By Rank')],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.005),
-                          child: ElevatedButton(
-                            onPressed: () => _cryptoListBloc
-                                .add(CryptoCoinListSorByMarketCupEvent()),
-                            child: const Row(
-                              children: [Text('Sort By Market Cap')],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.005),
-                          child: ElevatedButton(
-                            onPressed: () => _cryptoListBloc
-                                .add(CryptoCoinListSorByPercentChangeEvent()),
-                            child: const Row(
-                              children: [Text('Sort By % Change')],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.005),
-                          child: ElevatedButton(
-                            onPressed: () => _cryptoListBloc
-                                .add(CryptoCoinListSorByPriceEvent()),
-                            child: const Row(
-                              children: [Text('Sort By Price')],
-                            ),
-                          ),
-                        ),
-                      ]),
+                      ],
                     ),
-                  ),
-                  SliverList.separated(
-                      itemCount: state.cryptoCoinList.length + 1,
-                      itemBuilder: (context, index) {
-                        if (index < state.cryptoCoinList.length) {
-                          final coin = state.cryptoCoinList[index];
-                          return CryptoListTile(
-                            coin: coin,
-                          );
-                        } else {
-                          return const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 32),
-                            child: Center(
-                                child: CircularProgressIndicator.adaptive()),
-                          );
-                        }
-                      },
-                      separatorBuilder: (context, i) => const Divider())
-                ],
-              ),
-            );
-          }
-          return const Center(child: CircularProgressIndicator.adaptive());
-        },
+                    SliverToBoxAdapter(
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        MediaQuery.of(context).size.width *
+                                            0.005),
+                                child: ElevatedButton(
+                                  onPressed: topFiftyButtonEnabled
+                                      ? () => buttonEnabled(1)
+                                      : null,
+                                  child: const Text('Top 50'),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        MediaQuery.of(context).size.width *
+                                            0.005),
+                                child: ElevatedButton(
+                                  onPressed: topHundredButtonEnabled
+                                      ? () => buttonEnabled(2)
+                                      : null,
+                                  child: const Row(
+                                    children: [Text('Top 100')],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        MediaQuery.of(context).size.width *
+                                            0.005),
+                                child: ElevatedButton(
+                                  onPressed: topTwoHundredFiftyButtonEnabled
+                                      ? () => buttonEnabled(3)
+                                      : null,
+                                  child: const Row(
+                                    children: [Text('Top 250')],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        MediaQuery.of(context).size.width *
+                                            0.005),
+                                child: ElevatedButton(
+                                  onPressed: () => _cryptoListBloc
+                                      .add(CryptoCoinListSorByRankEvent()),
+                                  child: const Row(
+                                    children: [Text('Sort By Rank')],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        MediaQuery.of(context).size.width *
+                                            0.005),
+                                child: ElevatedButton(
+                                  onPressed: () => _cryptoListBloc
+                                      .add(CryptoCoinListSorByMarketCupEvent()),
+                                  child: const Row(
+                                    children: [Text('Sort By Market Cap')],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        MediaQuery.of(context).size.width *
+                                            0.005),
+                                child: ElevatedButton(
+                                  onPressed: () => _cryptoListBloc.add(
+                                      CryptoCoinListSorByPercentChangeEvent()),
+                                  child: const Row(
+                                    children: [Text('Sort By % Change')],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        MediaQuery.of(context).size.width *
+                                            0.005),
+                                child: ElevatedButton(
+                                  onPressed: () => _cryptoListBloc
+                                      .add(CryptoCoinListSorByPriceEvent()),
+                                  child: const Row(
+                                    children: [Text('Sort By Price')],
+                                  ),
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                    SliverList.separated(
+                        itemCount: state.cryptoCoinList.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index < state.cryptoCoinList.length) {
+                            final coin = state.cryptoCoinList[index];
+                            return CryptoListTile(
+                              coin: coin,
+                            );
+                          } else {
+                            return const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 32),
+                              child: Center(
+                                  child: CircularProgressIndicator.adaptive()),
+                            );
+                          }
+                        },
+                        separatorBuilder: (context, i) => const Divider())
+                  ],
+                ),
+              );
+            }
+            return const Center(child: CircularProgressIndicator.adaptive());
+          },
+        ),
       ),
     );
   }

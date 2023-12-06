@@ -13,22 +13,25 @@ class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
   late String selectedCurrency = 'usd';
   late String price = '0';
+  late String basePrice = '0';
   late CryptoCoinDetails coin;
-  // late double currencyPrice;
+  late String currencyPrice;
 
-  late double numberCoins = 1.0;
+  late String numberCoins = '1.0';
 
   final AbstractCoinRepository abstractCoinRepository;
   CryptoCoinDetailsBloc(this.abstractCoinRepository)
       : super(CryptoCoinDetailsInitial()) {
     on<CryptoCoinDetailsLoadEvent>(_getCoinDetailsLoad);
     on<CryptoCoinSaveValueInTextFieldEvent>(_currency);
-    // on<CryptoCoinConvertCurrencyToCoinEvent>(_coinCount);
+    on<CryptoCoinConvertCoinToCurrencyEvent>(_coinCount);
     on<CryptoCoinCurrencySelectedEvent>(_getSelectedItem);
   }
 
-  Future<void> _getCoinDetailsLoad(CryptoCoinDetailsLoadEvent event,
-      Emitter<CryptoCoinDetailsState> emit) async {
+  Future<void> _getCoinDetailsLoad(
+    CryptoCoinDetailsLoadEvent event,
+    Emitter<CryptoCoinDetailsState> emit,
+  ) async {
     try {
       if (state is! CryptoCoinDetailsLoaded) {
         emit(CryptoCoinDetailsLoading());
@@ -36,6 +39,7 @@ class CryptoCoinDetailsBloc
       coin = await abstractCoinRepository.getCryptoCoinDetails(id: event.id);
       log('$coin');
       price = coin.marketData.currentPrice.usd.toString();
+      basePrice = price;
       emit(CryptoCoinDetailsLoaded(
         coin: coin,
         selectedItem: selectedCurrency,
@@ -47,19 +51,16 @@ class CryptoCoinDetailsBloc
   }
 
   Future<void> _currency(CryptoCoinSaveValueInTextFieldEvent event,
-      Emitter<CryptoCoinDetailsState> emit) async {
+      Emitter<CryptoCoinDetailsState> emit
+      // , String inputNumber
+      ) async {
     try {
       if (state is CryptoCoinDetailsLoaded) {
-        final coinState = state as CryptoCoinDetailsLoaded;
-        final double currency =
-            coinState.coin.marketData.currentPrice.toJson()[selectedCurrency];
+        currencyPrice =
+            (double.parse(event.saveValue) * double.parse(price)).toString();
 
-        price = currency.toString();
         emit(CryptoCoinDetailsLoaded(
-            coin: coin,
-            selectedItem: selectedCurrency,
-            price: event.saveValue));
-        log('$currency');
+            coin: coin, selectedItem: selectedCurrency, price: currencyPrice));
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
@@ -77,10 +78,8 @@ class CryptoCoinDetailsBloc
         emit(CryptoCoinDetailsLoaded(
             coin: coin, selectedItem: selectedCurrency, price: price));
 
-        // emit(CryptoCoinDetailsLoading(selectedItem: selectedCurrency));
-        // log('$coin');
         log(selectedCurrency);
-        // log('$coin');
+
         log(price);
       }
     } catch (e) {
@@ -89,31 +88,20 @@ class CryptoCoinDetailsBloc
     }
   }
 
-  // Future<void> _coinCount(
-  //   CryptoCoinConvertCurrencyToCoinEvent event,
-  //   Emitter<CryptoCoinDetailsState> emit,
-  //   //  String value
-  // ) async {
-  //   try {} catch (e) {
-  //     emit(CryptoCoinDetailsFailure(error: e));
-  //   }
-  // }
+  Future<void> _coinCount(CryptoCoinConvertCoinToCurrencyEvent event,
+      Emitter<CryptoCoinDetailsState> emit) async {
+    try {
+      if (state is CryptoCoinDetailsLoaded) {
+        numberCoins = numberCoins.isEmpty
+            ? '1.0'
+            : (double.parse(currencyPrice) / double.parse(basePrice))
+                .toString();
 
-  // Future<void> _currency(CryptoCoinConvertCoinToCurrencyEvent event,
-  //     Emitter<CryptoCoinDetailsState> emit) async {
-  //   try {
-  //     if (state is CryptoCoinDetailsLoaded) {
-  //       final coinState = state as CryptoCoinDetailsLoaded;
-  //       final double currency =
-  //           coinState.coin.marketData.currentPrice.toJson()[selectedCurrency];
-
-  //       // emit((CryptoCoinCounterToCurrency(currency: currency)));
-  //       price = currency.toString();
-  //       log('$currency');
-  //     }
-  //   } catch (e) {
-  //     emit(CryptoCoinDetailsFailure(error: e));
-  //     log('$e');
-  //   }
-  // }
+        log(numberCoins);
+      }
+    } catch (e) {
+      emit(CryptoCoinDetailsFailure(error: e));
+      log('$e');
+    }
+  }
 }

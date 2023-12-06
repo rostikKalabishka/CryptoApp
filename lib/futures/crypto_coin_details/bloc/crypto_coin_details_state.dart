@@ -33,35 +33,3 @@ class CryptoCoinDetailsFailure extends CryptoCoinDetailsState {
   @override
   List<Object> get props => super.props..add(error);
 }
-
-// class CryptoCoinDropDownMenuSelectedItem extends CryptoCoinDetailsState {
-//   final String selectedItem;
-
-//   const CryptoCoinDropDownMenuSelectedItem({required this.selectedItem});
-//   @override
-//   List<Object> get props => [selectedItem];
-// }
-
-// class CryptoCoinCurrencyToCoinCounter extends CryptoCoinDetailsState {
-//   final double coinCounter;
-
-//   const CryptoCoinCurrencyToCoinCounter({required this.coinCounter});
-//   @override
-//   List<Object> get props => [coinCounter];
-// }
-
-// class CryptoCoinCounterToCurrency extends CryptoCoinDetailsState {
-//   final double currency;
-
-//   const CryptoCoinCounterToCurrency({required this.currency});
-//   @override
-//   List<Object> get props => [currency];
-// }
-
-// class CryptoCoinDropDownMenu extends CryptoCoinDetailsState {
-//   final CurrentPrice currentPrice;
-
-//   const CryptoCoinDropDownMenu({required this.currentPrice});
-//   @override
-//   List<Object> get props => [currentPrice];
-// }

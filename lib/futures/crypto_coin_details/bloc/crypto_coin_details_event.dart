@@ -23,6 +23,7 @@ class CryptoCoinDropDownMenuEvent extends CryptoCoinDetailsEvent {
 class CryptoCoinConvertCoinToCurrencyEvent extends CryptoCoinDetailsEvent {
   final String text;
   const CryptoCoinConvertCoinToCurrencyEvent({required this.text});
+  List<Object> get props => super.props..add(text);
 }
 
 class CryptoCoinConvertCurrencyToCoinEvent extends CryptoCoinDetailsEvent {
