@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../crypto_coin_list/view/view.dart';
+import '../../portfolio/view/portfolio.dart';
 import '../../search_coin/view/search_coin_screen.dart';
 
 @RoutePage()
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> pages = const [
     CryptoCoinListScreen(),
     SearchCoinScreen(),
-    Text('Portfolio'),
+    PortfolioPage(),
     Text('Settings'),
   ];
   @override

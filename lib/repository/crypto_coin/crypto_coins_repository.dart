@@ -1,8 +1,10 @@
-import 'package:crypto_app/repository/crypto_coin/models/crypto_coin_details.dart';
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../abstract_coin_repository.dart';
-import 'models/crypto_coin.dart';
+
+import 'models/model.dart';
 
 class CryptoCoinsRepository implements AbstractCoinRepository {
   const CryptoCoinsRepository({required this.dio});
@@ -51,6 +53,32 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
         CryptoCoinDetails coin = CryptoCoinDetails.fromJson(responseData);
         // log('${coin.marketData.currentPrice.toJson()['btc']}');
         return coin;
+      } else if (response.statusCode == 429) {
+        throw Exception('You\'ve exceeded the Rate Limit');
+      } else {
+        throw Exception('Failed to fetch data');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<
+      void
+      // List<CryptocurrencySearchCoin>
+      > cryptocurrencySearch({required String query}) async {
+    try {
+      final Response response = await dio
+          .get('https://api.coingecko.com/api/v3/search', queryParameters: {
+        'query': query,
+      });
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseData =
+            response.data as Map<String, dynamic>;
+        log('$responseData');
+        // List<CryptocurrencySearchCoin> coins = responseData.map((e) => CryptocurrencySearchCoin.fromJson(e)).toList
       } else if (response.statusCode == 429) {
         throw Exception('You\'ve exceeded the Rate Limit');
       } else {

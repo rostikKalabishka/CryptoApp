@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/router/router.dart';
 import 'package:flutter/material.dart';
 
-import '../../../repository/crypto_coin/models/model.dart';
+import '../../../repository/crypto_coin/models/model.dart' show CryptoCoin;
 
 class CryptoListTile extends StatelessWidget {
   const CryptoListTile({

@@ -6,6 +6,9 @@ import 'package:crypto_app/repository/abstract_coin_repository.dart';
 import '../bloc/crypto_coin_list_bloc.dart';
 import '../widget/crypto_list_tile.dart';
 
+// ignore: camel_case_types
+enum buttonStateEnum { topFifty, topHundred, topTwoHundredFifty }
+
 @RoutePage()
 class CryptoCoinListScreen extends StatefulWidget {
   const CryptoCoinListScreen({super.key});
@@ -45,7 +48,6 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
       create: (context) => _cryptoListBloc,
       child: Scaffold(
         body: BlocBuilder<CryptoCoinListBloc, CryptoCoinListState>(
-          // bloc: _cryptoListBloc,
           builder: (BuildContext context, CryptoCoinListState state) {
             if (state is CryptoCoinListLoaded) {
               return RefreshIndicator.adaptive(
@@ -86,7 +88,8 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                             0.005),
                                 child: ElevatedButton(
                                   onPressed: topFiftyButtonEnabled
-                                      ? () => buttonEnabled(1)
+                                      ? () => buttonEnabled(
+                                          buttonStateEnum.topFifty)
                                       : null,
                                   child: const Text('Top 50'),
                                 ),
@@ -98,7 +101,8 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                             0.005),
                                 child: ElevatedButton(
                                   onPressed: topHundredButtonEnabled
-                                      ? () => buttonEnabled(2)
+                                      ? () => buttonEnabled(
+                                          buttonStateEnum.topHundred)
                                       : null,
                                   child: const Row(
                                     children: [Text('Top 100')],
@@ -112,7 +116,8 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                             0.005),
                                 child: ElevatedButton(
                                   onPressed: topTwoHundredFiftyButtonEnabled
-                                      ? () => buttonEnabled(3)
+                                      ? () => buttonEnabled(
+                                          buttonStateEnum.topTwoHundredFifty)
                                       : null,
                                   child: const Row(
                                     children: [Text('Top 250')],
@@ -202,23 +207,23 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
     );
   }
 
-  void buttonEnabled(int index) {
-    switch (index) {
-      case 1:
+  void buttonEnabled(buttonStateEnum buttonEnum) {
+    switch (buttonEnum) {
+      case buttonStateEnum.topFifty:
         setState(() {
           topFiftyButtonEnabled = false;
           topHundredButtonEnabled = true;
           topTwoHundredFiftyButtonEnabled = true;
         });
         _cryptoListBloc.add(CryptoCoinListLoadTopFiftyCoinEvent());
-      case 2:
+      case buttonStateEnum.topHundred:
         setState(() {
           topFiftyButtonEnabled = true;
           topHundredButtonEnabled = false;
           topTwoHundredFiftyButtonEnabled = true;
         });
         _cryptoListBloc.add(CryptoCoinListLoadEvent());
-      case 3:
+      case buttonStateEnum.topTwoHundredFifty:
         setState(() {
           topFiftyButtonEnabled = true;
           topHundredButtonEnabled = true;

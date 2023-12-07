@@ -22,7 +22,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
 
   late final TextEditingController coinCountController;
   late final TextEditingController currencyController;
-  // double currentPrice = widget.coin.currentPrice;
+
   @override
   void initState() {
     _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.coin.id));
@@ -42,7 +42,6 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
       create: (context) => _blocDetails,
       child: Scaffold(
         body: BlocBuilder<CryptoCoinDetailsBloc, CryptoCoinDetailsState>(
-          // bloc: _blocDetails,
           builder: (context, state) {
             if (state is CryptoCoinDetailsLoaded) {
               return RefreshIndicator.adaptive(
