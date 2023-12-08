@@ -13,7 +13,7 @@ CryptocurrencySearchCoin _$CryptocurrencySearchCoinFromJson(
       name: json['name'] as String,
       apiSymbol: json['api_symbol'] as String,
       symbol: json['symbol'] as String,
-      marketCapRank: json['market_cap_rank'] as int,
+      marketCapRank: json['market_cap_rank'] as int?,
       thumb: json['thumb'] as String,
       large: json['large'] as String,
     );

@@ -8,7 +8,8 @@ class CryptocurrencySearchCoin extends Equatable {
   final String name;
   final String apiSymbol;
   final String symbol;
-  final int marketCapRank;
+  @JsonKey(name: 'market_cap_rank')
+  final int? marketCapRank;
   final String thumb;
   final String large;
 

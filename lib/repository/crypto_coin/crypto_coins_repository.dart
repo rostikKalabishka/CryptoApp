@@ -64,10 +64,8 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
   }
 
   @override
-  Future<
-      void
-      // List<CryptocurrencySearchCoin>
-      > cryptocurrencySearch({required String query}) async {
+  Future<List<CryptocurrencySearchCoin>> cryptocurrencySearch(
+      {required String query}) async {
     try {
       final Response response = await dio
           .get('https://api.coingecko.com/api/v3/search', queryParameters: {
@@ -78,7 +76,14 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
         Map<String, dynamic> responseData =
             response.data as Map<String, dynamic>;
         log('$responseData');
-        // List<CryptocurrencySearchCoin> coins = responseData.map((e) => CryptocurrencySearchCoin.fromJson(e)).toList
+        final coins = responseData['coins'] as List<dynamic>;
+        log('$coins');
+        List<CryptocurrencySearchCoin> queryResponseList = coins
+            .map((e) =>
+                CryptocurrencySearchCoin.fromJson(e as Map<String, dynamic>))
+            .toList();
+        log('$queryResponseList');
+        return queryResponseList;
       } else if (response.statusCode == 429) {
         throw Exception('You\'ve exceeded the Rate Limit');
       } else {

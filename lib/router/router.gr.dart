@@ -37,6 +37,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeScreen(),
       );
     },
+    PortfolioRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PortfolioPage(),
+      );
+    },
     SearchCoinRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -108,6 +114,20 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PortfolioPage]
+class PortfolioRoute extends PageRouteInfo<void> {
+  const PortfolioRoute({List<PageRouteInfo>? children})
+      : super(
+          PortfolioRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PortfolioRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

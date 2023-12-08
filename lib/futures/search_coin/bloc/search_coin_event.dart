@@ -6,3 +6,11 @@ sealed class SearchCoinEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class SearchQueryEvent extends SearchCoinEvent {
+  final String query;
+
+  const SearchQueryEvent({required this.query});
+  @override
+  List<Object> get props => super.props..add(query);
+}
