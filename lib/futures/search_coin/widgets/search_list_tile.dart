@@ -11,7 +11,7 @@ class SearchListTile extends StatelessWidget {
   final String image;
   final String name;
   final String symbol;
-  final int marketCapRank;
+  final int? marketCapRank;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,9 @@ class SearchListTile extends StatelessWidget {
           ),
         ],
       ),
-      trailing: Text('$marketCapRank#'),
+      trailing: marketCapRank != null
+          ? Text('$marketCapRank#')
+          : const SizedBox.shrink(),
     );
   }
 }

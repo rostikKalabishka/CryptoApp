@@ -19,6 +19,14 @@ final class SearchCoinLoadedQuery extends SearchCoinState {
   List<Object> get props => super.props..add(cryptocurrencySearchCoin);
 }
 
+final class TrendingCryptoLoaded extends SearchCoinState {
+  final List<TrendingCoin> trendingCryptoList;
+
+  const TrendingCryptoLoaded({required this.trendingCryptoList});
+  @override
+  List<Object> get props => super.props..add(trendingCryptoList);
+}
+
 final class SearchCoinFailure extends SearchCoinState {
   final Object error;
 

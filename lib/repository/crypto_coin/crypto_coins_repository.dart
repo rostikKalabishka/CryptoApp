@@ -93,4 +93,33 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
       throw Exception(e);
     }
   }
+
+  @override
+  Future<List<TrendingCoin>> getTrendingCryptoCoin() async {
+    try {
+      final Response response =
+          await dio.get('https://api.coingecko.com/api/v3/search/trending');
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseData =
+            response.data as Map<String, dynamic>;
+        log('$responseData');
+        final coins = responseData['coins'] as List<dynamic>;
+        log('$coins');
+
+        List<TrendingCoin> trendingCryptoList = coins
+            .map(
+                (e) => TrendingCoin.fromJson(e['item'] as Map<String, dynamic>))
+            .toList();
+        log('$trendingCryptoList');
+        return trendingCryptoList;
+      } else if (response.statusCode == 429) {
+        throw Exception('You\'ve exceeded the Rate Limit');
+      } else {
+        throw Exception('Failed to fetch data');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

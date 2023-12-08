@@ -14,3 +14,7 @@ class SearchQueryEvent extends SearchCoinEvent {
   @override
   List<Object> get props => super.props..add(query);
 }
+
+class TrendingCoinListLoadedEvent extends SearchCoinEvent {
+  const TrendingCoinListLoadedEvent();
+}

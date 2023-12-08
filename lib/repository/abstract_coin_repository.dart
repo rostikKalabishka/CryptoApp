@@ -8,4 +8,6 @@ abstract interface class AbstractCoinRepository {
 
   Future<List<CryptocurrencySearchCoin>> cryptocurrencySearch(
       {required String query});
+
+  Future<List<TrendingCoin>> getTrendingCryptoCoin();
 }

@@ -19,88 +19,110 @@ class SearchCoinScreen extends StatefulWidget {
 }
 
 class _SearchCoinScreenState extends State<SearchCoinScreen> {
-  final searchCoinBloc = SearchCoinBloc(GetIt.I<AbstractCoinRepository>());
+  final searchCoinController = TextEditingController();
+  final _searchCoinBloc = SearchCoinBloc(GetIt.I<AbstractCoinRepository>());
+  @override
+  void initState() {
+    _searchCoinBloc.add(const TrendingCoinListLoadedEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return BlocProvider(
-      create: (context) => searchCoinBloc,
+      create: (context) => _searchCoinBloc,
       child: Scaffold(
-        body: BlocBuilder<SearchCoinBloc, SearchCoinState>(
-          builder: (context, state) {
-            if (state is SearchCoinLoadedQuery) {
-              return RefreshIndicator.adaptive(
-                onRefresh: () async {},
-                child: CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      // actions: [
-                      //   IconButton(
-                      //     icon: Icon(Icons.abc),
-                      //     onPressed: () async {
-                      //       await GetIt.I<AbstractCoinRepository>()
-                      //           .cryptocurrencySearch(query: 'btc');
-                      //     },
-                      //   )
-                      // ],
-                      centerTitle: true,
-                      pinned: true,
-                      title: Text(
-                        'Crypto App',
-                        style: theme.textTheme.bodyLarge
-                            ?.copyWith(fontWeight: FontWeight.w400),
-                      ),
-                      snap: true,
-                      floating: true,
-                      elevation: 0,
-                      bottom: PreferredSize(
-                          preferredSize: Size.fromHeight(
-                              MediaQuery.of(context).size.height * 0.09),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: scaffoldBackground,
-                                  borderRadius: BorderRadius.circular(12)),
-                              width: double.infinity,
-                              margin: const EdgeInsets.symmetric(horizontal: 8)
-                                  .copyWith(bottom: 12),
-                              padding: const EdgeInsets.all(1),
-                              child: TextFormField(
-                                style: theme.textTheme.bodySmall,
-                                decoration: const InputDecoration(
-                                    hintText: 'Search for a coin...',
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide.none)),
-                              ))),
-                    ),
-                    SliverList.separated(
-                      itemCount: 20,
-                      itemBuilder: (context, index) {
-                        return SearchListTile(
-                          image:
-                              'https://assets.coingecko.com/coins/images/19512/thumb/tzbtc.png',
-                          name: 'Bitcoin',
-                          symbol: 'BTC',
-                          marketCapRank: 1,
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          child: Divider(),
-                        );
-                      },
-                    )
-                  ],
+        body: RefreshIndicator.adaptive(
+          onRefresh: () async {},
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                centerTitle: true,
+                pinned: true,
+                title: Text(
+                  'Crypto App',
+                  style: theme.textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.w400),
                 ),
-              );
-            }
-
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
-          },
+                snap: true,
+                floating: true,
+                elevation: 0,
+                bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(
+                        MediaQuery.of(context).size.height * 0.09),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: scaffoldBackground,
+                            borderRadius: BorderRadius.circular(12)),
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(horizontal: 8)
+                            .copyWith(bottom: 12),
+                        padding: const EdgeInsets.all(1),
+                        child: TextFormField(
+                          controller: searchCoinController,
+                          onChanged: (text) {
+                            _searchCoinBloc.add(SearchQueryEvent(query: text));
+                          },
+                          style: theme.textTheme.bodySmall,
+                          decoration: const InputDecoration(
+                              hintText: 'Search for a coin...',
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none)),
+                        ))),
+              ),
+              BlocBuilder<SearchCoinBloc, SearchCoinState>(
+                  builder: (context, state) {
+                if (state is SearchCoinLoadedQuery) {
+                  return SliverList.separated(
+                    itemCount: state.cryptocurrencySearchCoin.length,
+                    itemBuilder: (context, index) {
+                      return SearchListTile(
+                        image: state.cryptocurrencySearchCoin[index].thumb,
+                        name: state.cryptocurrencySearchCoin[index].name,
+                        symbol: state.cryptocurrencySearchCoin[index].symbol,
+                        marketCapRank:
+                            state.cryptocurrencySearchCoin[index].marketCapRank,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: Divider(),
+                      );
+                    },
+                  );
+                } else if (state is TrendingCryptoLoaded) {
+                  return SliverList.separated(
+                    itemCount: state.trendingCryptoList.length,
+                    itemBuilder: (context, index) {
+                      return SearchListTile(
+                        image: state.trendingCryptoList[index].thumb,
+                        name: state.trendingCryptoList[index].name,
+                        symbol: state.trendingCryptoList[index].symbol,
+                        marketCapRank:
+                            state.trendingCryptoList[index].marketCapRank,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        child: Divider(),
+                      );
+                    },
+                  );
+                } else {
+                  return const SliverToBoxAdapter(
+                    child: Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                  );
+                }
+              })
+            ],
+          ),
         ),
       ),
     );
