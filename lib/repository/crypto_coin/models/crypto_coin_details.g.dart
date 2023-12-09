@@ -31,8 +31,8 @@ CryptoCoinDetails _$CryptoCoinDetailsFromJson(Map<String, dynamic> json) =>
       sentimentVotesDownPercentage:
           (json['sentiment_votes_down_percentage'] as num).toDouble(),
       watchlistPortfolioUsers: json['watchlist_portfolio_users'] as int,
-      marketCapRank: json['market_cap_rank'] as int,
-      coingeckoRank: json['coingecko_rank'] as int,
+      marketCapRank: json['market_cap_rank'] as int?,
+      coingeckoRank: json['coingecko_rank'] as int?,
       coingeckoScore: (json['coingecko_score'] as num).toDouble(),
       developerScore: (json['developer_score'] as num).toDouble(),
       communityScore: (json['community_score'] as num).toDouble(),

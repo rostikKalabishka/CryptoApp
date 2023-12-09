@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import '../../../repository/abstract_coin_repository.dart';
-import '../../../repository/crypto_coin/models/crypto_coin.dart';
+
 import '../bloc/crypto_coin_details_bloc.dart';
 import '../widget/widgets.dart';
 
 @RoutePage()
 class CryptoCoinDetailsScreen extends StatefulWidget {
-  const CryptoCoinDetailsScreen({super.key, this.coin, required this.id});
-  final CryptoCoin? coin;
+  const CryptoCoinDetailsScreen({super.key, required this.id});
+
   final String id;
   @override
   State<CryptoCoinDetailsScreen> createState() =>
@@ -27,11 +27,11 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
   void initState() {
     _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.id));
 
-    coinCountController =
-        TextEditingController(text: _blocDetails.numberCoins.toString());
-    currencyController = TextEditingController(
-        text: (num.parse(coinCountController.text) * widget.coin!.currentPrice)
-            .toString());
+    // coinCountController =
+    //     TextEditingController(text: _blocDetails.numberCoins.toString());
+    // currencyController = TextEditingController(
+    //     text: (num.parse(coinCountController.text) * widget.coin!.currentPrice)
+    //         .toString());
     super.initState();
   }
 
@@ -70,7 +70,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                         child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Text(
-                        '\$${widget.coin!.currentPrice}',
+                        '\$${state.currentPriceInUsd}',
                         style: theme.textTheme.bodyLarge,
                       ),
                     )),
@@ -109,7 +109,6 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                         padding: const EdgeInsets.all(12.0),
                         child: CardDateWidget(
                           coinDetails: state.coin,
-                          coinInfoFromList: widget.coin!,
                         ),
                       ),
                     ),
@@ -148,8 +147,8 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                   ),
                   OutlinedButton(
                       onPressed: () async {
-                        _blocDetails.add(
-                            CryptoCoinDetailsLoadEvent(id: widget.coin!.id));
+                        _blocDetails
+                            .add(CryptoCoinDetailsLoadEvent(id: widget.id));
                       },
                       child: const Text('Try Again'))
                 ],

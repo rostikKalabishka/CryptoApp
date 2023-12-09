@@ -16,6 +16,7 @@ class CryptoCoinDetailsBloc
   late String basePrice = '0';
   late CryptoCoinDetails coin;
   late String currencyPrice;
+  late String currentPriceInUsd;
 
   late String numberCoins = '1.0';
 
@@ -40,11 +41,13 @@ class CryptoCoinDetailsBloc
       log('$coin');
       price = coin.marketData.currentPrice.usd.toString();
       basePrice = price;
+
+      currentPriceInUsd = coin.marketData.currentPrice.usd.toString();
       emit(CryptoCoinDetailsLoaded(
-        coin: coin,
-        selectedItem: selectedCurrency,
-        price: price,
-      ));
+          coin: coin,
+          selectedItem: selectedCurrency,
+          price: price,
+          currentPriceInUsd: currentPriceInUsd));
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
     }
@@ -60,7 +63,10 @@ class CryptoCoinDetailsBloc
             (double.parse(event.saveValue) * double.parse(price)).toString();
 
         emit(CryptoCoinDetailsLoaded(
-            coin: coin, selectedItem: selectedCurrency, price: currencyPrice));
+            coin: coin,
+            selectedItem: selectedCurrency,
+            price: currencyPrice,
+            currentPriceInUsd: currentPriceInUsd));
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
@@ -76,7 +82,10 @@ class CryptoCoinDetailsBloc
         price =
             coin.marketData.currentPrice.toJson()[selectedCurrency].toString();
         emit(CryptoCoinDetailsLoaded(
-            coin: coin, selectedItem: selectedCurrency, price: price));
+            coin: coin,
+            selectedItem: selectedCurrency,
+            price: price,
+            currentPriceInUsd: currentPriceInUsd));
 
         log(selectedCurrency);
 

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/home/view/home_screen.dart';
-import 'package:crypto_app/repository/crypto_coin/models/model.dart';
+
 import 'package:flutter/material.dart';
 
 import '../futures/crypto_coin_details/view/coin_details.dart';

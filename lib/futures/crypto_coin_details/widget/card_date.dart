@@ -11,11 +11,9 @@ class CardDateWidget extends StatelessWidget {
   const CardDateWidget({
     Key? key,
     required this.coinDetails,
-    required this.coinInfoFromList,
   }) : super(key: key);
 
   final CryptoCoinDetails coinDetails;
-  final CryptoCoin coinInfoFromList;
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +27,18 @@ class CardDateWidget extends StatelessWidget {
           ),
           const Divider(),
           RowInCard(
+            text: 'Community Score',
+            textInfo: '${coinDetails.communityScore}',
+          ),
+          const Divider(),
+          RowInCard(
+            text: 'Price Change 24h',
+            textInfo: '\$${coinDetails.marketData.priceChange24h}',
+          ),
+          const Divider(),
+          RowInCard(
             text: 'Market Cap',
-            textInfo: '\$${coinInfoFromList.marketCap}',
-          ),
-          const Divider(),
-          RowInCard(
-            text: 'Fully Diluted Valuation',
-            textInfo: '\$${coinInfoFromList.fullyDilutedValuation}',
-          ),
-          const Divider(),
-          RowInCard(
-            text: 'Total Volume',
-            textInfo: '\$${coinInfoFromList.totalVolume}',
+            textInfo: '\$${coinDetails.marketData.marketCap.usd}',
           ),
           const Divider(),
           RowInCard(
@@ -48,6 +46,15 @@ class CardDateWidget extends StatelessWidget {
             textInfo: coinDetails.links.homepage.first,
           ),
           const Divider(),
+          coinDetails.links.reposUrl.github.isNotEmpty
+              ? RowInCard(
+                  text: 'GitHub',
+                  textInfo: coinDetails.links.reposUrl.github[0],
+                )
+              : const SizedBox.shrink(),
+          coinDetails.links.reposUrl.github.isNotEmpty
+              ? const Divider()
+              : const SizedBox.shrink(),
           RowInCard(
             text: 'Max Supply',
             textInfo: '${coinDetails.marketData.maxSupply ?? '?'}',

@@ -15,13 +15,14 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
 
   final String price;
 
-  const CryptoCoinDetailsLoaded({
-    required this.coin,
-    required this.selectedItem,
-    required this.price,
-  });
+  final String currentPriceInUsd;
+  const CryptoCoinDetailsLoaded(
+      {required this.coin,
+      required this.selectedItem,
+      required this.price,
+      required this.currentPriceInUsd});
   @override
-  List<Object> get props => [coin, selectedItem, price];
+  List<Object> get props => [coin, selectedItem, price, currentPriceInUsd];
 }
 
 class CryptoCoinDetailsLoading extends CryptoCoinDetailsState {}
