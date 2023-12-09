@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
 import '../../../repository/abstract_coin_repository.dart';
 import '../../../repository/crypto_coin/models/crypto_coin.dart';
 import '../bloc/crypto_coin_details_bloc.dart';
@@ -10,8 +9,9 @@ import '../widget/widgets.dart';
 
 @RoutePage()
 class CryptoCoinDetailsScreen extends StatefulWidget {
-  const CryptoCoinDetailsScreen({super.key, required this.coin});
-  final CryptoCoin coin;
+  const CryptoCoinDetailsScreen({super.key, this.coin, required this.id});
+  final CryptoCoin? coin;
+  final String id;
   @override
   State<CryptoCoinDetailsScreen> createState() =>
       _CryptoCoinDetailsScreenState();
@@ -25,12 +25,12 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
 
   @override
   void initState() {
-    _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.coin.id));
+    _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.id));
 
     coinCountController =
         TextEditingController(text: _blocDetails.numberCoins.toString());
     currencyController = TextEditingController(
-        text: (num.parse(coinCountController.text) * widget.coin.currentPrice)
+        text: (num.parse(coinCountController.text) * widget.coin!.currentPrice)
             .toString());
     super.initState();
   }
@@ -46,8 +46,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
             if (state is CryptoCoinDetailsLoaded) {
               return RefreshIndicator.adaptive(
                 onRefresh: () async {
-                  _blocDetails
-                      .add(CryptoCoinDetailsLoadEvent(id: widget.coin.id));
+                  _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.id));
                 },
                 child: CustomScrollView(
                   slivers: [
@@ -71,22 +70,16 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                         child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Text(
-                        '\$${widget.coin.currentPrice}',
+                        '\$${widget.coin!.currentPrice}',
                         style: theme.textTheme.bodyLarge,
                       ),
                     )),
 
                     SliverToBoxAdapter(
                       child: CryptoCalculator(
-                        // coinCountController: coinCountController,
-                        // currencyController: currencyController,
                         blocDetails: _blocDetails,
                         coin: state.coin,
 
-                        // dropdownValueFunc: (String dropdownValue) {
-                        //   _blocDetails.add(CryptoCoinCurrencySelectedEvent(
-                        //       selectedCurrency: dropdownValue));
-                        // },
                         func: (text) {
                           _blocDetails.add(
                             CryptoCoinConvertCoinToCurrencyEvent(
@@ -116,7 +109,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                         padding: const EdgeInsets.all(12.0),
                         child: CardDateWidget(
                           coinDetails: state.coin,
-                          coinInfoFromList: widget.coin,
+                          coinInfoFromList: widget.coin!,
                         ),
                       ),
                     ),
@@ -156,7 +149,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                   OutlinedButton(
                       onPressed: () async {
                         _blocDetails.add(
-                            CryptoCoinDetailsLoadEvent(id: widget.coin.id));
+                            CryptoCoinDetailsLoadEvent(id: widget.coin!.id));
                       },
                       child: const Text('Try Again'))
                 ],

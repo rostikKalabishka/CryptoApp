@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/router/router.dart';
 import 'package:flutter/material.dart';
 
 class SearchListTile extends StatelessWidget {
@@ -7,16 +9,21 @@ class SearchListTile extends StatelessWidget {
     required this.name,
     required this.symbol,
     required this.marketCapRank,
+    required this.id,
   });
   final String image;
   final String name;
   final String symbol;
   final int? marketCapRank;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListTile(
+      onTap: () {
+        AutoRouter.of(context).push(CryptoCoinDetailsRoute(id: id));
+      },
       leading: AspectRatio(
         aspectRatio: 0.45,
         child: Image.network(

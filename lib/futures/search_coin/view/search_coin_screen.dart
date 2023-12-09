@@ -80,6 +80,7 @@ class _SearchCoinScreenState extends State<SearchCoinScreen> {
                     itemCount: state.cryptocurrencySearchCoin.length,
                     itemBuilder: (context, index) {
                       return SearchListTile(
+                        id: state.cryptocurrencySearchCoin[index].id,
                         image: state.cryptocurrencySearchCoin[index].thumb,
                         name: state.cryptocurrencySearchCoin[index].name,
                         symbol: state.cryptocurrencySearchCoin[index].symbol,
@@ -99,6 +100,7 @@ class _SearchCoinScreenState extends State<SearchCoinScreen> {
                     itemCount: state.trendingCryptoList.length,
                     itemBuilder: (context, index) {
                       return SearchListTile(
+                        id: state.trendingCryptoList[index].id,
                         image: state.trendingCryptoList[index].thumb,
                         name: state.trendingCryptoList[index].name,
                         symbol: state.trendingCryptoList[index].symbol,

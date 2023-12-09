@@ -22,6 +22,7 @@ abstract class _$AppRouter extends RootStackRouter {
         child: CryptoCoinDetailsScreen(
           key: args.key,
           coin: args.coin,
+          id: args.id,
         ),
       );
     },
@@ -57,13 +58,15 @@ abstract class _$AppRouter extends RootStackRouter {
 class CryptoCoinDetailsRoute extends PageRouteInfo<CryptoCoinDetailsRouteArgs> {
   CryptoCoinDetailsRoute({
     Key? key,
-    required CryptoCoin coin,
+    CryptoCoin? coin,
+    required String id,
     List<PageRouteInfo>? children,
   }) : super(
           CryptoCoinDetailsRoute.name,
           args: CryptoCoinDetailsRouteArgs(
             key: key,
             coin: coin,
+            id: id,
           ),
           initialChildren: children,
         );
@@ -77,16 +80,19 @@ class CryptoCoinDetailsRoute extends PageRouteInfo<CryptoCoinDetailsRouteArgs> {
 class CryptoCoinDetailsRouteArgs {
   const CryptoCoinDetailsRouteArgs({
     this.key,
-    required this.coin,
+    this.coin,
+    required this.id,
   });
 
   final Key? key;
 
-  final CryptoCoin coin;
+  final CryptoCoin? coin;
+
+  final String id;
 
   @override
   String toString() {
-    return 'CryptoCoinDetailsRouteArgs{key: $key, coin: $coin}';
+    return 'CryptoCoinDetailsRouteArgs{key: $key, coin: $coin, id: $id}';
   }
 }
 
