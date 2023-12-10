@@ -24,7 +24,7 @@ class SearchCoinBloc extends Bloc<SearchCoinEvent, SearchCoinState> {
 
     final completer = Completer<void>();
 
-    searchDebounce = Timer(const Duration(milliseconds: 500), () async {
+    searchDebounce = Timer(const Duration(milliseconds: 200), () async {
       final coinList =
           await abstractCoinRepository.cryptocurrencySearch(query: event.query);
       emit(SearchCoinLoadedQuery(cryptocurrencySearchCoin: coinList));
@@ -37,7 +37,13 @@ class SearchCoinBloc extends Bloc<SearchCoinEvent, SearchCoinState> {
 
   Future<void> _getTrendingList(
       TrendingCoinListLoadedEvent event, Emitter<SearchCoinState> emit) async {
-    final coinList = await abstractCoinRepository.getTrendingCryptoCoin();
-    emit(TrendingCryptoLoaded(trendingCryptoList: coinList));
+    final completer = Completer<void>();
+
+    searchDebounce = Timer(const Duration(milliseconds: 250), () async {
+      final coinList = await abstractCoinRepository.getTrendingCryptoCoin();
+      emit(TrendingCryptoLoaded(trendingCryptoList: coinList));
+      completer.complete();
+    });
+    await completer.future;
   }
 }

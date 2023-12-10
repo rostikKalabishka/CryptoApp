@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 
 import '../abstract_coin_repository.dart';
@@ -75,14 +73,14 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData =
             response.data as Map<String, dynamic>;
-        log('$responseData');
+        // log('$responseData');
         final coins = responseData['coins'] as List<dynamic>;
-        log('$coins');
+        // log('$coins');
         List<CryptocurrencySearchCoin> queryResponseList = coins
             .map((e) =>
                 CryptocurrencySearchCoin.fromJson(e as Map<String, dynamic>))
             .toList();
-        log('$queryResponseList');
+        // log('$queryResponseList');
         return queryResponseList;
       } else if (response.statusCode == 429) {
         throw Exception('You\'ve exceeded the Rate Limit');
@@ -103,15 +101,15 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData =
             response.data as Map<String, dynamic>;
-        log('$responseData');
+        // log('$responseData');
         final coins = responseData['coins'] as List<dynamic>;
-        log('$coins');
+        // log('$coins');
 
         List<TrendingCoin> trendingCryptoList = coins
             .map(
                 (e) => TrendingCoin.fromJson(e['item'] as Map<String, dynamic>))
             .toList();
-        log('$trendingCryptoList');
+        // log('$trendingCryptoList');
         return trendingCryptoList;
       } else if (response.statusCode == 429) {
         throw Exception('You\'ve exceeded the Rate Limit');

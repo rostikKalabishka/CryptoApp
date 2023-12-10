@@ -38,7 +38,7 @@ class CryptoCoinDetailsBloc
         emit(CryptoCoinDetailsLoading());
       }
       coin = await abstractCoinRepository.getCryptoCoinDetails(id: event.id);
-      log('$coin');
+
       price = coin.marketData.currentPrice.usd.toString();
       basePrice = price;
 
@@ -87,9 +87,9 @@ class CryptoCoinDetailsBloc
             price: price,
             currentPriceInUsd: currentPriceInUsd));
 
-        log(selectedCurrency);
+        // log(selectedCurrency);
 
-        log(price);
+        // log(price);
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
@@ -106,7 +106,7 @@ class CryptoCoinDetailsBloc
             : (double.parse(currencyPrice) / double.parse(basePrice))
                 .toString();
 
-        log(numberCoins);
+        // log(numberCoins);
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));

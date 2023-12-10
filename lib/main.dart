@@ -6,6 +6,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import 'repository/abstract_auth_repository.dart';
+import 'repository/auth/auth_repository.dart';
 import 'repository/crypto_coin/crypto_coins_repository.dart';
 
 void main() async {
@@ -18,5 +20,8 @@ void main() async {
 
   GetIt.I.registerLazySingleton<AbstractCoinRepository>(
       () => CryptoCoinsRepository(dio: dio));
+
+  GetIt.I.registerLazySingleton<AbstractAuthRepository>(
+      () => AuthRepository(dio: dio));
   runApp(const CryptoApp());
 }
