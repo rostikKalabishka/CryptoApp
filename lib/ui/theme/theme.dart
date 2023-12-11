@@ -6,7 +6,7 @@ final darkTheme = ThemeData.dark().copyWith(
       centerTitle: true,
       surfaceTintColor: Colors.transparent,
       // color: Color.fromARGB(255, 13, 24, 34)
-      //color: scaffoldBackground
+      color: scaffoldBackground,
       iconTheme: IconThemeData(color: Colors.blue)),
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -17,6 +17,8 @@ final darkTheme = ThemeData.dark().copyWith(
   primaryColorDark: const Color.fromARGB(255, 3, 28, 49),
   // colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 3, 21, 36)),
   iconTheme: const IconThemeData(color: const Color.fromARGB(255, 1, 13, 100)),
+  bottomNavigationBarTheme:
+      const BottomNavigationBarThemeData(backgroundColor: scaffoldBackground),
   textTheme: const TextTheme(
       bodyLarge: TextStyle(
         fontSize: 26,

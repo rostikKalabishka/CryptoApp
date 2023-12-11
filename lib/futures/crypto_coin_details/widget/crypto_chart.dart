@@ -1,4 +1,5 @@
 import 'package:crypto_app/futures/crypto_coin_details/model/chart_data.dart';
+import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -221,10 +222,31 @@ class _CryptoChartState extends State<CryptoChart> {
           borderColor: Colors.transparent),
       series: <ChartSeries<ChartData, int>>[
         SplineAreaSeries(
+          dataSource: data,
+          xValueMapper: (ChartData data, _) => data.index,
+          yValueMapper: (ChartData data, _) => data.price,
+          splineType: SplineType.natural,
+          gradient: LinearGradient(
+              colors: [splineColor, scaffoldBackground.withAlpha(150)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter),
+        ),
+        SplineSeries(
+            // markerSettings: MarkerSettings(
+            //     // isVisible: true,
+            //     // color: accentColor,
+            //     // borderWidth: 0.001,
+            //     ),
+            color: accentColor,
             dataSource: data,
             xValueMapper: (ChartData data, _) => data.index,
             yValueMapper: (ChartData data, _) => data.price)
       ],
+      trackballBehavior: TrackballBehavior(
+        enable: true,
+        lineType: TrackballLineType.vertical,
+        tooltipSettings: const InteractiveTooltip(enable: true),
+      ),
     );
   }
 }

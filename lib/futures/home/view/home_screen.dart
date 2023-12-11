@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
 
 import '../../crypto_coin_list/view/view.dart';
@@ -40,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   BottomNavigationBar bottomNavigationBar() {
     return BottomNavigationBar(
+      backgroundColor: scaffoldBackground,
       onTap: onPageChanged,
       unselectedItemColor: Colors.white,
       currentIndex: _indexPage,
