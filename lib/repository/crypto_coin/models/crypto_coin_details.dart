@@ -23,7 +23,7 @@ class CryptoCoinDetails extends Equatable {
   final double sentimentVotesDownPercentage;
   final int watchlistPortfolioUsers;
   final int? marketCapRank;
-  final int? coingeckoRank;
+  final double? coingeckoRank;
   final double coingeckoScore;
   final double developerScore;
   final double communityScore;

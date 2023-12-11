@@ -16,7 +16,7 @@ class _CryptoAppState extends State<CryptoApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Crypto App',
       theme: darkTheme,
       routerConfig: _appRouter.config(),
     );

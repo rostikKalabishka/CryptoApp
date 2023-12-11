@@ -101,7 +101,12 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
 
                     //chart
                     const SliverToBoxAdapter(
-                      child: CryptoChart(),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 12,
+                        ),
+                        child: CryptoChart(),
+                      ),
                     ),
 
                     SliverToBoxAdapter(
