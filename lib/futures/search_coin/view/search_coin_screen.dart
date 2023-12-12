@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/search_coin/bloc/search_coin_bloc.dart';
 import 'package:crypto_app/futures/search_coin/widgets/widgets.dart';
-import 'package:flutter/material.dart';
-
 import 'package:crypto_app/ui/theme/const.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -36,7 +33,10 @@ class _SearchCoinScreenState extends State<SearchCoinScreen> {
       create: (context) => _searchCoinBloc,
       child: Scaffold(
         body: RefreshIndicator.adaptive(
-          onRefresh: () async {},
+          onRefresh: () async {
+            searchCoinController.clear();
+            _searchCoinBloc.add(const TrendingCoinListLoadedEvent());
+          },
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -55,7 +55,7 @@ class _SearchCoinScreenState extends State<SearchCoinScreen> {
                       MediaQuery.of(context).size.height * 0.09),
                   child: Container(
                     decoration: BoxDecoration(
-                        color: scaffoldBackground,
+                        color: splineColor.withAlpha(45),
                         borderRadius: BorderRadius.circular(12)),
                     width: double.infinity,
                     margin: const EdgeInsets.symmetric(horizontal: 8)
@@ -64,19 +64,20 @@ class _SearchCoinScreenState extends State<SearchCoinScreen> {
                     child: TextFormField(
                       controller: searchCoinController,
                       onChanged: (text) {
-                        final completer = Completer<void>();
+                        // final completer = Completer<void>();
                         if (text.isEmpty) {
                           _searchCoinBloc
                               .add(const TrendingCoinListLoadedEvent());
-                          completer.future;
+                          // completer.future;
                         } else if (text.isNotEmpty) {
                           _searchCoinBloc.add(SearchQueryEvent(query: text));
-                          completer.complete();
+                          // completer.complete();
                         }
                       },
                       style: theme.textTheme.bodySmall,
                       decoration: const InputDecoration(
                           hintText: 'Search for a coin...',
+                          hintStyle: TextStyle(color: Colors.white),
                           border:
                               OutlineInputBorder(borderSide: BorderSide.none),
                           enabledBorder:

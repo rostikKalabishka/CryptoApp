@@ -55,6 +55,7 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -79,8 +80,9 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
                     keyboardType: TextInputType.number,
                     maxLines: 1,
                     textAlign: TextAlign.start,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
+                    decoration: InputDecoration(
+                      fillColor: theme.cardColor,
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                       ),
                       contentPadding: EdgeInsets.symmetric(vertical: 8),
@@ -149,10 +151,7 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: DropdownButtonMenu(
-                  func:
-                      //  (dropdownValue) =>
-                      //     widget.dropdownValueFunc!(dropdownValue),
-                      (dropdownValue) {
+                  func: (dropdownValue) {
                     widget.blocDetails.add(CryptoCoinCurrencySelectedEvent(
                         selectedCurrency: dropdownValue));
                   },

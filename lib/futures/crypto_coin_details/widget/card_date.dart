@@ -17,7 +17,9 @@ class CardDateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
+      color: theme.cardColor,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [

@@ -50,7 +50,10 @@ class SearchListTile extends StatelessWidget {
         ],
       ),
       trailing: marketCapRank != null
-          ? Text('$marketCapRank#')
+          ? Text(
+              '$marketCapRank#',
+              style: theme.textTheme.bodySmall?.copyWith(fontSize: 12),
+            )
           : const SizedBox.shrink(),
     );
   }

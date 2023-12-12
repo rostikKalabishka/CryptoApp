@@ -2,6 +2,8 @@ import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData.dark().copyWith(
+  cardColor: splineColor.withAlpha(100),
+  colorScheme: ColorScheme.fromSeed(seedColor: splineColor),
   appBarTheme: const AppBarTheme(
       centerTitle: true,
       surfaceTintColor: Colors.transparent,
@@ -14,7 +16,7 @@ final darkTheme = ThemeData.dark().copyWith(
           backgroundColor: const Color.fromARGB(255, 1, 13, 100),
           foregroundColor: Colors.white)),
   scaffoldBackgroundColor: scaffoldBackground,
-  primaryColorDark: const Color.fromARGB(255, 3, 28, 49),
+  primaryColorDark: splineColor,
   // colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 3, 21, 36)),
   iconTheme: const IconThemeData(color: const Color.fromARGB(255, 1, 13, 100)),
   bottomNavigationBarTheme:

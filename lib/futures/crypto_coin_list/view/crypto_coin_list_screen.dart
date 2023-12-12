@@ -45,6 +45,7 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (context) => _cryptoListBloc,
       child: Scaffold(
@@ -65,9 +66,14 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                         onPressed: () {},
                         icon: const Icon(Icons.notification_add_outlined),
                       ),
-                      title: const Row(
+                      title: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Text('Crypto App')],
+                        children: [
+                          Text(
+                            'Crypto App',
+                            style: theme.textTheme.bodyLarge,
+                          )
+                        ],
                       ),
                       actions: [
                         IconButton(
@@ -93,7 +99,11 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                       ? () => buttonEnabled(
                                           buttonStateEnum.topFifty)
                                       : null,
-                                  child: const Text('Top 50'),
+                                  child: Text('Top 50',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold)),
                                 ),
                               ),
                               Padding(
@@ -106,9 +116,11 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                       ? () => buttonEnabled(
                                           buttonStateEnum.topHundred)
                                       : null,
-                                  child: const Row(
-                                    children: [Text('Top 100')],
-                                  ),
+                                  child: Text('Top 100',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold)),
                                 ),
                               ),
                               Padding(
@@ -121,9 +133,11 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                       ? () => buttonEnabled(
                                           buttonStateEnum.topTwoHundredFifty)
                                       : null,
-                                  child: const Row(
-                                    children: [Text('Top 250')],
-                                  ),
+                                  child: Text('Top 250',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold)),
                                 ),
                               ),
                               Padding(
@@ -134,9 +148,11 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                 child: ElevatedButton(
                                   onPressed: () => _cryptoListBloc
                                       .add(CryptoCoinListSorByRankEvent()),
-                                  child: const Row(
-                                    children: [Text('Sort By Rank')],
-                                  ),
+                                  child: Text('Sort By Rank',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold)),
                                 ),
                               ),
                               Padding(
@@ -147,9 +163,11 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                 child: ElevatedButton(
                                   onPressed: () => _cryptoListBloc
                                       .add(CryptoCoinListSorByMarketCupEvent()),
-                                  child: const Row(
-                                    children: [Text('Sort By Market Cap')],
-                                  ),
+                                  child: Text('Sort By Market Cap',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold)),
                                 ),
                               ),
                               Padding(
@@ -160,9 +178,11 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                 child: ElevatedButton(
                                   onPressed: () => _cryptoListBloc.add(
                                       CryptoCoinListSorByPercentChangeEvent()),
-                                  child: const Row(
-                                    children: [Text('Sort By % Change')],
-                                  ),
+                                  child: Text('Sort By % Change',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold)),
                                 ),
                               ),
                               Padding(
@@ -173,9 +193,11 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                 child: ElevatedButton(
                                   onPressed: () => _cryptoListBloc
                                       .add(CryptoCoinListSorByPriceEvent()),
-                                  child: const Row(
-                                    children: [Text('Sort By Price')],
-                                  ),
+                                  child: Text('Sort By Price',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold)),
                                 ),
                               ),
                             ]),

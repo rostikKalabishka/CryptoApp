@@ -26,12 +26,6 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
   @override
   void initState() {
     _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.id));
-
-    // coinCountController =
-    //     TextEditingController(text: _blocDetails.numberCoins.toString());
-    // currencyController = TextEditingController(
-    //     text: (num.parse(coinCountController.text) * widget.coin!.currentPrice)
-    //         .toString());
     super.initState();
   }
 
@@ -62,7 +56,10 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.02,
                           ),
-                          Text(state.coin.name)
+                          Text(
+                            state.coin.name,
+                            style: const TextStyle(color: Colors.white),
+                          )
                         ],
                       ),
                     ),

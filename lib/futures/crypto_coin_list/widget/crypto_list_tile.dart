@@ -33,7 +33,10 @@ class CryptoListTile extends StatelessWidget {
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.0345,
-                child: Text('${coin.symbol.toUpperCase()} '),
+                child: Text(
+                  '${coin.symbol.toUpperCase()} ',
+                  style: theme.textTheme.bodySmall?.copyWith(fontSize: 12),
+                ),
               ),
             ],
           ),

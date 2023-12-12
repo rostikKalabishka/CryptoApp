@@ -41,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   BottomNavigationBar bottomNavigationBar() {
     return BottomNavigationBar(
-      backgroundColor: scaffoldBackground,
       onTap: onPageChanged,
       unselectedItemColor: Colors.white,
       currentIndex: _indexPage,
