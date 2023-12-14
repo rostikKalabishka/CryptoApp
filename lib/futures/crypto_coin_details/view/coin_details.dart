@@ -143,22 +143,41 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                 ),
               );
             } else if (state is CryptoCoinDetailsFailure) {
-              return Center(
-                  child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(state.error.toString()),
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    title: Text(
+                      'Crypto App',
+                      style: theme.textTheme.bodyLarge,
+                    ),
                   ),
-                  OutlinedButton(
-                      onPressed: () async {
-                        _blocDetails
-                            .add(CryptoCoinDetailsLoadEvent(id: widget.id));
-                      },
-                      child: const Text('Try Again'))
+                  SliverToBoxAdapter(
+                    child: Expanded(
+                      child: Center(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(state.error.toString()),
+                          ),
+                          OutlinedButton(
+                              onPressed: () async {
+                                _blocDetails.add(
+                                    CryptoCoinDetailsLoadEvent(id: widget.id));
+                              },
+                              child: Text(
+                                'Try Again',
+                                style: theme.textTheme.bodyMedium,
+                              ))
+                        ],
+                      )),
+                    ),
+                  )
                 ],
-              ));
+              );
             }
             return const Center(
               child: CircularProgressIndicator.adaptive(),

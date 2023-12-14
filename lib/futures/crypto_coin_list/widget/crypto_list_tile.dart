@@ -18,12 +18,12 @@ class CryptoListTile extends StatelessWidget {
         AutoRouter.of(context).push(CryptoCoinDetailsRoute(id: coin.id));
       },
       leading: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.1,
+        width: MediaQuery.of(context).size.width * 0.11,
         child: Center(
           child: Column(
             children: [
               AspectRatio(
-                aspectRatio: 5 / 3,
+                aspectRatio: 5 / 2.5,
                 child: Image.network(
                   coin.image,
                 ),
@@ -32,7 +32,7 @@ class CryptoListTile extends StatelessWidget {
                 flex: 2,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.0345,
+                height: MediaQuery.of(context).size.height * 0.0347,
                 child: Text(
                   '${coin.symbol.toUpperCase()} ',
                   style: theme.textTheme.bodySmall?.copyWith(fontSize: 12),
@@ -45,7 +45,7 @@ class CryptoListTile extends StatelessWidget {
       title: Row(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.25,
+            width: MediaQuery.of(context).size.width * 0.24,
             child: Text(
               '\$${coin.currentPrice}',
               textAlign: TextAlign.end,
@@ -56,7 +56,7 @@ class CryptoListTile extends StatelessWidget {
             flex: 1,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.11,
+            width: MediaQuery.of(context).size.width * 0.13,
             child: Text(
               '${coin.priceChangePercentage24h.toStringAsFixed(1)} %',
               style: theme.textTheme.bodyMedium?.copyWith(

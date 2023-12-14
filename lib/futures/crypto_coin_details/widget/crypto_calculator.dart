@@ -60,6 +60,7 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Card(
+          color: theme.cardColor,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -114,6 +115,7 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
           ),
         ),
         Card(
+          color: theme.cardColor,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

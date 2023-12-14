@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/futures/portfolio/watchlist/view/watchlist.dart';
+import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,17 +21,53 @@ class _PortfolioPageState extends State<PortfolioPage> {
     return Scaffold(
       body: BlocProvider(
         create: (context) => PortfolioBloc(),
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              centerTitle: true,
-              title: Text(
-                'Portfolio',
-                style: theme.textTheme.bodyLarge,
+        child: DefaultTabController(
+          length: 2,
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                centerTitle: true,
+                bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(
+                      MediaQuery.of(context).size.height * 0.05),
+                  child: const TabBar(
+                    labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                    indicatorWeight: 4,
+                    indicatorColor: accentColor,
+                    labelColor: accentColor,
+                    unselectedLabelColor: Colors.white,
+                    tabs: [
+                      Tab(
+                        text: 'Watchlist',
+                      ),
+                      Tab(
+                        text: 'Portfolio',
+                      )
+                    ],
+                  ),
+                ),
+                title: Text(
+                  'Portfolio',
+                  style: theme.textTheme.bodyLarge,
+                ),
               ),
-            )
-            // SliverToBoxAdapter()
-          ],
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height -
+                      kToolbarHeight -
+                      MediaQuery.of(context).padding.top -
+                      kBottomNavigationBarHeight -
+                      kTextTabBarHeight,
+                  child: const TabBarView(
+                    children: [
+                      WatchList(),
+                      Center(child: Text('Portfolio')),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
