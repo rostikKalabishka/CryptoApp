@@ -19,16 +19,16 @@ class CryptoCoinDetails extends Equatable {
   final Image image;
   final String? countryOrigin;
   final String? genesisDate;
-  final double sentimentVotesUpPercentage;
-  final double sentimentVotesDownPercentage;
+  // final double sentimentVotesUpPercentage;
+  // final double sentimentVotesDownPercentage;
   final int watchlistPortfolioUsers;
   final int? marketCapRank;
   final double? coingeckoRank;
-  final double coingeckoScore;
-  final double developerScore;
-  final double communityScore;
-  final double liquidityScore;
-  final double publicInterestScore;
+  // final double coingeckoScore;
+  // final double developerScore;
+  // final double communityScore;
+  // final double liquidityScore;
+  // final double publicInterestScore;
   final MarketData marketData;
 
   final List<dynamic> statusUpdates;
@@ -49,16 +49,16 @@ class CryptoCoinDetails extends Equatable {
     required this.image,
     required this.countryOrigin,
     required this.genesisDate,
-    required this.sentimentVotesUpPercentage,
-    required this.sentimentVotesDownPercentage,
+    // required this.sentimentVotesUpPercentage,
+    // required this.sentimentVotesDownPercentage,
     required this.watchlistPortfolioUsers,
     required this.marketCapRank,
     required this.coingeckoRank,
-    required this.coingeckoScore,
-    required this.developerScore,
-    required this.communityScore,
-    required this.liquidityScore,
-    required this.publicInterestScore,
+    // required this.coingeckoScore,
+    // required this.developerScore,
+    // required this.communityScore,
+    // required this.liquidityScore,
+    // required this.publicInterestScore,
     required this.statusUpdates,
     required this.lastUpdated,
     required this.marketData,
@@ -84,16 +84,16 @@ class CryptoCoinDetails extends Equatable {
         image,
         countryOrigin,
         genesisDate,
-        sentimentVotesUpPercentage,
-        sentimentVotesDownPercentage,
+        // sentimentVotesUpPercentage,
+        // sentimentVotesDownPercentage,
         watchlistPortfolioUsers,
         marketCapRank,
         coingeckoRank,
-        coingeckoScore,
-        developerScore,
-        communityScore,
-        liquidityScore,
-        publicInterestScore,
+        // coingeckoScore,
+        // developerScore,
+        // communityScore,
+        // liquidityScore,
+        // publicInterestScore,
         statusUpdates,
         lastUpdated,
         marketData
@@ -273,7 +273,7 @@ class Links extends Equatable {
   final String facebookUsername;
 
   final String telegramChannelIdentifier;
-  final String subredditUrl;
+  // final String subredditUrl;
   final ReposUrl reposUrl;
   const Links({
     required this.homepage,
@@ -284,7 +284,7 @@ class Links extends Equatable {
     required this.twitterScreenName,
     required this.facebookUsername,
     required this.telegramChannelIdentifier,
-    required this.subredditUrl,
+    // required this.subredditUrl,
     required this.reposUrl,
   });
   factory Links.fromJson(Map<String, dynamic> json) => _$LinksFromJson(json);
@@ -301,7 +301,7 @@ class Links extends Equatable {
         twitterScreenName,
         facebookUsername,
         telegramChannelIdentifier,
-        subredditUrl,
+        // subredditUrl,
         reposUrl,
       ];
 }
@@ -2259,67 +2259,67 @@ class FullyDilutedValuation extends Equatable {
 
 @JsonSerializable()
 class TotalVolume extends Equatable {
-  final int? aed;
-  final int? ars;
-  final int? aud;
-  final int? bch;
-  final int? bdt;
-  final int? bhd;
-  final int? bmd;
-  final int? bnb;
-  final int? brl;
-  final int? btc;
-  final int? cad;
-  final int? chf;
-  final int? clp;
-  final int? cny;
-  final int? czk;
-  final int? dkk;
-  final int? dot;
-  final int? eos;
-  final int? eth;
-  final int? eur;
-  final int? gbp;
-  final int? hkd;
-  final int? huf;
-  final int? idr;
-  final int? ils;
-  final int? inr;
-  final int? jpy;
-  final int? krw;
-  final int? kwd;
-  final int? lkr;
-  final int? ltc;
-  final int? mmk;
-  final int? mxn;
-  final int? myr;
-  final int? ngn;
-  final int? nok;
-  final int? nzd;
-  final int? php;
-  final int? pkr;
-  final int? pln;
-  final int? rub;
-  final int? sar;
-  final int? sek;
-  final int? sgd;
-  final int? thb;
-  final int? tTry;
-  final int? twd;
-  final int? uah;
-  final int? usd;
-  final int? vef;
-  final int? vnd;
-  final int? xag;
-  final int? xau;
-  final int? xdr;
-  final int? xlm;
-  final int? xrp;
-  final int? yfi;
-  final int? zar;
-  final int? bits;
-  final int? link;
-  final int? sats;
+  final double? aed;
+  final double? ars;
+  final double? aud;
+  final double? bch;
+  final double? bdt;
+  final double? bhd;
+  final double? bmd;
+  final double? bnb;
+  final double? brl;
+  final double? btc;
+  final double? cad;
+  final double? chf;
+  final double? clp;
+  final double? cny;
+  final double? czk;
+  final double? dkk;
+  final double? dot;
+  final double? eos;
+  final double? eth;
+  final double? eur;
+  final double? gbp;
+  final double? hkd;
+  final double? huf;
+  final double? idr;
+  final double? ils;
+  final double? inr;
+  final double? jpy;
+  final double? krw;
+  final double? kwd;
+  final double? lkr;
+  final double? ltc;
+  final double? mmk;
+  final double? mxn;
+  final double? myr;
+  final double? ngn;
+  final double? nok;
+  final double? nzd;
+  final double? php;
+  final double? pkr;
+  final double? pln;
+  final double? rub;
+  final double? sar;
+  final double? sek;
+  final double? sgd;
+  final double? thb;
+  final double? tTry;
+  final double? twd;
+  final double? uah;
+  final double? usd;
+  final double? vef;
+  final double? vnd;
+  final double? xag;
+  final double? xau;
+  final double? xdr;
+  final double? xlm;
+  final double? xrp;
+  final double? yfi;
+  final double? zar;
+  final double? bits;
+  final double? link;
+  final double? sats;
   const TotalVolume({
     required this.aed,
     required this.ars,

@@ -5,6 +5,7 @@ import 'package:crypto_app/repository/abstract_coin_repository.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../repository/crypto_coin/models/crypto_coin_details.dart';
+import '../model/chart_data.dart';
 
 part 'crypto_coin_details_event.dart';
 part 'crypto_coin_details_state.dart';
@@ -17,6 +18,9 @@ class CryptoCoinDetailsBloc
   late CryptoCoinDetails coin;
   late String currencyPrice;
   late String currentPriceInUsd;
+  late List<ChartData> sparkline;
+  late double max;
+  late double min;
 
   late String numberCoins = '1.0';
 
@@ -43,7 +47,21 @@ class CryptoCoinDetailsBloc
       basePrice = price;
 
       currentPriceInUsd = coin.marketData.currentPrice.usd.toString();
+      final detailsInfoForChart = coin.marketData.sparkLine7d;
+      sparkline = detailsInfoForChart.price.asMap().entries.map((entry) {
+        return ChartData.fromJson({
+          'price': entry.value,
+          'index': entry.key + 1,
+        });
+      }).toList();
+      max = detailsInfoForChart.price.reduce(
+          (currentMax, price) => currentMax < price ? price : currentMax);
+      min = detailsInfoForChart.price.reduce(
+          (currentMax, price) => currentMax > price ? price : currentMax);
       emit(CryptoCoinDetailsLoaded(
+          max: max + (max * 0.05),
+          min: min - (min * 0.05),
+          sparkline: sparkline,
           coin: coin,
           selectedItem: selectedCurrency,
           price: price,
@@ -63,6 +81,9 @@ class CryptoCoinDetailsBloc
             (double.parse(event.saveValue) * double.parse(price)).toString();
 
         emit(CryptoCoinDetailsLoaded(
+            sparkline: sparkline,
+            max: max,
+            min: min,
             coin: coin,
             selectedItem: selectedCurrency,
             price: currencyPrice,
@@ -82,6 +103,9 @@ class CryptoCoinDetailsBloc
         price =
             coin.marketData.currentPrice.toJson()[selectedCurrency].toString();
         emit(CryptoCoinDetailsLoaded(
+            sparkline: sparkline,
+            max: max,
+            min: min,
             coin: coin,
             selectedItem: selectedCurrency,
             price: price,

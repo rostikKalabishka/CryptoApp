@@ -29,11 +29,6 @@ class CardDateWidget extends StatelessWidget {
           ),
           const Divider(),
           RowInCard(
-            text: 'Community Score',
-            textInfo: '${coinDetails.communityScore}',
-          ),
-          const Divider(),
-          RowInCard(
             text: 'Price Change 24h',
             textInfo: '\$${coinDetails.marketData.priceChange24h}',
           ),
