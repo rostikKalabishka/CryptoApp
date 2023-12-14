@@ -36,8 +36,8 @@ class _CryptoChartState extends State<CryptoChart> {
       plotAreaBorderWidth: 0,
       //add my custom max and min
       primaryXAxis: NumericAxis(
-          maximum: 1,
-          minimum: 168,
+          maximum: data.first.index.toDouble(),
+          minimum: data.last.index.toDouble(),
           isVisible: false,
           borderWidth: 0,
           borderColor: Colors.transparent),
@@ -60,11 +60,6 @@ class _CryptoChartState extends State<CryptoChart> {
               end: Alignment.bottomCenter),
         ),
         SplineSeries(
-            // markerSettings: MarkerSettings(
-            //     // isVisible: true,
-            //     // color: accentColor,
-            //     // borderWidth: 0.001,
-            //     ),
             color: accentColor,
             dataSource: data,
             xValueMapper: (ChartData data, _) => data.index,

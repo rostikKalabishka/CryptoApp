@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/router/router.dart';
 import 'package:flutter/material.dart';
 
 class WatchList extends StatelessWidget {
@@ -11,11 +13,12 @@ class WatchList extends StatelessWidget {
       slivers: [
         SliverList.separated(
           itemBuilder: (context, index) {
-            return Container(
+            return SizedBox(
               height: 60,
               child: ListTile(
                 onTap: () {
-                  // AutoRouter.of(context).push(CryptoCoinDetailsRoute(id: coin.id));
+                  AutoRouter.of(context)
+                      .push(CryptoCoinDetailsRoute(id: 'bitcoin'));
                 },
                 leading: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,

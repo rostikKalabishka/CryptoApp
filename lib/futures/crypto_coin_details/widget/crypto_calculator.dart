@@ -86,7 +86,7 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
                       border: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 8),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8),
                     ),
                     style: const TextStyle(fontSize: 14),
                   ),

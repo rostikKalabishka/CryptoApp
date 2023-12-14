@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/futures/portfolio/portfolio_mode/view/portfolio_mode.dart';
 import 'package:crypto_app/futures/portfolio/watchlist/view/watchlist.dart';
 import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   child: const TabBarView(
                     children: [
                       WatchList(),
-                      Center(child: Text('Portfolio')),
+                      PortfolioMode(),
                     ],
                   ),
                 ),
