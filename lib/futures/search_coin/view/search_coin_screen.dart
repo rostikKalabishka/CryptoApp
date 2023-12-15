@@ -43,9 +43,8 @@ class _SearchCoinScreenState extends State<SearchCoinScreen> {
                 centerTitle: true,
                 pinned: true,
                 title: Text(
-                  'Crypto App',
-                  style: theme.textTheme.bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.w400),
+                  'Search',
+                  style: theme.textTheme.bodyLarge,
                 ),
                 snap: true,
                 floating: true,
