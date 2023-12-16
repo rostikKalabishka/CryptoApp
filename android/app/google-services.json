@@ -12,7 +12,20 @@
           "package_name": "com.example.crypto_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "477905921693-misvliv9bkmpbot35rrspm12i39c7sps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.crypto_app",
+            "certificate_hash": "e07e69161a922d5c78b7a674f10d8bb625aad049"
+          }
+        },
+        {
+          "client_id": "477905921693-6i37us11cgdrq537bsavrn3rjbva95k7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDSAq-VTzyTArVDCVvZYcYHO9p6ipHCht8"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477905921693-6i37us11cgdrq537bsavrn3rjbva95k7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "477905921693-dgf97k0arsepic0uhimdm28hpu5p747h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cryptoApp"
+              }
+            }
+          ]
         }
       }
     }

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/home/view/home_screen.dart';
+import 'package:crypto_app/futures/settings/view/settings.dart';
 
 import 'package:flutter/material.dart';
 
@@ -26,8 +27,20 @@ class AppRouter extends _$AppRouter {
           AutoRoute(
             page: PortfolioRoute.page,
             path: 'portfolio',
+          ),
+          AutoRoute(
+            page: SettingsRoute.page,
+            path: 'settings',
           )
         ]),
-        AutoRoute(page: CryptoCoinDetailsRoute.page)
+        AutoRoute(page: CryptoCoinDetailsRoute.page),
+        AutoRoute(
+          page: SearchCoinRoute.page,
+          path: 'search_coin',
+        ),
+        AutoRoute(
+          page: SettingsRoute.page,
+          path: 'settings',
+        )
       ];
 }

@@ -27,6 +27,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
+                pinned: true,
                 centerTitle: true,
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(

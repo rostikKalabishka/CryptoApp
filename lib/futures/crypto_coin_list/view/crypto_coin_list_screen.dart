@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/router/router.dart';
 import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,7 +64,11 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                       backgroundColor: scaffoldBackground,
                       centerTitle: true,
                       leading: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          AutoRouter.of(context).push(
+                            const SettingsRoute(),
+                          );
+                        },
                         icon: const Icon(Icons.notification_add_outlined),
                       ),
                       title: Row(
@@ -77,7 +82,11 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                       ),
                       actions: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            AutoRouter.of(context).push(
+                              const SearchCoinRoute(),
+                            );
+                          },
                           icon: const Icon(Icons.search_outlined),
                         ),
                       ],

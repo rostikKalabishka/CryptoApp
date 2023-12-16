@@ -70,6 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '477905921693',
     projectId: 'crypto-app-c1e1b',
     storageBucket: 'crypto-app-c1e1b.appspot.com',
+    androidClientId: '477905921693-misvliv9bkmpbot35rrspm12i39c7sps.apps.googleusercontent.com',
+    iosClientId: '477905921693-dgf97k0arsepic0uhimdm28hpu5p747h.apps.googleusercontent.com',
     iosBundleId: 'com.example.cryptoApp',
   );
 }
