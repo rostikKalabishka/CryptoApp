@@ -28,6 +28,7 @@ dependencies:
   flutter_dotenv: ^5.1.0
   syncfusion_flutter_charts: ^23.2.4
   flutter_slidable: ^3.0.1
+  flutter_svg: ^2.0.9
   intl: ^0.18.1
 
 dev_dependencies:
@@ -42,3 +43,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/svg/

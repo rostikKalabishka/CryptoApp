@@ -1,4 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/futures/auth/login/view/login.dart';
+import 'package:crypto_app/futures/auth/registration/view/registration.dart';
 import 'package:crypto_app/futures/home/view/home_screen.dart';
 import 'package:crypto_app/futures/settings/view/settings.dart';
 
@@ -15,7 +17,15 @@ part 'router.gr.dart';
 class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(page: HomeRoute.page, path: '/', children: [
+        AutoRoute(
+          page: LoginRoute.page,
+          path: '/',
+        ),
+        AutoRoute(
+          page: RegistrationRoute.page,
+          path: '/registration',
+        ),
+        AutoRoute(page: HomeRoute.page, path: '/home', children: [
           AutoRoute(
             page: CryptoCoinListRoute.page,
             path: 'crypto_coin_list',
@@ -34,13 +44,13 @@ class AppRouter extends _$AppRouter {
           )
         ]),
         AutoRoute(page: CryptoCoinDetailsRoute.page),
-        AutoRoute(
-          page: SearchCoinRoute.page,
-          path: 'search_coin',
-        ),
-        AutoRoute(
-          page: SettingsRoute.page,
-          path: 'settings',
-        )
+        // AutoRoute(
+        //   page: SearchCoinRoute.page,
+        //   path: 'search_coin',
+        // ),
+        // AutoRoute(
+        //   page: SettingsRoute.page,
+        //   path: 'settings',
+        // )
       ];
 }

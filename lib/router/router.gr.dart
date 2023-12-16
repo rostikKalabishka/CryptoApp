@@ -37,10 +37,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeScreen(),
       );
     },
+    LoginRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LoginScreen(),
+      );
+    },
     PortfolioRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const PortfolioPage(),
+        child: const PortfolioScreen(),
+      );
+    },
+    RegistrationRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const RegistrationScreen(),
       );
     },
     SearchCoinRoute.name: (routeData) {
@@ -125,7 +137,21 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [PortfolioPage]
+/// [LoginScreen]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute({List<PageRouteInfo>? children})
+      : super(
+          LoginRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PortfolioScreen]
 class PortfolioRoute extends PageRouteInfo<void> {
   const PortfolioRoute({List<PageRouteInfo>? children})
       : super(
@@ -134,6 +160,20 @@ class PortfolioRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'PortfolioRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RegistrationScreen]
+class RegistrationRoute extends PageRouteInfo<void> {
+  const RegistrationRoute({List<PageRouteInfo>? children})
+      : super(
+          RegistrationRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RegistrationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

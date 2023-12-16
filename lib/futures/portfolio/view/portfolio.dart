@@ -8,14 +8,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/portfolio_bloc.dart';
 
 @RoutePage()
-class PortfolioPage extends StatefulWidget {
-  const PortfolioPage({super.key});
+class PortfolioScreen extends StatefulWidget {
+  const PortfolioScreen({super.key});
 
   @override
-  State<PortfolioPage> createState() => _PortfolioPageState();
+  State<PortfolioScreen> createState() => _PortfolioScreenState();
 }
 
-class _PortfolioPageState extends State<PortfolioPage> {
+class _PortfolioScreenState extends State<PortfolioScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

@@ -93,66 +93,69 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
         SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CardInfo(
-                info: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Dark Mode'),
-                    Transform.scale(
-                      scale: 0.8,
-                      child: Switch.adaptive(
-                          value: darkMode,
-                          onChanged: (bool value) {
-                            darkMode = value;
-                            setState(() {});
-                          }),
-                    )
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Row(
-                      children: [
-                        Icon(
-                          Icons.notifications,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('Notification')
-                      ],
-                    ),
-                    Transform.scale(
-                      scale: 0.8,
-                      child: Switch.adaptive(
-                          value: darkMode,
-                          onChanged: (bool value) {
-                            darkMode = value;
-                            setState(() {});
-                          }),
-                    )
-                  ],
-                ),
-                const Divider(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
+          child: RefreshIndicator(
+            onRefresh: () async {},
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CardInfo(
+                  info: Column(
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Language'),
-                      Text('English'),
+                      const Text('Dark Mode'),
+                      Transform.scale(
+                        scale: 0.8,
+                        child: Switch.adaptive(
+                            value: darkMode,
+                            onChanged: (bool value) {
+                              darkMode = value;
+                              setState(() {});
+                            }),
+                      )
                     ],
                   ),
-                ),
-              ],
-            )),
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.notifications,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text('Notification')
+                        ],
+                      ),
+                      Transform.scale(
+                        scale: 0.8,
+                        child: Switch.adaptive(
+                            value: darkMode,
+                            onChanged: (bool value) {
+                              darkMode = value;
+                              setState(() {});
+                            }),
+                      )
+                    ],
+                  ),
+                  const Divider(),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Language'),
+                        Text('English'),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
+            ),
           ),
         )
       ]),
