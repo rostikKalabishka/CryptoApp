@@ -1,6 +1,6 @@
 abstract interface class AbstractAuthRepository {
   Future registration({
-    required String userName,
+    required String username,
     required String password,
     required String email,
   });
@@ -8,4 +8,13 @@ abstract interface class AbstractAuthRepository {
     required String password,
     required String email,
   });
+
+  Future<void> signOut();
+
+  Future<void> addUserDetails({
+    required String username,
+    required String email,
+  });
+
+  Future<void> forgotPassword({required String email});
 }

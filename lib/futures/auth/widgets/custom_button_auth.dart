@@ -10,7 +10,8 @@ class CustomButtonAuth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return GestureDetector(
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
       onTap: function,
       child: Container(
         padding: const EdgeInsets.all(20),

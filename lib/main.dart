@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_app/crypto_app.dart';
 import 'package:crypto_app/firebase_options.dart';
 import 'package:crypto_app/repository/abstract_coin_repository.dart';
@@ -18,12 +19,15 @@ void main() async {
   );
   final Dio dio = Dio();
   final firebaseAuthInstance = FirebaseAuth.instance;
+  final firebaseStore = FirebaseFirestore.instance;
 
   GetIt.I.registerLazySingleton<AbstractCoinRepository>(
       () => CryptoCoinsRepository(dio: dio));
   // GetIt.I
   //     .registerLazySingleton(() => Loader(firebaseAuth: firebaseAuthInstance));
-  GetIt.I.registerLazySingleton<AbstractAuthRepository>(() =>
-      AuthRepository(dio: dio, firebaseAuthInstance: firebaseAuthInstance));
+  GetIt.I.registerLazySingleton<AbstractAuthRepository>(() => AuthRepository(
+      dio: dio,
+      firebaseAuthInstance: firebaseAuthInstance,
+      firebaseStore: firebaseStore));
   runApp(const CryptoApp());
 }

@@ -45,7 +45,7 @@ class CryptoListTile extends StatelessWidget {
       title: Row(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.24,
+            width: MediaQuery.of(context).size.width * 0.25,
             child: Text(
               '\$${coin.currentPrice}',
               textAlign: TextAlign.end,
@@ -56,7 +56,7 @@ class CryptoListTile extends StatelessWidget {
             flex: 1,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.13,
+            width: MediaQuery.of(context).size.width * 0.14,
             child: Text(
               '${coin.priceChangePercentage24h.toStringAsFixed(1)} %',
               style: theme.textTheme.bodyMedium?.copyWith(
@@ -66,7 +66,7 @@ class CryptoListTile extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.34,
+            width: MediaQuery.of(context).size.width * 0.33,
             child: Text(
               '\$${coin.marketCap}',
               textAlign: TextAlign.end,
