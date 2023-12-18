@@ -1,3 +1,4 @@
+import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_app/crypto_app.dart';
 import 'package:crypto_app/firebase_options.dart';
@@ -11,6 +12,7 @@ import 'package:get_it/get_it.dart';
 import 'repository/abstract_auth_repository.dart';
 import 'repository/auth/auth_repository.dart';
 import 'repository/crypto_coin/crypto_coins_repository.dart';
+import 'simple_bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,5 +31,6 @@ void main() async {
       dio: dio,
       firebaseAuthInstance: firebaseAuthInstance,
       firebaseStore: firebaseStore));
+  Bloc.observer = SimpleBlocObserver();
   runApp(const CryptoApp());
 }

@@ -21,6 +21,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
@@ -70,7 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                AutoRouter.of(context)
+                                    .push(const ResetPasswordRoute());
+                              },
                               child: Text(
                                 'Forgot Password?',
                                 style: theme.textTheme.bodySmall,
@@ -114,7 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         CustomButtonAuth(
                           image: 'assets/svg/google.svg',
-                          function: () {},
+                          function: () {
+                            _loginBloc.add(LoginSignInWithGoogleEvent());
+                          },
                         ),
                         CustomButtonAuth(
                           image: 'assets/svg/apple.svg',

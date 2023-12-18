@@ -17,4 +17,7 @@ abstract interface class AbstractAuthRepository {
   });
 
   Future<void> forgotPassword({required String email});
+
+  Future<void> singInWithGoogle();
+  Future<void> singInWithAppleID();
 }

@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:crypto_app/repository/abstract_auth_repository.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepository implements AbstractAuthRepository {
   final Dio dio;
@@ -88,5 +89,23 @@ class AuthRepository implements AbstractAuthRepository {
       );
       await userDoc.set(userDetails.toJson());
     }
+  }
+
+  @override
+  Future singInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
+    final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+    return FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  @override
+  Future<void> singInWithAppleID() {
+    // TODO: implement singInWithAppleID
+    throw UnimplementedError();
   }
 }

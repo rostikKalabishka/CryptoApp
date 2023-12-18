@@ -6,6 +6,7 @@ import 'package:crypto_app/futures/settings/view/settings.dart';
 
 import 'package:flutter/material.dart';
 
+import '../futures/auth/reset_password/view/reset_password.dart';
 import '../futures/crypto_coin_details/view/coin_details.dart';
 import '../futures/crypto_coin_list/view/crypto_coin_list_screen.dart';
 import '../futures/portfolio/view/portfolio.dart';
@@ -20,6 +21,10 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           page: LoginRoute.page,
           path: '/',
+        ),
+        AutoRoute(
+          page: ResetPasswordRoute.page,
+          path: '/reset_password',
         ),
         AutoRoute(
           page: RegistrationRoute.page,

@@ -31,6 +31,7 @@ dependencies:
   flutter_svg: ^2.0.9
   intl: ^0.18.1
   cloud_firestore: ^4.13.6
+  sign_in_with_apple: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -46,3 +47,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/svg/
+    - assets/images/
