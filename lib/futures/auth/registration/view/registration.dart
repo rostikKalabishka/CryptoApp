@@ -3,6 +3,7 @@ import 'package:crypto_app/futures/auth/registration/bloc/registration_bloc.dart
 import 'package:crypto_app/futures/auth/widgets/custom_button_auth.dart';
 import 'package:crypto_app/repository/abstract_auth_repository.dart';
 import 'package:crypto_app/router/router.dart';
+import 'package:crypto_app/utils/ustil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -18,11 +19,15 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final Utils utils = Utils();
+  final _formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final _registrationBloc = RegistrationBloc(GetIt.I<AbstractAuthRepository>());
+  bool obscurePassword = true;
+  String? _errorMsg;
 
   @override
   Widget build(BuildContext context) {
@@ -59,44 +64,69 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Padding(
                       padding: const EdgeInsets.all(12),
-                      child: Column(children: [
-                        CustomTextField(
-                          textEditingController: usernameController,
-                          textInputType: TextInputType.emailAddress,
-                          obscureText: false,
-                          hintText: 'Username',
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
-                        CustomTextField(
-                          textEditingController: emailController,
-                          textInputType: TextInputType.emailAddress,
-                          obscureText: false,
-                          hintText: 'Email',
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
-                        CustomTextField(
-                          textEditingController: passwordController,
-                          textInputType: TextInputType.emailAddress,
-                          obscureText: true,
-                          hintText: 'Password',
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
-                        CustomTextField(
-                          textEditingController: confirmPasswordController,
-                          textInputType: TextInputType.emailAddress,
-                          obscureText: true,
-                          hintText: 'Confirm Password',
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                      ]),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(children: [
+                          CustomTextField(
+                            textEditingController: usernameController,
+                            textInputType: TextInputType.text,
+                            obscureText: false,
+                            hintText: 'Username',
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          CustomTextField(
+                              textEditingController: emailController,
+                              textInputType: TextInputType.emailAddress,
+                              obscureText: false,
+                              hintText: 'Email',
+                              validator: (val) => utils.emailValidator(val!)
+                              // if (val!.isEmpty) {
+                              //   return 'Please fill in this field';
+                              // } else if (!RegExp(
+                              //         r'^[\w-\.]+@([\w-]+.)+[\w-]{2,4}$')
+                              //     .hasMatch(val)) {
+                              //   return 'Please enter a valid email';
+                              // }
+                              // return null;
+
+                              // },
+                              ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          CustomTextField(
+                            textEditingController: passwordController,
+                            textInputType: TextInputType.text,
+                            obscureText: true,
+                            hintText: 'Password',
+                            validator: (val) => utils.passwordValidator(val!),
+                            // {
+                            //   if (val!.isEmpty) {
+                            //     return 'Please fill in this field';
+                            //   } else if (!RegExp(
+                            //           r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~`)\%\-(_+=;:,.<>/?"[{\]}\|^]).{8,}$')
+                            //       .hasMatch(val)) {
+                            //     return 'Please enter a valid password';
+                            //   }
+                            //   return null;
+                            // },
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          CustomTextField(
+                            textEditingController: confirmPasswordController,
+                            textInputType: TextInputType.emailAddress,
+                            obscureText: true,
+                            hintText: 'Confirm Password',
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                        ]),
+                      ),
                     ),
                   ),
                 ),
