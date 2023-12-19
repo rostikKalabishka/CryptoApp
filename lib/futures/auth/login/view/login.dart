@@ -4,6 +4,7 @@ import 'package:crypto_app/futures/auth/widgets/custom_button_auth.dart';
 import 'package:crypto_app/futures/auth/widgets/widget.dart';
 import 'package:crypto_app/repository/abstract_auth_repository.dart';
 import 'package:crypto_app/router/router.dart';
+import 'package:crypto_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -20,6 +21,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final _loginBloc = LoginBloc(GetIt.I<AbstractAuthRepository>());
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final Utils utils = Utils();
+  final _formKey = GlobalKey<FormState>();
+  bool obscurePassword = true;
+  String? _errorMsg;
   @override
   void dispose() {
     emailController.dispose();
@@ -53,42 +58,45 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: Form(
+                    key: _formKey,
                     child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(children: [
-                        CustomTextField(
-                          textEditingController: emailController,
-                          textInputType: TextInputType.emailAddress,
-                          obscureText: false,
-                          hintText: 'Email',
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
-                        CustomTextField(
-                          textEditingController: passwordController,
-                          textInputType: TextInputType.emailAddress,
-                          obscureText: true,
-                          hintText: 'Password',
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                AutoRouter.of(context)
-                                    .push(const ResetPasswordRoute());
-                              },
-                              child: Text(
-                                'Forgot Password?',
-                                style: theme.textTheme.bodySmall,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(children: [
+                          CustomTextField(
+                            textEditingController: emailController,
+                            textInputType: TextInputType.emailAddress,
+                            obscureText: false,
+                            hintText: 'Email',
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          CustomTextField(
+                            textEditingController: passwordController,
+                            textInputType: TextInputType.emailAddress,
+                            obscureText: true,
+                            hintText: 'Password',
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  AutoRouter.of(context)
+                                      .push(const ResetPasswordRoute());
+                                },
+                                child: Text(
+                                  'Forgot Password?',
+                                  style: theme.textTheme.bodySmall,
+                                ),
                               ),
-                            ),
-                          ],
-                        )
-                      ]),
+                            ],
+                          )
+                        ]),
+                      ),
                     ),
                   ),
                 ),

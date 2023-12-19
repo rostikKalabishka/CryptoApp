@@ -13,4 +13,8 @@ final class SettingsLoaded extends SettingsState {}
 
 final class SettingsLoading extends SettingsState {}
 
-final class SettingsFailureS extends SettingsState {}
+final class SettingsFailure extends SettingsState {}
+
+class SettingsSuccess extends SettingsState {}
+
+class SettingsProcess extends SettingsState {}

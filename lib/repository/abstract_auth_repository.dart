@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 abstract interface class AbstractAuthRepository {
   Future registration({
     required String username,
@@ -15,6 +17,8 @@ abstract interface class AbstractAuthRepository {
     required String username,
     required String email,
   });
+
+  Stream<User?> get user;
 
   Future<void> forgotPassword({required String email});
 

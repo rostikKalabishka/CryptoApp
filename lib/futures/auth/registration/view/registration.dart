@@ -3,7 +3,7 @@ import 'package:crypto_app/futures/auth/registration/bloc/registration_bloc.dart
 import 'package:crypto_app/futures/auth/widgets/custom_button_auth.dart';
 import 'package:crypto_app/repository/abstract_auth_repository.dart';
 import 'package:crypto_app/router/router.dart';
-import 'package:crypto_app/utils/ustil.dart';
+import 'package:crypto_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -68,6 +68,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         key: _formKey,
                         child: Column(children: [
                           CustomTextField(
+                            errorMsg: _errorMsg,
                             textEditingController: usernameController,
                             textInputType: TextInputType.text,
                             obscureText: false,
@@ -97,6 +98,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
                           CustomTextField(
+                            errorMsg: _errorMsg,
                             textEditingController: passwordController,
                             textInputType: TextInputType.text,
                             obscureText: true,
@@ -117,6 +119,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
                           CustomTextField(
+                            errorMsg: _errorMsg,
                             textEditingController: confirmPasswordController,
                             textInputType: TextInputType.emailAddress,
                             obscureText: true,

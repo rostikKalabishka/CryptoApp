@@ -92,6 +92,13 @@ class AuthRepository implements AbstractAuthRepository {
   }
 
   @override
+  Stream<User?> get user {
+    return firebaseAuthInstance.authStateChanges().map((firebaseUser) {
+      return firebaseUser;
+    });
+  }
+
+  @override
   Future singInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
