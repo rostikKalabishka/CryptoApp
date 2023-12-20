@@ -30,7 +30,10 @@ class AuthRepository implements AbstractAuthRepository {
       await firebaseAuthInstance.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      await addUserDetails(email: email, username: username);
+      final uid = firebaseAuthInstance.currentUser?.uid;
+      if (uid != null) {
+        await addUserDetails(email: email, username: username, uid: uid);
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         log('The password provided is too weak.');
@@ -76,9 +79,11 @@ class AuthRepository implements AbstractAuthRepository {
   }
 
   @override
-  Future<void> addUserDetails(
-      {required String username, required String email}) async {
-    final uid = firebaseAuthInstance.currentUser!.uid;
+  Future<void> addUserDetails({
+    required String username,
+    required String email,
+    required String uid,
+  }) async {
     if (uid.isNotEmpty) {
       final userDoc = firebaseStore.collection('users').doc(uid);
       UserDetails userDetails = UserDetails(
@@ -102,29 +107,31 @@ class AuthRepository implements AbstractAuthRepository {
   @override
   Future singInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final userDoc = firebaseStore.collection('users').doc(googleUser?.id);
-    // if (await userDoc.get() != null) {
-    //   UserDetails userDetails = UserDetails(
-    //     email: googleUser!.email,
-    //     username: googleUser.displayName ?? '',
-    //     uid: googleUser.id,
-    //     portfolio: const [],
-    //     profileImage: googleUser.photoUrl,
-    //   );
-    //   await userDoc.set(userDetails.toJson());
-    // } else {
-    //   // User doesn't exist, create a new document
-    //   await userDoc.set({
-    //     // User data fields
-    //   });
-    // }
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
 
-    final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+    if (googleUser != null) {
+      final userDoc = firebaseStore.collection('users').doc(googleUser.id);
+      final existingDoc = await userDoc.get();
 
-    return FirebaseAuth.instance.signInWithCredential(credential);
+      if (!existingDoc.exists) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+        UserDetails userDetails = UserDetails(
+          email: googleUser.email,
+          username: googleUser.displayName ?? '',
+          uid: googleUser.id,
+          portfolio: const [],
+          profileImage: googleUser.photoUrl,
+        );
+
+        await userDoc.set(userDetails.toJson());
+      }
+    }
   }
 
   @override

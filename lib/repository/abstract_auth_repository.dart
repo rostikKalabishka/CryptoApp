@@ -16,6 +16,7 @@ abstract interface class AbstractAuthRepository {
   Future<void> addUserDetails({
     required String username,
     required String email,
+    required String uid,
   });
 
   Stream<User?> get user;

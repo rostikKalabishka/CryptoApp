@@ -165,7 +165,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       children: [
                         CustomButtonAuth(
                           image: 'assets/svg/google.svg',
-                          function: () {},
+                          function: () {
+                            _registrationBloc
+                                .add(const RegistrationWithGoogleEvent());
+                          },
                         ),
                         CustomButtonAuth(
                           image: 'assets/svg/apple.svg',
