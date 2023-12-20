@@ -11,7 +11,7 @@ UserDetails _$UserDetailsFromJson(Map<String, dynamic> json) => UserDetails(
       username: json['username'] as String,
       uid: json['uid'] as String,
       portfolio: json['portfolio'] as List<dynamic>,
-      profileImage: json['profile_image'] as String,
+      profileImage: json['profile_image'] as String?,
     );
 
 Map<String, dynamic> _$UserDetailsToJson(UserDetails instance) =>

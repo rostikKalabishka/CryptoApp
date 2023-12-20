@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:crypto_app/repository/abstract_auth_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepository implements AbstractAuthRepository {
@@ -39,7 +40,7 @@ class AuthRepository implements AbstractAuthRepository {
         log('$e');
       }
     } catch (e) {
-      log('$e');
+      debugPrint('$e');
     }
   }
 
@@ -101,9 +102,25 @@ class AuthRepository implements AbstractAuthRepository {
   @override
   Future singInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
+    final userDoc = firebaseStore.collection('users').doc(googleUser?.id);
+    // if (await userDoc.get() != null) {
+    //   UserDetails userDetails = UserDetails(
+    //     email: googleUser!.email,
+    //     username: googleUser.displayName ?? '',
+    //     uid: googleUser.id,
+    //     portfolio: const [],
+    //     profileImage: googleUser.photoUrl,
+    //   );
+    //   await userDoc.set(userDetails.toJson());
+    // } else {
+    //   // User doesn't exist, create a new document
+    //   await userDoc.set({
+    //     // User data fields
+    //   });
+    // }
     final GoogleSignInAuthentication googleAuth =
         await googleUser!.authentication;
+
     final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 

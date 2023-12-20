@@ -21,10 +21,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _loginBloc = LoginBloc(GetIt.I<AbstractAuthRepository>());
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final Utils utils = Utils();
+  final CustomFieldValidator utils = CustomFieldValidator();
   final _formKey = GlobalKey<FormState>();
   bool obscurePassword = true;
-  String? _errorMsg;
+  final CustomFieldValidator customFieldValidator = CustomFieldValidator();
+
   @override
   void dispose() {
     emailController.dispose();
@@ -66,6 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.all(12),
                         child: Column(children: [
                           CustomTextField(
+                            validator: (val) =>
+                                customFieldValidator.emailValidator(val!),
                             textEditingController: emailController,
                             textInputType: TextInputType.emailAddress,
                             obscureText: false,
@@ -75,6 +78,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
                           CustomTextField(
+                            validator: (val) =>
+                                customFieldValidator.passwordValidator(val!),
                             textEditingController: passwordController,
                             textInputType: TextInputType.emailAddress,
                             obscureText: true,
@@ -105,12 +110,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: ElevatedButton(
                       onPressed: () {
-                        _loginBloc.add(LoginSignInEvent(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        ));
-                        print(emailController.text);
-                        print(passwordController.text);
+                        if (_formKey.currentState!.validate()) {
+                          _loginBloc.add(LoginSignInEvent(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          ));
+                          print(emailController.text);
+                          print(passwordController.text);
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12),

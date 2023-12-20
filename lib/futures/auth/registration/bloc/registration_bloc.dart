@@ -15,13 +15,12 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       RegistrationBaseEvent event, Emitter<RegistrationState> emit) async {
     try {
       emit(RegistrationProcess());
-      if (event.password == event.confirmPassword) {
-        await coinRepository.registration(
-            username: event.username,
-            password: event.password,
-            email: event.email);
-        emit(RegistrationSuccess());
-      }
+
+      await coinRepository.registration(
+          username: event.username,
+          password: event.password,
+          email: event.email);
+      emit(RegistrationSuccess());
     } catch (e) {
       emit(RegistrationFailure(error: e));
     }

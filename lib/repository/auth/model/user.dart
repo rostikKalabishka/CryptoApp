@@ -8,7 +8,7 @@ class UserDetails extends Equatable {
   final String email;
   final String username;
   final List portfolio;
-  final String profileImage;
+  final String? profileImage;
 
   const UserDetails({
     required this.email,
