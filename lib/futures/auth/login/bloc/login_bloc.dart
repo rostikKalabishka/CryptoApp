@@ -26,7 +26,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(LoginInSuccess());
 
       if (state is! LoginFailure) {
-        AutoRouter.of(event.context).push(const HomeRoute());
+        AutoRouter.of(event.context)
+            .pushAndPopUntil(const HomeRoute(), predicate: (route) => false);
       }
     } catch (e) {
       emit(LoginFailure(error: e));
@@ -40,7 +41,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await coinRepository.singInWithGoogle();
       emit(LoginInSuccess());
       if (state is! LoginFailure) {
-        AutoRouter.of(event.context).push(const HomeRoute());
+        AutoRouter.of(event.context)
+            .pushAndPopUntil(const HomeRoute(), predicate: (route) => false);
       }
     } catch (e) {
       emit(LoginFailure(error: e));

@@ -10,6 +10,7 @@ part 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   final AbstractAuthRepository coinRepository;
+
   RegistrationBloc(this.coinRepository) : super(RegistrationInitial()) {
     on<RegistrationBaseEvent>(_baseRegistration);
     on<RegistrationWithGoogleEvent>(_googleRegistration);
@@ -25,7 +26,8 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
           email: event.email);
       emit(RegistrationSuccess());
       if (state is! RegistrationFailure) {
-        AutoRouter.of(event.context).push(const HomeRoute());
+        AutoRouter.of(event.context)
+            .pushAndPopUntil(const HomeRoute(), predicate: (route) => false);
       }
     } catch (e) {
       emit(RegistrationFailure(error: e));
@@ -39,7 +41,8 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       await coinRepository.singInWithGoogle();
       emit(RegistrationSuccess());
       if (state is! RegistrationFailure) {
-        AutoRouter.of(event.context).push(const HomeRoute());
+        AutoRouter.of(event.context)
+            .pushAndPopUntil(const HomeRoute(), predicate: (route) => false);
       }
     } catch (e) {
       emit(RegistrationFailure(error: e));

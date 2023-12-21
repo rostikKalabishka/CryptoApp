@@ -66,6 +66,9 @@ class AuthRepository implements AbstractAuthRepository {
       } else if (e.code == 'wrong-password') {
         log('Wrong password provided for that user.');
         throw 'Wrong password provided for that user.';
+      } else if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
+        log('INVALID LOGIN CREDENTIALS');
+        throw 'Invalid login credentials.';
       } else {
         log('$e');
         throw e.code;
@@ -115,31 +118,43 @@ class AuthRepository implements AbstractAuthRepository {
 
   @override
   Future singInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      log(googleUser?.id ?? 'null');
 
-    if (googleUser != null) {
-      final userDoc = firebaseStore.collection('users').doc(googleUser.id);
-      final existingDoc = await userDoc.get();
-
-      if (!existingDoc.exists) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-
-        final credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-
-        await FirebaseAuth.instance.signInWithCredential(credential);
-
-        UserDetails userDetails = UserDetails(
-          email: googleUser.email,
-          username: googleUser.displayName ?? '',
-          uid: googleUser.id,
-          portfolio: const [],
-          profileImage: googleUser.photoUrl,
-        );
-
-        await userDoc.set(userDetails.toJson());
+      if (googleUser?.id == null) {
+        throw 'You cancel auth with Google';
       }
+      if (googleUser != null) {
+        final userDoc = firebaseStore.collection('users').doc(googleUser.id);
+        final existingDoc = await userDoc.get();
+
+        if (!existingDoc.exists) {
+          final GoogleSignInAuthentication googleAuth =
+              await googleUser.authentication;
+
+          final credential = GoogleAuthProvider.credential(
+              accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+          UserDetails userDetails = UserDetails(
+            email: googleUser.email,
+            username: googleUser.displayName ?? '',
+            uid: googleUser.id,
+            portfolio: const [],
+            profileImage: googleUser.photoUrl,
+          );
+
+          await userDoc.set(userDetails.toJson());
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      log(e.toString());
+      throw e.toString();
+    } catch (e) {
+      log(e.toString());
+      throw e.toString();
     }
   }
 }
