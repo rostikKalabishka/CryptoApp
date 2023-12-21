@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../repository/abstract_coin_repository.dart';
+import '../../../repository/crypto_coin/abstract_coin_repository.dart';
 import '../../../repository/crypto_coin/models/model.dart';
 
 part 'search_coin_event.dart';

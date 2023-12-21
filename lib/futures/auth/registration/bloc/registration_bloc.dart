@@ -1,6 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
-import 'package:crypto_app/repository/abstract_auth_repository.dart';
+import 'package:crypto_app/repository/auth/abstract_auth_repository.dart';
+import 'package:crypto_app/router/router.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 part 'registration_event.dart';
 part 'registration_state.dart';
@@ -21,7 +24,9 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
           password: event.password,
           email: event.email);
       emit(RegistrationSuccess());
-      // if (state is RegistrationSuccess) {}
+      if (state is! RegistrationFailure) {
+        AutoRouter.of(event.context).push(const HomeRoute());
+      }
     } catch (e) {
       emit(RegistrationFailure(error: e));
     }
@@ -33,7 +38,9 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     try {
       await coinRepository.singInWithGoogle();
       emit(RegistrationSuccess());
-      // if (state is RegistrationSuccess) {}
+      if (state is! RegistrationFailure) {
+        AutoRouter.of(event.context).push(const HomeRoute());
+      }
     } catch (e) {
       emit(RegistrationFailure(error: e));
     }

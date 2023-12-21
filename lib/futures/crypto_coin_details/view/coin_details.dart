@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import '../../../repository/abstract_coin_repository.dart';
+import '../../../repository/crypto_coin/abstract_coin_repository.dart';
 
 import '../bloc/crypto_coin_details_bloc.dart';
 import '../widget/widgets.dart';

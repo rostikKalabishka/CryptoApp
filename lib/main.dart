@@ -2,14 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_app/crypto_app.dart';
 import 'package:crypto_app/firebase_options.dart';
-import 'package:crypto_app/repository/abstract_coin_repository.dart';
+import 'package:crypto_app/repository/crypto_coin/abstract_coin_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import 'repository/abstract_auth_repository.dart';
+import 'repository/auth/abstract_auth_repository.dart';
 import 'repository/auth/auth_repository.dart';
 import 'repository/crypto_coin/crypto_coins_repository.dart';
 import 'simple_bloc_observer.dart';

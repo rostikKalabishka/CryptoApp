@@ -12,9 +12,11 @@ class RegistrationBaseEvent extends RegistrationEvent {
   final String password;
   final String confirmPassword;
   final String username;
+  final BuildContext context;
 
   const RegistrationBaseEvent(
       {required this.email,
+      required this.context,
       required this.password,
       required this.confirmPassword,
       required this.username});
@@ -23,7 +25,10 @@ class RegistrationBaseEvent extends RegistrationEvent {
 }
 
 class RegistrationWithGoogleEvent extends RegistrationEvent {
-  const RegistrationWithGoogleEvent();
+  final BuildContext context;
+  const RegistrationWithGoogleEvent({required this.context});
+  @override
+  List<Object> get props => [context];
 }
 
 class RegistrationWithAppleIdEvent extends RegistrationEvent {

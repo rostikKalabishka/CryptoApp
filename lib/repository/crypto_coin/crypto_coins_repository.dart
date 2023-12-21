@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../abstract_coin_repository.dart';
+import 'abstract_coin_repository.dart';
 
 import 'models/model.dart';
 

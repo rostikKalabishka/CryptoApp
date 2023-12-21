@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:crypto_app/repository/abstract_coin_repository.dart';
+import 'package:crypto_app/repository/crypto_coin/abstract_coin_repository.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../repository/crypto_coin/models/crypto_coin_details.dart';

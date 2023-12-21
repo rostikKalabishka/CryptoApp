@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/auth/reset_password/bloc/reset_password_bloc.dart';
 import 'package:crypto_app/futures/auth/widgets/widget.dart';
-import 'package:crypto_app/repository/abstract_auth_repository.dart';
+import 'package:crypto_app/repository/auth/abstract_auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

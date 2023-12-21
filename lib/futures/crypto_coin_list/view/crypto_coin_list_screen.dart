@@ -4,7 +4,7 @@ import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:crypto_app/repository/abstract_coin_repository.dart';
+import 'package:crypto_app/repository/crypto_coin/abstract_coin_repository.dart';
 import '../bloc/crypto_coin_list_bloc.dart';
 import '../widget/crypto_list_tile.dart';
 

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:crypto_app/repository/abstract_auth_repository.dart';
+import 'package:crypto_app/repository/auth/abstract_auth_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part 'settings_event.dart';

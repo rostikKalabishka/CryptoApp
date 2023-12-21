@@ -5,7 +5,7 @@ import 'package:crypto_app/repository/auth/model/model.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:crypto_app/repository/abstract_auth_repository.dart';
+import 'package:crypto_app/repository/auth/abstract_auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -37,13 +37,17 @@ class AuthRepository implements AbstractAuthRepository {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         log('The password provided is too weak.');
+        throw 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
         log('The account already exists for that email.');
+        throw 'The account already exists for that email.';
       } else {
         log('$e');
+        throw e.code;
       }
     } catch (e) {
       debugPrint('$e');
+      throw '$e';
     }
   }
 
@@ -58,13 +62,18 @@ class AuthRepository implements AbstractAuthRepository {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         log('No user found for that email.');
+        throw 'No user found for that email.';
       } else if (e.code == 'wrong-password') {
         log('Wrong password provided for that user.');
+        throw 'Wrong password provided for that user.';
       } else {
         log('$e');
+        throw e.code;
       }
     } catch (e) {
       log('$e');
+
+      throw 'Unknown error, try again';
     }
   }
 
@@ -132,11 +141,5 @@ class AuthRepository implements AbstractAuthRepository {
         await userDoc.set(userDetails.toJson());
       }
     }
-  }
-
-  @override
-  Future<void> singInWithAppleID() {
-    // TODO: implement singInWithAppleID
-    throw UnimplementedError();
   }
 }
