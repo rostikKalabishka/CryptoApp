@@ -82,11 +82,12 @@ class CryptoCoinDetailsBloc
     final currentState = state;
     try {
       if (currentState is CryptoCoinDetailsLoaded) {
-        final price = (double.parse(event.saveValue) *
-                double.parse(currentState.currentPriceInUsd))
-            .toString();
+        final count = event.saveValue.isEmpty ? '0' : event.saveValue;
+        final price =
+            (double.parse(count) * double.parse(currentState.currentPriceInUsd))
+                .toString();
         final updateState =
-            currentState.copyWith(price: price, counterCoin: event.saveValue);
+            currentState.copyWith(price: price, counterCoin: count);
 
         emit(updateState);
       }
@@ -101,9 +102,10 @@ class CryptoCoinDetailsBloc
 
     try {
       if (currentState is CryptoCoinDetailsLoaded) {
-        final counterCoin = (double.parse(event.price) /
-                double.parse(currentState.currentPriceInUsd))
-            .toString();
+        final price = event.price.isEmpty ? '0' : event.price;
+        final counterCoin =
+            (double.parse(price) / double.parse(currentState.currentPriceInUsd))
+                .toString();
         final updateState =
             currentState.copyWith(counterCoin: counterCoin, price: event.price);
 
