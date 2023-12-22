@@ -120,12 +120,10 @@ class AuthRepository implements AbstractAuthRepository {
   Future singInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      log(googleUser?.id ?? 'null');
 
-      if (googleUser?.id == null) {
-        throw 'You cancel auth with Google';
-      }
-      if (googleUser != null) {
+      if (googleUser == null) {
+        throw 'You cancel authentication with Google';
+      } else {
         final userDoc = firebaseStore.collection('users').doc(googleUser.id);
         final existingDoc = await userDoc.get();
 

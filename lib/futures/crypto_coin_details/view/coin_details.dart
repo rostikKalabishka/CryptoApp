@@ -20,9 +20,11 @@ class CryptoCoinDetailsScreen extends StatefulWidget {
 class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
   final _blocDetails = CryptoCoinDetailsBloc(GetIt.I<AbstractCoinRepository>());
 
-  late final TextEditingController coinCountController;
-  late final TextEditingController currencyController;
-
+  final TextEditingController coinCountController = TextEditingController();
+  final TextEditingController currencyController = TextEditingController();
+  late String selectedItem;
+  late String price;
+  String numberCoins = '1.0';
   @override
   void initState() {
     _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.id));
@@ -35,7 +37,16 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
     return BlocProvider(
       create: (context) => _blocDetails,
       child: Scaffold(
-        body: BlocBuilder<CryptoCoinDetailsBloc, CryptoCoinDetailsState>(
+        body: BlocConsumer<CryptoCoinDetailsBloc, CryptoCoinDetailsState>(
+          listener: (BuildContext context, CryptoCoinDetailsState state) {
+            if (state is CryptoCoinCurrency) {
+              price = state.price;
+            } else if (state is CryptoCoinCurrencySelected) {
+              selectedItem = state.selectedCurrency;
+            } else if (state is CryptoCoinCounter) {
+              coinCountController.text = state.numberCoins;
+            }
+          },
           builder: (context, state) {
             if (state is CryptoCoinDetailsLoaded) {
               return RefreshIndicator.adaptive(
@@ -76,23 +87,19 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                       child: CryptoCalculator(
                         blocDetails: _blocDetails,
                         coin: state.coin,
-
                         func: (text) {
                           _blocDetails.add(
                             CryptoCoinConvertCoinToCurrencyEvent(
-                              text: text,
+                              coinCount: text,
+                              price: price,
                             ),
                           );
                         },
                         // currentPrice: state.coin.marketData.currentPrice,
                         price: state.price,
-                        list: state.coin.marketData.currentPrice
-                            .toJson()
-                            .keys
-                            .toList()
-                            .reversed
-                            .map((e) => e.toString())
-                            .toList(),
+                        dropDownList: state.dropDownList,
+                        coinCountController: coinCountController,
+                        currencyController: currencyController,
                       ),
                     ),
 

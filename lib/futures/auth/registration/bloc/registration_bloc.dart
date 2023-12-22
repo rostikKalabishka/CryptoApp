@@ -18,6 +18,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
   Future<void> _baseRegistration(
       RegistrationBaseEvent event, Emitter<RegistrationState> emit) async {
+    final autoRouter = AutoRouter.of(event.context);
     emit(RegistrationProcess());
     try {
       await coinRepository.registration(
@@ -26,8 +27,8 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
           email: event.email);
       emit(RegistrationSuccess());
       if (state is! RegistrationFailure) {
-        AutoRouter.of(event.context)
-            .pushAndPopUntil(const HomeRoute(), predicate: (route) => false);
+        autoRouter.pushAndPopUntil(const HomeRoute(),
+            predicate: (route) => false);
       }
     } catch (e) {
       emit(RegistrationFailure(error: e));
@@ -36,13 +37,14 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
   Future<void> _googleRegistration(RegistrationWithGoogleEvent event,
       Emitter<RegistrationState> emit) async {
+    final autoRouter = AutoRouter.of(event.context);
     emit(RegistrationProcess());
     try {
       await coinRepository.singInWithGoogle();
       emit(RegistrationSuccess());
       if (state is! RegistrationFailure) {
-        AutoRouter.of(event.context)
-            .pushAndPopUntil(const HomeRoute(), predicate: (route) => false);
+        autoRouter.pushAndPopUntil(const HomeRoute(),
+            predicate: (route) => false);
       }
     } catch (e) {
       emit(RegistrationFailure(error: e));

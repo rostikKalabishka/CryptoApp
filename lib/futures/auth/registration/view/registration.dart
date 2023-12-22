@@ -1,14 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/auth/registration/bloc/registration_bloc.dart';
-import 'package:crypto_app/futures/auth/widgets/custom_button_auth.dart';
 import 'package:crypto_app/repository/auth/abstract_auth_repository.dart';
 import 'package:crypto_app/router/router.dart';
-import 'package:crypto_app/ui/theme/const.dart';
 import 'package:crypto_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
 import '../../widgets/widget.dart';
 
 @RoutePage()
@@ -20,7 +17,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final CustomFieldValidator utils = CustomFieldValidator();
+  final Utils utils = Utils();
   final _formKey = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
@@ -36,191 +33,184 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final theme = Theme.of(context);
     return BlocProvider(
       create: (context) => _registrationBloc,
-      child: BlocListener<RegistrationBloc, RegistrationState>(
+      child: BlocConsumer<RegistrationBloc, RegistrationState>(
         listener: (context, state) {
           if (state is RegistrationFailure) {
             _errorMsg = state.error.toString();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: splineColor,
-                content: Center(
-                  child: Text(
-                    _errorMsg ?? '',
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ),
-              ),
-            );
+            utils.errorSnackBar(context, theme, _errorMsg);
             setState(() {});
           } else {
             _errorMsg = '';
             setState(() {});
           }
         },
-        child: Scaffold(
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                title: Text(
-                  'Crypto App',
-                  style: theme.textTheme.bodyLarge,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  // child: Center(
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       Text('Crypto App', style: theme.textTheme.bodyLarge)
-                  //     ],
-                  //   ),
-                  // ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(children: [
-                        CustomTextField(
-                          // errorMsg: _errorMsg,
-                          textEditingController: usernameController,
-                          textInputType: TextInputType.text,
-                          obscureText: false,
-                          hintText: 'Username',
-                          validator: (val) => utils.usernameValidator(val!),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
-                        CustomTextField(
-                            textEditingController: emailController,
-                            textInputType: TextInputType.emailAddress,
-                            obscureText: false,
-                            hintText: 'Email',
-                            validator: (val) => utils.emailValidator(val!)),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
-                        CustomTextField(
-                          textEditingController: passwordController,
-                          textInputType: TextInputType.text,
-                          onChange: (val) => utils.passwordValidator(val!),
-                          obscureText: obscurePassword,
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.abc),
-                            onPressed: () {
-                              obscurePassword = !obscurePassword;
-                              setState(() {});
-                            },
-                          ),
-                          hintText: 'Password',
-                          validator: (val) => utils.passwordValidator(val!),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
-                        CustomTextField(
-                          validator: (val) => utils.confirmPasswordValidator(
-                              val!, passwordController.text),
-                          textEditingController: confirmPasswordController,
-                          textInputType: TextInputType.emailAddress,
-                          obscureText: obscureConfirmPassword,
-                          hintText: 'Confirm Password',
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.abc),
-                            onPressed: () {
-                              obscureConfirmPassword = !obscureConfirmPassword;
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                      ]),
-                    ),
+        builder: (BuildContext context, RegistrationState state) {
+          return Scaffold(
+            body: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  title: Text(
+                    'Crypto App',
+                    style: theme.textTheme.bodyLarge,
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _registrationBloc.add(RegistrationBaseEvent(
-                          confirmPassword: confirmPasswordController.text,
-                          email: emailController.text,
-                          password: passwordController.text,
-                          username: usernameController.text,
-                          context: context,
-                        ));
-                        // AutoRouter.of(context).push(const HomeRoute());
-                      }
-                    },
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    // child: Center(
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text('Crypto App', style: theme.textTheme.bodyLarge)
+                    //     ],
+                    //   ),
+                    // ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Padding(
                       padding: const EdgeInsets.all(12),
-                      child: Text(
-                        'Registration',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                            fontSize: 20, fontWeight: FontWeight.w700),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(children: [
+                          CustomTextField(
+                            // errorMsg: _errorMsg,
+                            textEditingController: usernameController,
+                            textInputType: TextInputType.text,
+                            obscureText: false,
+                            hintText: 'Username',
+                            validator: (val) => utils.usernameValidator(val!),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          CustomTextField(
+                              textEditingController: emailController,
+                              textInputType: TextInputType.emailAddress,
+                              obscureText: false,
+                              hintText: 'Email',
+                              validator: (val) => utils.emailValidator(val!)),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          CustomTextField(
+                            textEditingController: passwordController,
+                            textInputType: TextInputType.text,
+                            onChange: (val) => utils.passwordValidator(val!),
+                            obscureText: obscurePassword,
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.abc),
+                              onPressed: () {
+                                obscurePassword = !obscurePassword;
+                                setState(() {});
+                              },
+                            ),
+                            hintText: 'Password',
+                            validator: (val) => utils.passwordValidator(val!),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          CustomTextField(
+                            validator: (val) => utils.confirmPasswordValidator(
+                                val!, passwordController.text),
+                            textEditingController: confirmPasswordController,
+                            textInputType: TextInputType.emailAddress,
+                            obscureText: obscureConfirmPassword,
+                            hintText: 'Confirm Password',
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.abc),
+                              onPressed: () {
+                                obscureConfirmPassword =
+                                    !obscureConfirmPassword;
+                                setState(() {});
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                        ]),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-                  child: CustomButtonAuth(
-                    image: 'assets/svg/google.svg',
-                    function: () {
-                      _registrationBloc
-                          .add(RegistrationWithGoogleEvent(context: context));
-                    },
-                    text: 'Sign in With Google',
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _registrationBloc.add(RegistrationBaseEvent(
+                            confirmPassword: confirmPasswordController.text,
+                            email: emailController.text,
+                            password: passwordController.text,
+                            username: usernameController.text,
+                            context: context,
+                          ));
+                          // AutoRouter.of(context).push(const HomeRoute());
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          'Registration',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                              fontSize: 20, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.05,
-                  child: Center(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Do you have an account?'),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              AutoRouter.of(context).push(const LoginRoute());
-                            },
-                            child: Text(
-                              'Login',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                  color: Colors.blue[700],
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 50, horizontal: 20),
+                    child: CustomButtonAuth(
+                      image: 'assets/svg/google.svg',
+                      function: () {
+                        _registrationBloc
+                            .add(RegistrationWithGoogleEvent(context: context));
+                      },
+                      text: 'Sign in With Google',
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    child: Center(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Do you have an account?'),
+                            const SizedBox(
+                              width: 5,
                             ),
-                          )
-                        ]),
+                            GestureDetector(
+                              onTap: () {
+                                AutoRouter.of(context).push(const LoginRoute());
+                              },
+                              child: Text(
+                                'Login',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                    color: Colors.blue[700],
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            )
+                          ]),
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-        ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }

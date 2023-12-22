@@ -17,9 +17,11 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
   final double max;
   final double min;
   final List<ChartData> sparkline;
+  final List<String> dropDownList;
 
   final String currentPriceInUsd;
   const CryptoCoinDetailsLoaded({
+    required this.dropDownList,
     required this.coin,
     required this.selectedItem,
     required this.price,
@@ -41,4 +43,36 @@ class CryptoCoinDetailsFailure extends CryptoCoinDetailsState {
   const CryptoCoinDetailsFailure({required this.error});
   @override
   List<Object> get props => super.props..add(error);
+}
+
+class CryptoCoinCurrency extends CryptoCoinDetailsState {
+  final String price;
+  // final String numberCoins;
+
+  const CryptoCoinCurrency({
+    required this.price,
+    // required this.numberCoins
+  });
+  @override
+  List<Object> get props => super.props..addAll([price]);
+}
+
+class CryptoCoinCounter extends CryptoCoinDetailsState {
+  final String numberCoins;
+  // final String price;
+
+  const CryptoCoinCounter({
+    required this.numberCoins,
+    // required this.price
+  });
+  @override
+  List<Object> get props => super.props..addAll([numberCoins]);
+}
+
+class CryptoCoinCurrencySelected extends CryptoCoinDetailsState {
+  final String selectedCurrency;
+
+  const CryptoCoinCurrencySelected({required this.selectedCurrency});
+  @override
+  List<Object> get props => super.props..addAll([selectedCurrency]);
 }

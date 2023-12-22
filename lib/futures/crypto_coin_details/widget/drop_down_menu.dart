@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class DropdownButtonMenu extends StatefulWidget {
   const DropdownButtonMenu({
     Key? key,
-    required this.list,
+    required this.dropDownList,
     // required this.blocDetails,
     required this.func,
   }) : super(key: key);
-  final List<String> list;
+  final List<String> dropDownList;
   // final CryptoCoinDetailsBloc blocDetails;
   final Function(String value) func;
 
@@ -16,7 +16,8 @@ class DropdownButtonMenu extends StatefulWidget {
 }
 
 class _DropdownButtonMenuState extends State<DropdownButtonMenu> {
-  late String dropdownValue = widget.list.isNotEmpty ? widget.list.first : '';
+  late String dropdownValue =
+      widget.dropDownList.isNotEmpty ? widget.dropDownList.first : '';
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class _DropdownButtonMenuState extends State<DropdownButtonMenu> {
           //     CryptoCoinCurrencySelectedEvent(selectedCurrency: dropdownValue));
         });
       },
-      items: widget.list.map<DropdownMenuItem<String>>((String value) {
+      items: widget.dropDownList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value.toUpperCase()),

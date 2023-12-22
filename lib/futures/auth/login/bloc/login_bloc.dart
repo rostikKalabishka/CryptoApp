@@ -19,6 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _loginSignIn(
       LoginSignInEvent event, Emitter<LoginState> emit) async {
+    final autoRouter = AutoRouter.of(event.context);
     emit(LoginInProcess());
     try {
       await coinRepository.login(
@@ -26,8 +27,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(LoginInSuccess());
 
       if (state is! LoginFailure) {
-        AutoRouter.of(event.context)
-            .pushAndPopUntil(const HomeRoute(), predicate: (route) => false);
+        autoRouter.pushAndPopUntil(const HomeRoute(),
+            predicate: (route) => false);
       }
     } catch (e) {
       emit(LoginFailure(error: e));
@@ -36,13 +37,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future _loginWithGoogle(
       LoginSignInWithGoogleEvent event, Emitter<LoginState> emit) async {
+    final autoRouter = AutoRouter.of(event.context);
     emit(LoginInProcess());
     try {
       await coinRepository.singInWithGoogle();
       emit(LoginInSuccess());
       if (state is! LoginFailure) {
-        AutoRouter.of(event.context)
-            .pushAndPopUntil(const HomeRoute(), predicate: (route) => false);
+        autoRouter.pushAndPopUntil(const HomeRoute(),
+            predicate: (route) => false);
       }
     } catch (e) {
       emit(LoginFailure(error: e));

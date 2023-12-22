@@ -1,4 +1,6 @@
-class CustomFieldValidator {
+import 'package:flutter/material.dart';
+
+class Utils {
   String? usernameValidator(String val) {
     if (val.isEmpty) {
       return 'Please fill in this field';
@@ -32,5 +34,19 @@ class CustomFieldValidator {
       return 'The password does not match';
     }
     return null;
+  }
+
+  void errorSnackBar(BuildContext context, ThemeData theme, String? errorMsg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: theme.cardColor,
+        content: Center(
+          child: Text(
+            errorMsg ?? 'Unknown error',
+            style: const TextStyle(color: Colors.red),
+          ),
+        ),
+      ),
+    );
   }
 }
