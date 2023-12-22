@@ -14,7 +14,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
   final CryptoCoinDetails coin;
   final String selectedItem;
   final String counterCoin;
-
+  final String coinDetailsPrice;
   final String price;
   final double max;
   final double min;
@@ -28,26 +28,37 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
     required this.coin,
     required this.selectedItem,
     required this.price,
+    required this.coinDetailsPrice,
     required this.currentPriceInUsd,
     required this.max,
     required this.min,
     required this.sparkline,
   });
   @override
-  List<Object> get props =>
-      [coin, selectedItem, price, currentPriceInUsd, sparkline, min, max];
+  List<Object> get props => [
+        counterCoin,
+        dropDownList,
+        coin,
+        selectedItem,
+        price,
+        coinDetailsPrice,
+        currentPriceInUsd,
+        max,
+        min,
+        sparkline,
+      ];
 
-  CryptoCoinDetailsLoaded copyWith({
-    CryptoCoinDetails? coin,
-    String? selectedItem,
-    String? counterCoin,
-    String? price,
-    double? max,
-    double? min,
-    List<ChartData>? sparkline,
-    List<String>? dropDownList,
-    String? currentPriceInUsd,
-  }) {
+  CryptoCoinDetailsLoaded copyWith(
+      {CryptoCoinDetails? coin,
+      String? selectedItem,
+      String? counterCoin,
+      String? price,
+      double? max,
+      double? min,
+      List<ChartData>? sparkline,
+      List<String>? dropDownList,
+      String? currentPriceInUsd,
+      String? coinDetailsPrice}) {
     return CryptoCoinDetailsLoaded(
       coin: coin ?? this.coin,
       selectedItem: selectedItem ?? this.selectedItem,
@@ -58,6 +69,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
       sparkline: sparkline ?? this.sparkline,
       dropDownList: dropDownList ?? this.dropDownList,
       currentPriceInUsd: currentPriceInUsd ?? this.currentPriceInUsd,
+      coinDetailsPrice: coinDetailsPrice ?? this.coinDetailsPrice,
     );
   }
 }

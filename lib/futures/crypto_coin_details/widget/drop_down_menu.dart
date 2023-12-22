@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/crypto_coin_details_bloc.dart';
 
 class DropdownButtonMenu extends StatefulWidget {
   const DropdownButtonMenu({
     Key? key,
     required this.dropDownList,
-    required this.func,
   }) : super(key: key);
   final List<String> dropDownList;
-
-  final Function(String value) func;
 
   @override
   State<DropdownButtonMenu> createState() => _DropdownButtonMenuState();
@@ -32,7 +32,8 @@ class _DropdownButtonMenuState extends State<DropdownButtonMenu> {
       onChanged: (String? value) {
         setState(() {
           dropdownValue = value!;
-          widget.func(dropdownValue);
+          BlocProvider.of<CryptoCoinDetailsBloc>(context).add(
+              CryptoCoinCurrencySelectedEvent(selectedCurrency: dropdownValue));
         });
       },
       items: widget.dropDownList.map<DropdownMenuItem<String>>((String value) {

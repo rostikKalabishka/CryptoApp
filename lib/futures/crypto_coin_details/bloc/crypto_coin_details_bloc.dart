@@ -13,6 +13,7 @@ part 'crypto_coin_details_state.dart';
 class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
   final AbstractCoinRepository abstractCoinRepository;
+
   CryptoCoinDetailsBloc(this.abstractCoinRepository)
       : super(CryptoCoinDetailsInitial()) {
     on<CryptoCoinDetailsLoadEvent>(_getCoinDetailsLoad);
@@ -31,10 +32,20 @@ class CryptoCoinDetailsBloc
       }
       final coin =
           await abstractCoinRepository.getCryptoCoinDetails(id: event.id);
+      final dropDownList = coin.marketData.currentPrice
+          .toJson()
+          .keys
+          .toList()
+          .reversed
+          .map((e) => e.toString())
+          .toList();
 
-      final price = coin.marketData.currentPrice.usd.toString();
+      final selectedCurrency = dropDownList.first.toLowerCase();
+      final price =
+          coin.marketData.currentPrice.toJson()[selectedCurrency].toString();
       // basePrice = price;
-
+      final String coinDetailsPrice =
+          coin.marketData.currentPrice.usd.toString();
       final currentPriceInUsd = coin.marketData.currentPrice.usd.toString();
       final detailsInfoForChart = coin.marketData.sparkLine7d;
       final sparkline = detailsInfoForChart.price.asMap().entries.map((entry) {
@@ -47,14 +58,7 @@ class CryptoCoinDetailsBloc
           (currentMax, price) => currentMax < price ? price : currentMax);
       var min = detailsInfoForChart.price.reduce(
           (currentMax, price) => currentMax > price ? price : currentMax);
-      final dropDownList = coin.marketData.currentPrice
-          .toJson()
-          .keys
-          .toList()
-          .reversed
-          .map((e) => e.toString())
-          .toList();
-      final selectedCurrency = dropDownList.first.toLowerCase();
+
       final counterCoin =
           (double.parse(price) / double.parse(price)).toString();
       emit(CryptoCoinDetailsLoaded(
@@ -66,7 +70,8 @@ class CryptoCoinDetailsBloc
           price: price,
           currentPriceInUsd: currentPriceInUsd,
           dropDownList: dropDownList,
-          counterCoin: counterCoin));
+          counterCoin: counterCoin,
+          coinDetailsPrice: coinDetailsPrice));
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
     }
@@ -103,9 +108,6 @@ class CryptoCoinDetailsBloc
             currentState.copyWith(counterCoin: counterCoin, price: event.price);
 
         emit(updateState);
-        // emit(CryptoCoinCounter(
-        //     numberCoins: (double.parse(event.price) / double.parse(basePrice))
-        //         .toString()));
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
@@ -114,10 +116,24 @@ class CryptoCoinDetailsBloc
 
   Future<void> _getSelectedItem(CryptoCoinCurrencySelectedEvent event,
       Emitter<CryptoCoinDetailsState> emit) async {
+    final currentState = state;
     try {
-      if (state is CryptoCoinCurrencySelected) {
-        emit(CryptoCoinCurrencySelected(
-            selectedCurrency: event.selectedCurrency));
+      if (currentState is CryptoCoinDetailsLoaded) {
+        final selectedCurrency = event.selectedCurrency;
+        final String currentPriceInUsd = currentState
+            .coin.marketData.currentPrice
+            .toJson()[selectedCurrency]
+            .toString();
+        final String price = (double.parse(currentState.counterCoin) *
+                double.parse(currentPriceInUsd))
+            .toString();
+
+        final updateState = currentState.copyWith(
+            selectedItem: selectedCurrency,
+            currentPriceInUsd: currentPriceInUsd,
+            price: price);
+
+        emit(updateState);
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));

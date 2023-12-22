@@ -102,7 +102,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                         child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Text(
-                        '\$${state.currentPriceInUsd}',
+                        '\$${state.coinDetailsPrice}',
                         style: theme.textTheme.bodyLarge,
                       ),
                     )),

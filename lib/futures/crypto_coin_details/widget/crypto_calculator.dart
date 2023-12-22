@@ -138,11 +138,6 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: DropdownButtonMenu(
-                  func: (dropdownValue) {
-                    BlocProvider.of<CryptoCoinDetailsBloc>(context).add(
-                        CryptoCoinCurrencySelectedEvent(
-                            selectedCurrency: dropdownValue));
-                  },
                   dropDownList: widget.dropDownList,
                 ),
               ),
