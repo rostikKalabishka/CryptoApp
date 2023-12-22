@@ -4,11 +4,10 @@ class DropdownButtonMenu extends StatefulWidget {
   const DropdownButtonMenu({
     Key? key,
     required this.dropDownList,
-    // required this.blocDetails,
     required this.func,
   }) : super(key: key);
   final List<String> dropDownList;
-  // final CryptoCoinDetailsBloc blocDetails;
+
   final Function(String value) func;
 
   @override
@@ -34,8 +33,6 @@ class _DropdownButtonMenuState extends State<DropdownButtonMenu> {
         setState(() {
           dropdownValue = value!;
           widget.func(dropdownValue);
-          // widget.blocDetails.add(
-          //     CryptoCoinCurrencySelectedEvent(selectedCurrency: dropdownValue));
         });
       },
       items: widget.dropDownList.map<DropdownMenuItem<String>>((String value) {

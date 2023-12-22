@@ -12,6 +12,7 @@ class CryptoCoinDetailsScreen extends StatefulWidget {
   const CryptoCoinDetailsScreen({super.key, required this.id});
 
   final String id;
+
   @override
   State<CryptoCoinDetailsScreen> createState() =>
       _CryptoCoinDetailsScreenState();
@@ -20,15 +21,37 @@ class CryptoCoinDetailsScreen extends StatefulWidget {
 class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
   final _blocDetails = CryptoCoinDetailsBloc(GetIt.I<AbstractCoinRepository>());
 
-  final TextEditingController coinCountController = TextEditingController();
-  final TextEditingController currencyController = TextEditingController();
   late String selectedItem;
   late String price;
-  String numberCoins = '1.0';
+  late String numberCoins;
+
+  late TextEditingController coinCountController;
+
+  late TextEditingController currencyController;
   @override
   void initState() {
     _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.id));
     super.initState();
+    coinCountController = TextEditingController();
+    currencyController = TextEditingController();
+    _blocDetails.stream.listen((state) {
+      if (state is CryptoCoinDetailsLoaded) {
+        setState(() {
+          price = state.price;
+
+          numberCoins = state.counterCoin;
+          // Update the controller's text
+          currencyController.text = price;
+          coinCountController.text = numberCoins;
+        });
+      }
+      // if (state is CryptoCoinCounter) {
+      //   setState(() {
+      //     numberCoins = state.numberCoins;
+      //     coinCountController.text = numberCoins;
+      //   });
+      // }
+    });
   }
 
   @override
@@ -39,13 +62,14 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
       child: Scaffold(
         body: BlocConsumer<CryptoCoinDetailsBloc, CryptoCoinDetailsState>(
           listener: (BuildContext context, CryptoCoinDetailsState state) {
-            if (state is CryptoCoinCurrency) {
-              price = state.price;
-            } else if (state is CryptoCoinCurrencySelected) {
-              selectedItem = state.selectedCurrency;
-            } else if (state is CryptoCoinCounter) {
-              coinCountController.text = state.numberCoins;
-            }
+            // if (state is CryptoCoinDetailsLoaded) {
+            //   price = state.price;
+            //   numberCoins = state.counterCoin;
+            //   setState(() {});
+            // } else if (state is CryptoCoinCurrencySelected) {
+            //   selectedItem = state.selectedCurrency;
+            //   setState(() {});
+            // }
           },
           builder: (context, state) {
             if (state is CryptoCoinDetailsLoaded) {
@@ -87,16 +111,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                       child: CryptoCalculator(
                         blocDetails: _blocDetails,
                         coin: state.coin,
-                        func: (text) {
-                          _blocDetails.add(
-                            CryptoCoinConvertCoinToCurrencyEvent(
-                              coinCount: text,
-                              price: price,
-                            ),
-                          );
-                        },
-                        // currentPrice: state.coin.marketData.currentPrice,
-                        price: state.price,
+                        price: price,
                         dropDownList: state.dropDownList,
                         coinCountController: coinCountController,
                         currencyController: currencyController,

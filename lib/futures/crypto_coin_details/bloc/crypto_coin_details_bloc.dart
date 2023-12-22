@@ -12,8 +12,6 @@ part 'crypto_coin_details_state.dart';
 
 class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
-  late String numberCoins = '1.0';
-
   final AbstractCoinRepository abstractCoinRepository;
   CryptoCoinDetailsBloc(this.abstractCoinRepository)
       : super(CryptoCoinDetailsInitial()) {
@@ -57,6 +55,8 @@ class CryptoCoinDetailsBloc
           .map((e) => e.toString())
           .toList();
       final selectedCurrency = dropDownList.first.toLowerCase();
+      final counterCoin =
+          (double.parse(price) / double.parse(price)).toString();
       emit(CryptoCoinDetailsLoaded(
           max: max + (max * 0.05),
           min: min - (min * 0.05),
@@ -65,48 +65,25 @@ class CryptoCoinDetailsBloc
           selectedItem: selectedCurrency,
           price: price,
           currentPriceInUsd: currentPriceInUsd,
-          dropDownList: dropDownList));
+          dropDownList: dropDownList,
+          counterCoin: counterCoin));
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
     }
   }
 
-  // Future<void> _currency(CryptoCoinSaveValueInTextFieldEvent event,
-  //     Emitter<CryptoCoinDetailsState> emit
-
-  //     ) async {
-  //   try {
-  //     if (state is CryptoCoinDetailsLoaded) {
-  //       currencyPrice =
-  //           (double.parse(event.saveValue) * double.parse(price)).toString();
-
-  //       emit(CryptoCoinDetailsLoaded(
-  //           sparkline: sparkline,
-  //           max: max,
-  //           min: min,
-  //           coin: coin,
-  //           selectedItem: selectedCurrency,
-  //           price: event.saveValue,
-  //           currentPriceInUsd: currentPriceInUsd));
-  //     }
-  //   } catch (e) {
-  //     emit(CryptoCoinDetailsFailure(error: e));
-  //     log('$e');
-  //   }
-  // }
-
   Future<void> _currency(CryptoCoinSaveValueInTextFieldEvent event,
       Emitter<CryptoCoinDetailsState> emit) async {
+    final currentState = state;
     try {
-      // var boba;
-      if (state is CryptoCoinCurrency) {
-        final price =
-            (double.parse(event.saveValue) * double.parse(event.coinCountTwo))
-                .toString();
-        emit(CryptoCoinCurrency(price: price));
-      }
-      if (state is CryptoCoinCurrencySelected) {
-        // boba = event.saveValue;
+      if (currentState is CryptoCoinDetailsLoaded) {
+        final price = (double.parse(event.saveValue) *
+                double.parse(currentState.currentPriceInUsd))
+            .toString();
+        final updateState =
+            currentState.copyWith(price: price, counterCoin: event.saveValue);
+
+        emit(updateState);
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
@@ -115,9 +92,20 @@ class CryptoCoinDetailsBloc
 
   Future<void> _coinCount(CryptoCoinConvertCoinToCurrencyEvent event,
       Emitter<CryptoCoinDetailsState> emit) async {
+    final currentState = state;
+
     try {
-      if (state is CryptoCoinCounter) {
-        emit(CryptoCoinCounter(numberCoins: event.coinCount));
+      if (currentState is CryptoCoinDetailsLoaded) {
+        final counterCoin = (double.parse(event.price) /
+                double.parse(currentState.currentPriceInUsd))
+            .toString();
+        final updateState =
+            currentState.copyWith(counterCoin: counterCoin, price: event.price);
+
+        emit(updateState);
+        // emit(CryptoCoinCounter(
+        //     numberCoins: (double.parse(event.price) / double.parse(basePrice))
+        //         .toString()));
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
@@ -130,43 +118,10 @@ class CryptoCoinDetailsBloc
       if (state is CryptoCoinCurrencySelected) {
         emit(CryptoCoinCurrencySelected(
             selectedCurrency: event.selectedCurrency));
-
-        // final selectedCurrency = event.selectedCurrency;
-        // price =
-        //     coin.marketData.currentPrice.toJson()[selectedCurrency].toString();
-        // emit(CryptoCoinDetailsLoaded(
-        //     sparkline: sparkline,
-        //     max: max,
-        //     min: min,
-        //     coin: coin,
-        //     selectedItem: selectedCurrency,
-        //     price: price,
-        //     currentPriceInUsd: currentPriceInUsd));
-
-        // log(selectedCurrency);
-
-        // log(price);
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
       log('$e');
     }
   }
-
-//   Future<void> _coinCount(CryptoCoinConvertCoinToCurrencyEvent event,
-//       Emitter<CryptoCoinDetailsState> emit) async {
-//     try {
-//       if (state is CryptoCoinDetailsLoaded) {
-//         numberCoins = numberCoins.isEmpty
-//             ? '1.0'
-//             : (double.parse(currencyPrice) / double.parse(basePrice))
-//                 .toString();
-
-//         // log(numberCoins);
-//       }
-//     } catch (e) {
-//       emit(CryptoCoinDetailsFailure(error: e));
-//       log('$e');
-//     }
-//   }
 }

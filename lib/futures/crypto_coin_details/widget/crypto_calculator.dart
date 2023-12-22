@@ -8,30 +8,33 @@ import '../bloc/crypto_coin_details_bloc.dart';
 import 'drop_down_menu.dart';
 
 class CryptoCalculator extends StatefulWidget {
-  CryptoCalculator({
+  const CryptoCalculator({
     Key? key,
-    this.func,
     // this.dropdownValueFunc,
     required this.coin,
+
+    // required this.cryptoCoinSaveValueInTextField,
+    // required this.cryptoCoinConvertCoinToCurrency,
     required this.dropDownList,
     required this.price,
     required this.blocDetails,
-    // required this.currencyPrice,
     required this.coinCountController,
     required this.currencyController,
   }) : super(key: key);
 
   final CryptoCoinDetails coin;
+  // final Function(String text) cryptoCoinSaveValueInTextField;
 
   // final CurrentPrice currentPrice;
-  final Function(String text)? func;
+  // final Function(String text) cryptoCoinConvertCoinToCurrency;
   // final Function(String text)? dropdownValueFunc;
   final List<String> dropDownList;
   final String price;
   final CryptoCoinDetailsBloc blocDetails;
+
   // final String currencyPrice;
-  TextEditingController coinCountController;
-  TextEditingController currencyController;
+  final TextEditingController coinCountController;
+  final TextEditingController currencyController;
 
   @override
   State<CryptoCalculator> createState() => _CryptoCalculatorState();
@@ -111,7 +114,7 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
                       BlocProvider.of<CryptoCoinDetailsBloc>(context).add(
                           CryptoCoinConvertCoinToCurrencyEvent(
                               coinCount: widget.coinCountController.text,
-                              price: widget.price));
+                              price: widget.currencyController.text));
                     },
                     controller: widget.currencyController,
                     keyboardType: TextInputType.number,
