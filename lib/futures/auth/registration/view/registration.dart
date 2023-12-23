@@ -62,7 +62,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         key: _formKey,
                         child: Column(children: [
                           CustomTextField(
-                            // errorMsg: _errorMsg,
                             textEditingController: usernameController,
                             textInputType: TextInputType.text,
                             obscureText: false,
@@ -87,7 +86,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             onChange: (val) => utils.passwordValidator(val!),
                             obscureText: obscurePassword,
                             suffixIcon: IconButton(
-                              icon: Icon(obscurePassword == false
+                              icon: Icon(obscurePassword == true
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined),
                               onPressed: () {
@@ -109,7 +108,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             obscureText: obscureConfirmPassword,
                             hintText: 'Confirm Password',
                             suffixIcon: IconButton(
-                              icon: Icon(obscureConfirmPassword == false
+                              icon: Icon(obscureConfirmPassword == true
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined),
                               onPressed: () {

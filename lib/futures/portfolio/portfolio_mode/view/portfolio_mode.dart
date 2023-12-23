@@ -85,13 +85,13 @@ class _PortfolioModeState extends State<PortfolioMode> {
 
 List<CoinUserData> getChartData() {
   final List<CoinUserData> chartData = [
-    const CoinUserData(cryptocurrency: 'BTC', priceCurrent: 12012.2),
-    const CoinUserData(cryptocurrency: 'ETH', priceCurrent: 2012.2),
-    const CoinUserData(cryptocurrency: 'PEPE', priceCurrent: 112.2),
-    const CoinUserData(cryptocurrency: 'USDT', priceCurrent: 8012.2),
-    const CoinUserData(cryptocurrency: 'SOL', priceCurrent: 3012.2),
-    const CoinUserData(cryptocurrency: 'BNB', priceCurrent: 502.2),
-    const CoinUserData(cryptocurrency: 'DOGE', priceCurrent: 1012.2),
+    const CoinUserData(cryptocurrencyName: 'BTC', priceCurrent: 12012.2),
+    const CoinUserData(cryptocurrencyName: 'ETH', priceCurrent: 2012.2),
+    const CoinUserData(cryptocurrencyName: 'PEPE', priceCurrent: 112.2),
+    const CoinUserData(cryptocurrencyName: 'USDT', priceCurrent: 8012.2),
+    const CoinUserData(cryptocurrencyName: 'SOL', priceCurrent: 3012.2),
+    const CoinUserData(cryptocurrencyName: 'BNB', priceCurrent: 502.2),
+    const CoinUserData(cryptocurrencyName: 'DOGE', priceCurrent: 1012.2),
   ];
   return chartData;
 }

@@ -27,6 +27,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
+                title: Text(
+                  'Portfolio',
+                  style: theme.textTheme.bodyLarge,
+                ),
                 pinned: true,
                 centerTitle: true,
                 bottom: PreferredSize(
@@ -34,23 +38,19 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                       MediaQuery.of(context).size.height * 0.05),
                   child: const TabBar(
                     labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                    indicatorWeight: 4,
                     indicatorColor: accentColor,
                     labelColor: accentColor,
                     unselectedLabelColor: Colors.white,
+                    indicatorSize: TabBarIndicatorSize.tab,
                     tabs: [
                       Tab(
                         text: 'Watchlist',
                       ),
                       Tab(
                         text: 'Portfolio',
-                      )
+                      ),
                     ],
                   ),
-                ),
-                title: Text(
-                  'Portfolio',
-                  style: theme.textTheme.bodyLarge,
                 ),
               ),
               SliverToBoxAdapter(

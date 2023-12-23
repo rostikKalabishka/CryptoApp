@@ -20,7 +20,7 @@ class CryptoCoinDetailsScreen extends StatefulWidget {
 
 class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
   final _blocDetails = CryptoCoinDetailsBloc(GetIt.I<AbstractCoinRepository>());
-
+  bool starBool = false;
   late String selectedItem;
   late String price;
   late String numberCoins;
@@ -79,6 +79,22 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                           )
                         ],
                       ),
+                      actions: [
+                        IconButton(
+                          icon: starBool == true
+                              ? const Icon(
+                                  Icons.star,
+                                  color: Colors.yellow,
+                                )
+                              : const Icon(
+                                  Icons.star_outline,
+                                ),
+                          onPressed: () {
+                            starBool = !starBool;
+                            setState(() {});
+                          },
+                        )
+                      ],
                     ),
                     SliverToBoxAdapter(
                         child: Padding(
@@ -122,27 +138,6 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                         ),
                       ),
                     ),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Description',
-                              style: theme.textTheme.bodyLarge,
-                            ),
-                            Text(
-                              state.coin.description.en,
-                              maxLines: 15,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
                   ],
                 ),
               );
@@ -156,29 +151,27 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                     ),
                   ),
                   SliverToBoxAdapter(
-                    child: Expanded(
-                      child: Center(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(state.error.toString()),
-                          ),
-                          OutlinedButton(
-                              onPressed: () async {
-                                _blocDetails.add(
-                                    CryptoCoinDetailsLoadEvent(id: widget.id));
-                              },
-                              child: Text(
-                                'Try Again',
-                                style: theme.textTheme.bodyMedium,
-                              ))
-                        ],
-                      )),
-                    ),
+                    child: Center(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(state.error.toString()),
+                        ),
+                        OutlinedButton(
+                            onPressed: () async {
+                              _blocDetails.add(
+                                  CryptoCoinDetailsLoadEvent(id: widget.id));
+                            },
+                            child: Text(
+                              'Try Again',
+                              style: theme.textTheme.bodyMedium,
+                            ))
+                      ],
+                    )),
                   )
                 ],
               );

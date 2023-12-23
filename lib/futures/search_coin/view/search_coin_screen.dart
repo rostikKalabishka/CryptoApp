@@ -37,107 +37,109 @@ class _SearchCoinScreenState extends State<SearchCoinScreen> {
             searchCoinController.clear();
             _searchCoinBloc.add(const TrendingCoinListLoadedEvent());
           },
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                centerTitle: true,
-                pinned: true,
-                title: Text(
-                  'Search',
-                  style: theme.textTheme.bodyLarge,
-                ),
-                snap: true,
-                floating: true,
-                elevation: 0,
-                bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(
-                      MediaQuery.of(context).size.height * 0.09),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: splineColor.withAlpha(45),
-                        borderRadius: BorderRadius.circular(12)),
-                    width: double.infinity,
-                    margin: const EdgeInsets.symmetric(horizontal: 8)
-                        .copyWith(bottom: 12),
-                    padding: const EdgeInsets.all(1),
-                    child: TextFormField(
-                      controller: searchCoinController,
-                      onChanged: (text) {
-                        // final completer = Completer<void>();
-                        if (text.isEmpty) {
-                          _searchCoinBloc
-                              .add(const TrendingCoinListLoadedEvent());
-                          // completer.future;
-                        } else if (text.isNotEmpty) {
-                          _searchCoinBloc.add(SearchQueryEvent(query: text));
-                          // completer.complete();
-                        }
-                      },
-                      style: theme.textTheme.bodySmall,
-                      decoration: const InputDecoration(
-                          hintText: 'Search for a coin...',
-                          hintStyle: TextStyle(color: Colors.white),
-                          border:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none)),
+          child: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  centerTitle: true,
+                  pinned: true,
+                  title: Text(
+                    'Search',
+                    style: theme.textTheme.bodyLarge,
+                  ),
+                  snap: true,
+                  floating: true,
+                  elevation: 0,
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(
+                        MediaQuery.of(context).size.height * 0.0865),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: splineColor.withAlpha(45),
+                          borderRadius: BorderRadius.circular(12)),
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 8)
+                          .copyWith(bottom: 12),
+                      padding: const EdgeInsets.all(1),
+                      child: TextFormField(
+                        controller: searchCoinController,
+                        onChanged: (text) {
+                          // final completer = Completer<void>();
+                          if (text.isEmpty) {
+                            _searchCoinBloc
+                                .add(const TrendingCoinListLoadedEvent());
+                            // completer.future;
+                          } else if (text.isNotEmpty) {
+                            _searchCoinBloc.add(SearchQueryEvent(query: text));
+                            // completer.complete();
+                          }
+                        },
+                        style: theme.textTheme.bodySmall,
+                        decoration: const InputDecoration(
+                            hintText: 'Search for a coin...',
+                            hintStyle: TextStyle(color: Colors.white),
+                            border:
+                                OutlineInputBorder(borderSide: BorderSide.none),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              BlocBuilder<SearchCoinBloc, SearchCoinState>(
-                  builder: (context, state) {
-                if (state is SearchCoinLoadedQuery) {
-                  return SliverList.separated(
-                    itemCount: state.cryptocurrencySearchCoin.length,
-                    itemBuilder: (context, index) {
-                      final cryptocurrencySearchCoin =
-                          state.cryptocurrencySearchCoin[index];
-                      return SearchListTile(
-                        id: cryptocurrencySearchCoin.id,
-                        image: cryptocurrencySearchCoin.thumb,
-                        name: cryptocurrencySearchCoin.name,
-                        symbol: cryptocurrencySearchCoin.symbol,
-                        marketCapRank: cryptocurrencySearchCoin.marketCapRank,
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: Divider(),
-                      );
-                    },
-                  );
-                } else if (state is TrendingCryptoLoaded) {
-                  return SliverList.separated(
-                    itemCount: state.trendingCryptoList.length,
-                    itemBuilder: (context, index) {
-                      final trendingCryptoList =
-                          state.trendingCryptoList[index];
-                      return SearchListTile(
-                        id: trendingCryptoList.id,
-                        image: trendingCryptoList.thumb,
-                        name: trendingCryptoList.name,
-                        symbol: trendingCryptoList.symbol,
-                        marketCapRank: trendingCryptoList.marketCapRank,
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: Divider(),
-                      );
-                    },
-                  );
-                } else {
-                  return const SliverToBoxAdapter(
-                    child: Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    ),
-                  );
-                }
-              })
-            ],
+                BlocBuilder<SearchCoinBloc, SearchCoinState>(
+                    builder: (context, state) {
+                  if (state is SearchCoinLoadedQuery) {
+                    return SliverList.separated(
+                      itemCount: state.cryptocurrencySearchCoin.length,
+                      itemBuilder: (context, index) {
+                        final cryptocurrencySearchCoin =
+                            state.cryptocurrencySearchCoin[index];
+                        return SearchListTile(
+                          id: cryptocurrencySearchCoin.id,
+                          image: cryptocurrencySearchCoin.thumb,
+                          name: cryptocurrencySearchCoin.name,
+                          symbol: cryptocurrencySearchCoin.symbol,
+                          marketCapRank: cryptocurrencySearchCoin.marketCapRank,
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Divider(),
+                        );
+                      },
+                    );
+                  } else if (state is TrendingCryptoLoaded) {
+                    return SliverList.separated(
+                      itemCount: state.trendingCryptoList.length,
+                      itemBuilder: (context, index) {
+                        final trendingCryptoList =
+                            state.trendingCryptoList[index];
+                        return SearchListTile(
+                          id: trendingCryptoList.id,
+                          image: trendingCryptoList.thumb,
+                          name: trendingCryptoList.name,
+                          symbol: trendingCryptoList.symbol,
+                          marketCapRank: trendingCryptoList.marketCapRank,
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Divider(),
+                        );
+                      },
+                    );
+                  } else {
+                    return const SliverToBoxAdapter(
+                      child: Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      ),
+                    );
+                  }
+                })
+              ],
+            ),
           ),
         ),
       ),

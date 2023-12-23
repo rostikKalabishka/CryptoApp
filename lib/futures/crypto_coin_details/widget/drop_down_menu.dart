@@ -1,3 +1,4 @@
+import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,13 +22,17 @@ class _DropdownButtonMenuState extends State<DropdownButtonMenu> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
+      dropdownColor: scaffoldBackground,
       value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
+      icon: const Icon(
+        Icons.arrow_downward,
+        color: accentColor,
+      ),
       elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
+      style: const TextStyle(color: Colors.white),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: accentColor,
       ),
       onChanged: (String? value) {
         setState(() {

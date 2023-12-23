@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             obscureText: obscurePassword,
                             hintText: 'Password',
                             suffixIcon: IconButton(
-                              icon: Icon(obscurePassword == false
+                              icon: Icon(obscurePassword == true
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined),
                               onPressed: () {
