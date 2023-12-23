@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'crypto_coin_details_bloc.dart';
 
 sealed class CryptoCoinDetailsState extends Equatable {
@@ -18,7 +17,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
   final String price;
   final double max;
   final double min;
-  final List<ChartData> sparkline;
+  final List<ChartData> sparkLine;
   final List<String> dropDownList;
 
   final String currentPriceInUsd;
@@ -32,7 +31,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
     required this.currentPriceInUsd,
     required this.max,
     required this.min,
-    required this.sparkline,
+    required this.sparkLine,
   });
   @override
   List<Object> get props => [
@@ -45,7 +44,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
         currentPriceInUsd,
         max,
         min,
-        sparkline,
+        sparkLine,
       ];
 
   CryptoCoinDetailsLoaded copyWith(
@@ -55,7 +54,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
       String? price,
       double? max,
       double? min,
-      List<ChartData>? sparkline,
+      List<ChartData>? sparkLine,
       List<String>? dropDownList,
       String? currentPriceInUsd,
       String? coinDetailsPrice}) {
@@ -66,7 +65,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
       price: price ?? this.price,
       max: max ?? this.max,
       min: min ?? this.min,
-      sparkline: sparkline ?? this.sparkline,
+      sparkLine: sparkLine ?? this.sparkLine,
       dropDownList: dropDownList ?? this.dropDownList,
       currentPriceInUsd: currentPriceInUsd ?? this.currentPriceInUsd,
       coinDetailsPrice: coinDetailsPrice ?? this.coinDetailsPrice,
@@ -82,36 +81,4 @@ class CryptoCoinDetailsFailure extends CryptoCoinDetailsState {
   const CryptoCoinDetailsFailure({required this.error});
   @override
   List<Object> get props => super.props..add(error);
-}
-
-class CryptoCoinCurrency extends CryptoCoinDetailsState {
-  final String price;
-  // final String numberCoins;
-
-  const CryptoCoinCurrency({
-    required this.price,
-    // required this.numberCoins
-  });
-  @override
-  List<Object> get props => super.props..addAll([price]);
-}
-
-class CryptoCoinCounter extends CryptoCoinDetailsState {
-  final String numberCoins;
-  // final String price;
-
-  const CryptoCoinCounter({
-    required this.numberCoins,
-    // required this.price
-  });
-  @override
-  List<Object> get props => super.props..addAll([numberCoins]);
-}
-
-class CryptoCoinCurrencySelected extends CryptoCoinDetailsState {
-  final String selectedCurrency;
-
-  const CryptoCoinCurrencySelected({required this.selectedCurrency});
-  @override
-  List<Object> get props => super.props..addAll([selectedCurrency]);
 }

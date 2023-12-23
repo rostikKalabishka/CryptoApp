@@ -35,14 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       create: (context) => _registrationBloc,
       child: BlocConsumer<RegistrationBloc, RegistrationState>(
         listener: (context, state) {
-          if (state is RegistrationFailure) {
-            _errorMsg = state.error.toString();
-            utils.errorSnackBar(context, theme, _errorMsg);
-            setState(() {});
-          } else {
-            _errorMsg = '';
-            setState(() {});
-          }
+          _errorMessage(state, context, theme);
         },
         builder: (BuildContext context, RegistrationState state) {
           return Scaffold(
@@ -58,14 +51,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: SizedBox(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.05,
-                    // child: Center(
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.center,
-                    //     children: [
-                    //       Text('Crypto App', style: theme.textTheme.bodyLarge)
-                    //     ],
-                    //   ),
-                    // ),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -102,7 +87,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             onChange: (val) => utils.passwordValidator(val!),
                             obscureText: obscurePassword,
                             suffixIcon: IconButton(
-                              icon: const Icon(Icons.abc),
+                              icon: Icon(obscurePassword == false
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined),
                               onPressed: () {
                                 obscurePassword = !obscurePassword;
                                 setState(() {});
@@ -122,7 +109,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             obscureText: obscureConfirmPassword,
                             hintText: 'Confirm Password',
                             suffixIcon: IconButton(
-                              icon: const Icon(Icons.abc),
+                              icon: Icon(obscureConfirmPassword == false
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined),
                               onPressed: () {
                                 obscureConfirmPassword =
                                     !obscureConfirmPassword;
@@ -151,7 +140,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             username: usernameController.text,
                             context: context,
                           ));
-                          // AutoRouter.of(context).push(const HomeRoute());
                         }
                       },
                       child: Padding(
@@ -166,9 +154,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: Container(
+                            height: 1,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'OR',
+                          style: theme.textTheme.labelMedium,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Container(
+                            height: 1,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 50, horizontal: 20),
+                        vertical: 30, horizontal: 20),
                     child: CustomButtonAuth(
                       image: 'assets/svg/google.svg',
                       function: () {
@@ -213,5 +231,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         },
       ),
     );
+  }
+
+  void _errorMessage(
+      RegistrationState state, BuildContext context, ThemeData theme) {
+    if (state is RegistrationFailure) {
+      _errorMsg = state.error.toString();
+      utils.errorSnackBar(context, theme, _errorMsg);
+      setState(() {});
+    } else {
+      _errorMsg = '';
+      setState(() {});
+    }
   }
 }

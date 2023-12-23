@@ -92,8 +92,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 customFieldValidator.passwordValidator(val!),
                             textEditingController: passwordController,
                             textInputType: TextInputType.emailAddress,
-                            obscureText: true,
+                            obscureText: obscurePassword,
                             hintText: 'Password',
+                            suffixIcon: IconButton(
+                              icon: Icon(obscurePassword == false
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined),
+                              onPressed: () {
+                                obscurePassword = !obscurePassword;
+                                setState(() {});
+                              },
+                            ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -140,9 +149,39 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: Container(
+                            height: 1,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Or',
+                          style: theme.textTheme.labelMedium,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Container(
+                            height: 1,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 60, horizontal: 20),
+                        vertical: 30, horizontal: 20),
                     child: CustomButtonAuth(
                       image: 'assets/svg/google.svg',
                       function: () {

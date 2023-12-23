@@ -38,19 +38,11 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
       if (state is CryptoCoinDetailsLoaded) {
         setState(() {
           price = state.price;
-
           numberCoins = state.counterCoin;
-          // Update the controller's text
           currencyController.text = price;
           coinCountController.text = numberCoins;
         });
       }
-      // if (state is CryptoCoinCounter) {
-      //   setState(() {
-      //     numberCoins = state.numberCoins;
-      //     coinCountController.text = numberCoins;
-      //   });
-      // }
     });
   }
 
@@ -60,17 +52,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
     return BlocProvider(
       create: (context) => _blocDetails,
       child: Scaffold(
-        body: BlocConsumer<CryptoCoinDetailsBloc, CryptoCoinDetailsState>(
-          listener: (BuildContext context, CryptoCoinDetailsState state) {
-            // if (state is CryptoCoinDetailsLoaded) {
-            //   price = state.price;
-            //   numberCoins = state.counterCoin;
-            //   setState(() {});
-            // } else if (state is CryptoCoinCurrencySelected) {
-            //   selectedItem = state.selectedCurrency;
-            //   setState(() {});
-            // }
-          },
+        body: BlocBuilder<CryptoCoinDetailsBloc, CryptoCoinDetailsState>(
           builder: (context, state) {
             if (state is CryptoCoinDetailsLoaded) {
               return RefreshIndicator.adaptive(
@@ -125,7 +107,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                           vertical: 0,
                         ),
                         child: CryptoChart(
-                          data: state.sparkline,
+                          data: state.sparkLine,
                           max: state.max,
                           min: state.min,
                         ),

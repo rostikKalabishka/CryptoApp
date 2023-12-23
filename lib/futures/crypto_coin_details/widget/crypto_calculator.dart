@@ -10,11 +10,7 @@ import 'drop_down_menu.dart';
 class CryptoCalculator extends StatefulWidget {
   const CryptoCalculator({
     Key? key,
-    // this.dropdownValueFunc,
     required this.coin,
-
-    // required this.cryptoCoinSaveValueInTextField,
-    // required this.cryptoCoinConvertCoinToCurrency,
     required this.dropDownList,
     required this.price,
     required this.blocDetails,
@@ -23,16 +19,11 @@ class CryptoCalculator extends StatefulWidget {
   }) : super(key: key);
 
   final CryptoCoinDetails coin;
-  // final Function(String text) cryptoCoinSaveValueInTextField;
 
-  // final CurrentPrice currentPrice;
-  // final Function(String text) cryptoCoinConvertCoinToCurrency;
-  // final Function(String text)? dropdownValueFunc;
   final List<String> dropDownList;
   final String price;
   final CryptoCoinDetailsBloc blocDetails;
 
-  // final String currencyPrice;
   final TextEditingController coinCountController;
   final TextEditingController currencyController;
 

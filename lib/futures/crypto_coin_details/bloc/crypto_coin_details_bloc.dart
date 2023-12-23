@@ -48,7 +48,7 @@ class CryptoCoinDetailsBloc
           coin.marketData.currentPrice.usd.toString();
       final currentPriceInUsd = coin.marketData.currentPrice.usd.toString();
       final detailsInfoForChart = coin.marketData.sparkLine7d;
-      final sparkline = detailsInfoForChart.price.asMap().entries.map((entry) {
+      final sparkLine = detailsInfoForChart.price.asMap().entries.map((entry) {
         return ChartData.fromJson({
           'price': entry.value,
           'index': entry.key + 1,
@@ -64,7 +64,7 @@ class CryptoCoinDetailsBloc
       emit(CryptoCoinDetailsLoaded(
           max: max + (max * 0.05),
           min: min - (min * 0.05),
-          sparkline: sparkline,
+          sparkLine: sparkLine,
           coin: coin,
           selectedItem: selectedCurrency,
           price: price,
