@@ -1,6 +1,6 @@
 part of 'settings_bloc.dart';
 
-sealed class SettingsState extends Equatable {
+class SettingsState extends Equatable {
   const SettingsState();
 
   @override
@@ -9,7 +9,12 @@ sealed class SettingsState extends Equatable {
 
 final class SettingsInitial extends SettingsState {}
 
-final class SettingsLoaded extends SettingsState {}
+class SettingsLoaded extends SettingsState {
+  final bool switchValue;
+  const SettingsLoaded({required this.switchValue});
+  @override
+  List<Object> get props => super.props..addAll([switchValue]);
+}
 
 final class SettingsLoading extends SettingsState {}
 

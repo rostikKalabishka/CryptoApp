@@ -18,6 +18,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   bool darkMode = true;
   final _settingsBloc = SettingsBloc(GetIt.I<AbstractAuthRepository>());
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -26,6 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
       create: (context) => _settingsBloc,
       child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
+          // if (state is SettingsLoaded) {
           return Scaffold(
             body: CustomScrollView(slivers: [
               SliverAppBar(
@@ -120,9 +122,13 @@ class _SettingsPageState extends State<SettingsPage> {
                               scale: 0.8,
                               child: Switch.adaptive(
                                   value: darkMode,
+                                  //state.switchValue,
                                   onChanged: (bool value) {
-                                    darkMode = value;
-                                    setState(() {});
+                                    value
+                                        ? _settingsBloc
+                                            .add(SettingsSwitchOnEvent())
+                                        : _settingsBloc
+                                            .add(SettingsSwitchOffEvent());
                                   }),
                             )
                           ],
@@ -189,6 +195,12 @@ class _SettingsPageState extends State<SettingsPage> {
               )
             ]),
           );
+          // }
+          // // else if (state is SettingsFailure) {
+          // return const Center(
+          //   child: CircularProgressIndicator.adaptive(),
+          // );
+          // // }
         },
       ),
     );

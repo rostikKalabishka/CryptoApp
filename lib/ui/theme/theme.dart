@@ -1,13 +1,14 @@
 import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
 
+enum AppTheme { darkTheme, lightTheme }
+
 final darkTheme = ThemeData.dark().copyWith(
   cardColor: splineColor.withAlpha(100),
   colorScheme: ColorScheme.fromSeed(seedColor: splineColor),
   appBarTheme: const AppBarTheme(
       centerTitle: true,
       surfaceTintColor: Colors.transparent,
-      // color: Color.fromARGB(255, 13, 24, 34)
       color: scaffoldBackground,
       iconTheme: IconThemeData(color: Colors.blue)),
   elevatedButtonTheme: ElevatedButtonThemeData(
