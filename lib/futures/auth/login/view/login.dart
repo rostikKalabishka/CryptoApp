@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Or',
+                          'OR',
                           style: theme.textTheme.labelMedium,
                         ),
                         const SizedBox(width: 8),

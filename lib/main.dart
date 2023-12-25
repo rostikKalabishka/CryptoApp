@@ -12,6 +12,8 @@ import 'package:get_it/get_it.dart';
 import 'repository/auth/abstract_auth_repository.dart';
 import 'repository/auth/auth_repository.dart';
 import 'repository/crypto_coin/crypto_coins_repository.dart';
+import 'repository/portfolio/abstract_portfolio_repository.dart';
+import 'repository/portfolio/portfolio_repository.dart';
 import 'simple_bloc_observer.dart';
 
 void main() async {
@@ -31,6 +33,12 @@ void main() async {
       dio: dio,
       firebaseAuthInstance: firebaseAuthInstance,
       firebaseStore: firebaseStore));
+
+  GetIt.I.registerLazySingleton<AbstractPortfolioRepository>(() =>
+      PortfolioRepository(
+          dio: dio,
+          firebaseAuthInstance: firebaseAuthInstance,
+          firebaseStore: firebaseStore));
   Bloc.observer = SimpleBlocObserver();
   runApp(const CryptoApp());
 }

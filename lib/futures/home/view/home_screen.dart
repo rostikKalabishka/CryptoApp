@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/settings/view/settings.dart';
-
 import 'package:flutter/material.dart';
-
 import '../../crypto_coin_list/view/view.dart';
 import '../../portfolio/view/portfolio.dart';
 import '../../search_coin/view/search_coin_screen.dart';
@@ -29,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     PortfolioScreen(),
     SettingsPage(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

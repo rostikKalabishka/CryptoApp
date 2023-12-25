@@ -22,10 +22,10 @@ class CryptoCoinListBloc
   bool _isSortedByMarketCup = false;
   bool _isSortedByPercentChange = false;
   int page = 1;
-  late int perPage;
+  late int perPage = 100;
 
   CryptoCoinListBloc(this.coinRepository) : super(CryptoCoinListInitial()) {
-    on<CryptoCoinListEvent>(_loadCryptoCoinList);
+    on<CryptoCoinListLoadEvent>(_loadCryptoCoinList);
 
     on<CryptoCoinListSorByRankEvent>((event, emit) => _sortByFilters(
           emit,
@@ -47,6 +47,7 @@ class CryptoCoinListBloc
     on<CryptoCoinListLoadTopFiftyCoinEvent>(_loadTopFiftyCoin);
     on<CryptoCoinListLoadTopTwoHundredFiftyCoinEvent>(
         _loadTopTwoHundredFiftyCoin);
+    on<CryptoCoinListLoadNextPageEvent>(_cryptoCoinListLoadNextPage);
   }
 
   void _sortByFilters(Emitter<CryptoCoinListState> emit, SortFilters filter) {
@@ -89,20 +90,19 @@ class CryptoCoinListBloc
   };
 
   Future<void> _loadCryptoCoinList(
-      CryptoCoinListEvent event, Emitter<CryptoCoinListState> emit) async {
+      CryptoCoinListLoadEvent event, Emitter<CryptoCoinListState> emit) async {
     perPage = 100;
     try {
-      if (event is CryptoCoinListLoadNextPageEvent) {
-        isLoading = true;
-        page += 1;
-
-        await _loadList(emit, isLoading, page, perPage);
-      } else if (event is CryptoCoinListLoadEvent) {
-        isLoading = true;
-        coinList.clear();
-        page = 1;
-        await _loadList(emit, isLoading, page, perPage);
-      }
+      // if (event is CryptoCoinListLoadNextPageEvent) {
+      //   _cryptoCoinListLoadNextPage(
+      //     emit,
+      //   );
+      // } else {
+      isLoading = true;
+      coinList.clear();
+      page = 1;
+      await _loadList(emit, isLoading, page, perPage);
+      // }
     } catch (e) {
       log('error: $e');
       emit(CryptoCoinListFailure(error: e));
@@ -112,41 +112,39 @@ class CryptoCoinListBloc
   }
 
   Future<void> _loadTopFiftyCoin(
-    CryptoCoinListEvent event,
+    CryptoCoinListLoadTopFiftyCoinEvent event,
     Emitter<CryptoCoinListState> emit,
   ) async {
     perPage = 50;
-    if (event is CryptoCoinListLoadNextPageEvent) {
-      isLoading = true;
-      page += 1;
+    // if (event is CryptoCoinListLoadNextPageEvent) {
+    //   _cryptoCoinListLoadNextPage(
+    //     emit,
+    //   );
+    // } else {
+    coinList.clear();
+    isLoading = true;
 
-      await _loadList(emit, isLoading, page, perPage);
-    } else if (event is CryptoCoinListLoadTopFiftyCoinEvent) {
-      coinList.clear();
-      isLoading = true;
-
-      page = 1;
-      await _loadList(emit, isLoading, page, perPage);
-    }
+    page = 1;
+    await _loadList(emit, isLoading, page, perPage);
+    // }
   }
 
   Future<void> _loadTopTwoHundredFiftyCoin(
-    CryptoCoinListEvent event,
+    CryptoCoinListLoadTopTwoHundredFiftyCoinEvent event,
     Emitter<CryptoCoinListState> emit,
   ) async {
     perPage = 250;
-    if (event is CryptoCoinListLoadNextPageEvent) {
-      isLoading = true;
-      page += 1;
+    // if (event is CryptoCoinListLoadNextPageEvent) {
+    //   _cryptoCoinListLoadNextPage(
+    //     emit,
+    //   );
+    // } else {
+    coinList.clear();
+    isLoading = true;
 
-      await _loadList(emit, isLoading, page, perPage);
-    } else if (event is CryptoCoinListLoadTopFiftyCoinEvent) {
-      coinList.clear();
-      isLoading = true;
-
-      page = 1;
-      await _loadList(emit, isLoading, page, perPage);
-    }
+    page = 1;
+    await _loadList(emit, isLoading, page, perPage);
+    // }
   }
 
   Future<void> _loadList(Emitter<CryptoCoinListState> emit, bool isLoading,
@@ -156,5 +154,15 @@ class CryptoCoinListBloc
     coinList.addAll(firstPageList);
     emit(CryptoCoinListLoaded(cryptoCoinList: List.from(coinList)));
     isLoading = false;
+  }
+
+  Future<void> _cryptoCoinListLoadNextPage(
+    CryptoCoinListLoadNextPageEvent event,
+    Emitter<CryptoCoinListState> emit,
+  ) async {
+    isLoading = true;
+    page += 1;
+
+    await _loadList(emit, isLoading, page, perPage);
   }
 }
