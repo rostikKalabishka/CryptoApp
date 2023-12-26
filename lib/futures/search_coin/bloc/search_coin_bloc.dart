@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../repository/crypto_coin/abstract_coin_repository.dart';
@@ -14,8 +15,13 @@ class SearchCoinBloc extends Bloc<SearchCoinEvent, SearchCoinState> {
 
   Timer? searchDebounce;
   SearchCoinBloc(this.abstractCoinRepository) : super(SearchCoinInitial()) {
-    on<SearchQueryEvent>(_searchQuery);
-    on<TrendingCoinListLoadedEvent>(_getTrendingList);
+    on<SearchCoinEvent>((event, emit) async {
+      if (event is SearchQueryEvent) {
+        await _searchQuery(event, emit);
+      } else if (event is TrendingCoinListLoadedEvent) {
+        await _getTrendingList(event, emit);
+      }
+    }, transformer: sequential());
   }
 
   Future<void> _searchQuery(
@@ -37,13 +43,7 @@ class SearchCoinBloc extends Bloc<SearchCoinEvent, SearchCoinState> {
 
   Future<void> _getTrendingList(
       TrendingCoinListLoadedEvent event, Emitter<SearchCoinState> emit) async {
-    final completer = Completer<void>();
-
-    searchDebounce = Timer(const Duration(milliseconds: 250), () async {
-      final coinList = await abstractCoinRepository.getTrendingCryptoCoin();
-      emit(TrendingCryptoLoaded(trendingCryptoList: coinList));
-      completer.complete();
-    });
-    await completer.future;
+    final coinList = await abstractCoinRepository.getTrendingCryptoCoin();
+    emit(TrendingCryptoLoaded(trendingCryptoList: coinList));
   }
 }

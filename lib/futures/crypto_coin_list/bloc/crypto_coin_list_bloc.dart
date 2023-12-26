@@ -93,16 +93,10 @@ class CryptoCoinListBloc
       CryptoCoinListLoadEvent event, Emitter<CryptoCoinListState> emit) async {
     perPage = 100;
     try {
-      // if (event is CryptoCoinListLoadNextPageEvent) {
-      //   _cryptoCoinListLoadNextPage(
-      //     emit,
-      //   );
-      // } else {
       isLoading = true;
       coinList.clear();
       page = 1;
       await _loadList(emit, isLoading, page, perPage);
-      // }
     } catch (e) {
       log('error: $e');
       emit(CryptoCoinListFailure(error: e));
@@ -116,17 +110,12 @@ class CryptoCoinListBloc
     Emitter<CryptoCoinListState> emit,
   ) async {
     perPage = 50;
-    // if (event is CryptoCoinListLoadNextPageEvent) {
-    //   _cryptoCoinListLoadNextPage(
-    //     emit,
-    //   );
-    // } else {
+
     coinList.clear();
     isLoading = true;
 
     page = 1;
     await _loadList(emit, isLoading, page, perPage);
-    // }
   }
 
   Future<void> _loadTopTwoHundredFiftyCoin(
@@ -134,17 +123,12 @@ class CryptoCoinListBloc
     Emitter<CryptoCoinListState> emit,
   ) async {
     perPage = 250;
-    // if (event is CryptoCoinListLoadNextPageEvent) {
-    //   _cryptoCoinListLoadNextPage(
-    //     emit,
-    //   );
-    // } else {
+
     coinList.clear();
     isLoading = true;
 
     page = 1;
     await _loadList(emit, isLoading, page, perPage);
-    // }
   }
 
   Future<void> _loadList(Emitter<CryptoCoinListState> emit, bool isLoading,

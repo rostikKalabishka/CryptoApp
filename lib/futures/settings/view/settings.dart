@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/settings/bloc/settings_bloc.dart';
+import 'package:crypto_app/futures/settings/bloc/settings_state.dart';
 import 'package:crypto_app/futures/settings/widgets/card_info.dart';
 import 'package:crypto_app/repository/auth/abstract_auth_repository.dart';
 import 'package:crypto_app/router/router.dart';
@@ -16,15 +17,14 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool darkMode = true;
-  final _settingsBloc = SettingsBloc(GetIt.I<AbstractAuthRepository>());
+  bool notifications = true;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final settingsBloc = context.read<SettingsBloc>();
     return BlocProvider(
-      create: (context) => _settingsBloc,
+      create: (context) => settingsBloc,
       child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
           // if (state is SettingsLoaded) {
@@ -121,13 +121,14 @@ class _SettingsPageState extends State<SettingsPage> {
                             Transform.scale(
                               scale: 0.8,
                               child: Switch.adaptive(
-                                  value: darkMode,
-                                  //state.switchValue,
+                                  value: state.switchValue,
                                   onChanged: (bool value) {
                                     value
-                                        ? _settingsBloc
+                                        ? context
+                                            .read<SettingsBloc>()
                                             .add(SettingsSwitchOnEvent())
-                                        : _settingsBloc
+                                        : context
+                                            .read<SettingsBloc>()
                                             .add(SettingsSwitchOffEvent());
                                   }),
                             )
@@ -152,9 +153,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             Transform.scale(
                               scale: 0.8,
                               child: Switch.adaptive(
-                                  value: darkMode,
+                                  value: notifications,
                                   onChanged: (bool value) {
-                                    darkMode = value;
+                                    notifications = value;
                                     setState(() {});
                                   }),
                             )
@@ -187,7 +188,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                     ),
                     onPressed: () {
-                      _settingsBloc.add(SettingsSignOutEvent());
+                      settingsBloc.add(SettingsSignOutEvent());
                       AutoRouter.of(context).push(const LoginRoute());
                     },
                   ),
@@ -195,12 +196,14 @@ class _SettingsPageState extends State<SettingsPage> {
               )
             ]),
           );
-          // }
-          // // else if (state is SettingsFailure) {
-          // return const Center(
-          //   child: CircularProgressIndicator.adaptive(),
-          // );
-          // // }
+          //   } else if (state is SettingsFailure) {
+          //     return Center(
+          //       child: Text('${state.error}'),
+          //     );
+          //   }
+          //   return const Center(
+          //     child: CircularProgressIndicator.adaptive(),
+          //   );
         },
       ),
     );

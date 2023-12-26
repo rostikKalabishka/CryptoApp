@@ -27,8 +27,7 @@ void main() async {
 
   GetIt.I.registerLazySingleton<AbstractCoinRepository>(
       () => CryptoCoinsRepository(dio: dio));
-  // GetIt.I
-  //     .registerLazySingleton(() => Loader(firebaseAuth: firebaseAuthInstance));
+
   GetIt.I.registerLazySingleton<AbstractAuthRepository>(() => AuthRepository(
       dio: dio,
       firebaseAuthInstance: firebaseAuthInstance,
@@ -39,6 +38,6 @@ void main() async {
           dio: dio,
           firebaseAuthInstance: firebaseAuthInstance,
           firebaseStore: firebaseStore));
-  Bloc.observer = SimpleBlocObserver();
+  // Bloc.observer = SimpleBlocObserver();
   runApp(const CryptoApp());
 }
