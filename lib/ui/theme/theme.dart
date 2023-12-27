@@ -5,7 +5,10 @@ enum AppTheme { darkTheme, lightTheme }
 
 final darkTheme = ThemeData.dark().copyWith(
   cardColor: splineColor.withAlpha(100),
+  dividerColor: Colors.white,
   colorScheme: ColorScheme.fromSeed(seedColor: splineColor),
+  indicatorColor: accentColor,
+  tabBarTheme: const TabBarTheme(unselectedLabelColor: Colors.white),
   appBarTheme: const AppBarTheme(
       centerTitle: true,
       surfaceTintColor: Colors.transparent,
@@ -17,20 +20,48 @@ final darkTheme = ThemeData.dark().copyWith(
           backgroundColor: const Color.fromARGB(255, 1, 13, 100),
           foregroundColor: Colors.white)),
   scaffoldBackgroundColor: scaffoldBackground,
-  primaryColorDark: splineColor,
-  // colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 3, 21, 36)),
+  primaryColor: splineColor,
   iconTheme: const IconThemeData(color: Color.fromARGB(255, 1, 13, 100)),
   bottomNavigationBarTheme:
       const BottomNavigationBarThemeData(backgroundColor: scaffoldBackground),
+  hintColor: Colors.white,
   textTheme: const TextTheme(
-      bodyLarge: TextStyle(
-        fontSize: 26,
-        fontWeight: FontWeight.bold,
-      ),
-      bodySmall: TextStyle(fontSize: 14),
-      labelMedium: TextStyle(fontSize: 20)),
+    bodyLarge: TextStyle(
+      fontSize: 26,
+      fontWeight: FontWeight.bold,
+    ),
+    bodySmall: TextStyle(fontSize: 14),
+    labelMedium: TextStyle(fontSize: 20),
+  ),
 );
 
 final lightTheme = ThemeData.light().copyWith(
-    scaffoldBackgroundColor: Colors.white,
-    textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.black)));
+  cardColor: Colors.white12,
+  dividerColor: Colors.black,
+  colorScheme: ColorScheme.fromSeed(seedColor: splineColor),
+  hintColor: Colors.black,
+  tabBarTheme: const TabBarTheme(unselectedLabelColor: Colors.black),
+  appBarTheme: const AppBarTheme(
+      centerTitle: true,
+      surfaceTintColor: Colors.transparent,
+      color: Colors.white,
+      iconTheme: IconThemeData(color: Colors.black)),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+          disabledBackgroundColor: Colors.grey[300],
+          backgroundColor: Colors.grey[500],
+          foregroundColor: Colors.black45)),
+  scaffoldBackgroundColor: Colors.white,
+  indicatorColor: const Color.fromARGB(255, 9, 31, 172),
+  primaryColor: Colors.white12,
+  iconTheme: const IconThemeData(color: Colors.black),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Colors.grey, unselectedItemColor: Colors.black),
+  textTheme: const TextTheme(
+    bodyLarge: TextStyle(
+        fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black),
+    bodySmall: TextStyle(fontSize: 14, color: Colors.black),
+    labelMedium: TextStyle(fontSize: 20, color: Colors.black),
+    bodyMedium: TextStyle(fontSize: 14, color: Colors.black),
+  ),
+);

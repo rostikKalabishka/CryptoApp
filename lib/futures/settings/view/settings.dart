@@ -2,11 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/settings/bloc/settings_bloc.dart';
 import 'package:crypto_app/futures/settings/bloc/settings_state.dart';
 import 'package:crypto_app/futures/settings/widgets/card_info.dart';
-import 'package:crypto_app/repository/auth/abstract_auth_repository.dart';
 import 'package:crypto_app/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 @RoutePage()
 class SettingsPage extends StatefulWidget {
@@ -23,73 +21,156 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final settingsBloc = context.read<SettingsBloc>();
-    return BlocProvider(
-      create: (context) => settingsBloc,
-      child: BlocBuilder<SettingsBloc, SettingsState>(
-        builder: (context, state) {
-          // if (state is SettingsLoaded) {
-          return Scaffold(
-            body: CustomScrollView(slivers: [
-              SliverAppBar(
-                actions: [
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
-                ],
-                title: Text(
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      builder: (context, state) {
+        // if (state is SettingsLoaded) {
+        return Scaffold(
+          body: CustomScrollView(slivers: [
+            SliverAppBar(
+              actions: [
+                IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
+              ],
+              title: Text(
+                'Settings',
+                style: theme.textTheme.bodyLarge,
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://ichef.bbci.co.uk/news/976/cpsprodpb/16620/production/_91408619_55df76d5-2245-41c1-8031-07a4da3f313f.jpg'),
+                radius: 60,
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'Account',
+                  style: theme.textTheme.labelMedium,
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CardInfo(
+                    info: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('User Name'),
+                          Text('Tyler Durden'),
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      color: theme.dividerColor,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Email'),
+                          Text('rostik310222222222@gmail.com'),
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      color: theme.dividerColor,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Balance'),
+                          Text('\$500000'),
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
                   'Settings',
-                  style: theme.textTheme.bodyLarge,
+                  style: theme.textTheme.labelMedium,
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://ichef.bbci.co.uk/news/976/cpsprodpb/16620/production/_91408619_55df76d5-2245-41c1-8031-07a4da3f313f.jpg'),
-                  radius: 60,
-                ),
-              ),
-              SliverToBoxAdapter(
+            ),
+            SliverToBoxAdapter(
+              child: RefreshIndicator(
+                onRefresh: () async {},
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'Account',
-                    style: theme.textTheme.labelMedium,
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: CardInfo(
                       info: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('User Name'),
-                            Text('Tyler Durden'),
-                          ],
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Dark Mode'),
+                          Transform.scale(
+                            scale: 0.8,
+                            child: Switch.adaptive(
+                                value: state.switchValue,
+                                onChanged: (bool value) {
+                                  value
+                                      ? settingsBloc
+                                          .add(SettingsSwitchOnEvent())
+                                      : settingsBloc
+                                          .add(SettingsSwitchOffEvent());
+                                }),
+                          )
+                        ],
                       ),
-                      Divider(),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Email'),
-                            Text('rostik310222222222@gmail.com'),
-                          ],
-                        ),
+                      Divider(
+                        color: theme.dividerColor,
                       ),
-                      Divider(),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Row(
+                            children: [
+                              Icon(
+                                Icons.notifications,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text('Notification')
+                            ],
+                          ),
+                          Transform.scale(
+                            scale: 0.8,
+                            child: Switch.adaptive(
+                                value: notifications,
+                                onChanged: (bool value) {
+                                  notifications = value;
+                                  setState(() {});
+                                }),
+                          )
+                        ],
+                      ),
+                      Divider(
+                        color: theme.dividerColor,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Balance'),
-                            Text('\$500000'),
+                            Text('Language'),
+                            Text('English'),
                           ],
                         ),
                       ),
@@ -97,115 +178,27 @@ class _SettingsPageState extends State<SettingsPage> {
                   )),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 120),
+                child: ElevatedButton(
                   child: Text(
-                    'Settings',
-                    style: theme.textTheme.labelMedium,
+                    'Sign Out',
+                    style: theme.textTheme.bodySmall
+                        ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
+                  onPressed: () {
+                    settingsBloc.add(SettingsSignOutEvent());
+                    AutoRouter.of(context).push(const LoginRoute());
+                  },
                 ),
               ),
-              SliverToBoxAdapter(
-                child: RefreshIndicator(
-                  onRefresh: () async {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CardInfo(
-                        info: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text('Dark Mode'),
-                            Transform.scale(
-                              scale: 0.8,
-                              child: Switch.adaptive(
-                                  value: state.switchValue,
-                                  onChanged: (bool value) {
-                                    value
-                                        ? context
-                                            .read<SettingsBloc>()
-                                            .add(SettingsSwitchOnEvent())
-                                        : context
-                                            .read<SettingsBloc>()
-                                            .add(SettingsSwitchOffEvent());
-                                  }),
-                            )
-                          ],
-                        ),
-                        const Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Row(
-                              children: [
-                                Icon(
-                                  Icons.notifications,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text('Notification')
-                              ],
-                            ),
-                            Transform.scale(
-                              scale: 0.8,
-                              child: Switch.adaptive(
-                                  value: notifications,
-                                  onChanged: (bool value) {
-                                    notifications = value;
-                                    setState(() {});
-                                  }),
-                            )
-                          ],
-                        ),
-                        const Divider(),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Language'),
-                              Text('English'),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 120),
-                  child: ElevatedButton(
-                    child: Text(
-                      'Sign Out',
-                      style: theme.textTheme.bodySmall
-                          ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
-                    ),
-                    onPressed: () {
-                      settingsBloc.add(SettingsSignOutEvent());
-                      AutoRouter.of(context).push(const LoginRoute());
-                    },
-                  ),
-                ),
-              )
-            ]),
-          );
-          //   } else if (state is SettingsFailure) {
-          //     return Center(
-          //       child: Text('${state.error}'),
-          //     );
-          //   }
-          //   return const Center(
-          //     child: CircularProgressIndicator.adaptive(),
-          //   );
-        },
-      ),
+            )
+          ]),
+        );
+      },
     );
   }
 }

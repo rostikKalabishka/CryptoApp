@@ -75,7 +75,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                           ),
                           Text(
                             state.coin.name,
-                            style: const TextStyle(color: Colors.white),
+                            style: theme.textTheme.bodyLarge,
                           )
                         ],
                       ),

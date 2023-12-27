@@ -1,9 +1,13 @@
-import 'dart:developer';
+import 'package:crypto_app/futures/auth/login/bloc/login_bloc.dart';
+import 'package:crypto_app/futures/auth/login/view/login.dart';
+import 'package:crypto_app/futures/auth/registration/view/registration.dart';
+import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import 'futures/auth/registration/bloc/registration_bloc.dart';
 import 'futures/settings/bloc/settings_bloc.dart';
 import 'futures/settings/bloc/settings_state.dart';
 import 'repository/auth/abstract_auth_repository.dart';
@@ -19,31 +23,42 @@ class CryptoApp extends StatefulWidget {
 
 class _CryptoAppState extends State<CryptoApp> {
   final _appRouter = AppRouter();
-  final _settingsBloc = SettingsBloc(GetIt.I<AbstractAuthRepository>());
+  final _settingsBloc = SettingsBloc(GetIt.I<AbstractAuthRepository>(),
+      GetIt.I<AbstractDataStorageRepository>());
+  final _loginBloc = LoginBloc(GetIt.I<AbstractAuthRepository>());
+  final _registrationBloc = RegistrationBloc(GetIt.I<AbstractAuthRepository>());
+
+  @override
+  void initState() {
+    _settingsBloc.add(SettingsLoadEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => _settingsBloc,
-      child: BlocBuilder<SettingsBloc, SettingsState>(
-          builder: (context, state) {
-        log('SettingsBloc state changed: $state');
-        // if (state is SettingsLoaded) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => _settingsBloc,
+        ),
+        BlocProvider(
+          create: (_) => _loginBloc,
+          child: const LoginScreen(),
+        ),
+        BlocProvider(
+          create: (_) => _registrationBloc,
+          child: const RegistrationScreen(),
+        ),
+      ],
+      child:
+          BlocBuilder<SettingsBloc, SettingsState>(builder: (context, state) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Crypto App',
           theme: state.switchValue ? darkTheme : lightTheme,
           routerConfig: _appRouter.config(),
         );
-      }
-          //    else if (state is SettingsFailure) {
-          //     return Center(
-          //       child: Text('${state.error}'),
-          //     );
-          //   }
-          //   return const Center(child: CircularProgressIndicator.adaptive());
-          // },
-          ),
+      }),
     );
   }
 }

@@ -27,22 +27,30 @@ class CardDateWidget extends StatelessWidget {
             text: 'Market Cap Rank',
             textInfo: '#${coinDetails.marketCapRank}',
           ),
-          const Divider(),
+          Divider(
+            color: theme.dividerColor,
+          ),
           RowInCard(
             text: 'Price Change 24h',
             textInfo: '\$${coinDetails.marketData.priceChange24h}',
           ),
-          const Divider(),
+          Divider(
+            color: theme.dividerColor,
+          ),
           RowInCard(
             text: 'Market Cap',
             textInfo: '\$${coinDetails.marketData.marketCap.usd}',
           ),
-          const Divider(),
+          Divider(
+            color: theme.dividerColor,
+          ),
           RowInCard(
             text: 'Home Page',
             textInfo: coinDetails.links.homepage.first,
           ),
-          const Divider(),
+          Divider(
+            color: theme.dividerColor,
+          ),
           coinDetails.links.reposUrl.github.isNotEmpty
               ? RowInCard(
                   text: 'GitHub',
@@ -50,18 +58,24 @@ class CardDateWidget extends StatelessWidget {
                 )
               : const SizedBox.shrink(),
           coinDetails.links.reposUrl.github.isNotEmpty
-              ? const Divider()
+              ? Divider(
+                  color: theme.dividerColor,
+                )
               : const SizedBox.shrink(),
           RowInCard(
             text: 'Max Supply',
             textInfo: '${coinDetails.marketData.maxSupply ?? '?'}',
           ),
-          const Divider(),
+          Divider(
+            color: theme.dividerColor,
+          ),
           RowInCard(
             text: 'Total Supply',
             textInfo: '${coinDetails.marketData.totalSupply ?? '?'}',
           ),
-          const Divider(),
+          Divider(
+            color: theme.dividerColor,
+          ),
           RowInCard(
             text: 'Added to Watchlist',
             textInfo: '${coinDetails.watchlistPortfolioUsers}',

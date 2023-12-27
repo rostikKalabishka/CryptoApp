@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/portfolio/portfolio_mode/view/portfolio_mode.dart';
 import 'package:crypto_app/futures/portfolio/watchlist/view/watchlist.dart';
-import 'package:crypto_app/ui/theme/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,13 +35,13 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 bottom: PreferredSize(
                   preferredSize: Size.fromHeight(
                       MediaQuery.of(context).size.height * 0.05),
-                  child: const TabBar(
-                    labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                    indicatorColor: accentColor,
-                    labelColor: accentColor,
-                    unselectedLabelColor: Colors.white,
+                  child: TabBar(
+                    labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    indicatorColor: theme.indicatorColor,
+                    labelColor: theme.indicatorColor,
+                    unselectedLabelColor: theme.unselectedWidgetColor,
                     indicatorSize: TabBarIndicatorSize.tab,
-                    tabs: [
+                    tabs: const [
                       Tab(
                         text: 'Watchlist',
                       ),

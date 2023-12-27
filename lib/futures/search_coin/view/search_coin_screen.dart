@@ -64,23 +64,20 @@ class _SearchCoinScreenState extends State<SearchCoinScreen> {
                       child: TextFormField(
                         controller: searchCoinController,
                         onChanged: (text) {
-                          // final completer = Completer<void>();
                           if (text.isEmpty) {
                             _searchCoinBloc
                                 .add(const TrendingCoinListLoadedEvent());
-                            // completer.future;
                           } else if (text.isNotEmpty) {
                             _searchCoinBloc.add(SearchQueryEvent(query: text));
-                            // completer.complete();
                           }
                         },
                         style: theme.textTheme.bodySmall,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             hintText: 'Search for a coin...',
-                            hintStyle: TextStyle(color: Colors.white),
-                            border:
-                                OutlineInputBorder(borderSide: BorderSide.none),
-                            enabledBorder: OutlineInputBorder(
+                            hintStyle: TextStyle(color: theme.hintColor),
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none),
+                            enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide.none)),
                       ),
                     ),
