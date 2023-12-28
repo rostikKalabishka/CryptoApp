@@ -9,6 +9,8 @@ sealed class SettingsEvent extends Equatable {
 
 class SettingsLoadEvent extends SettingsEvent {}
 
+class SettingsLoadUserInfoEvent extends SettingsEvent {}
+
 class SettingsSignOutEvent extends SettingsEvent {}
 
 class SettingsSwitchOnEvent extends SettingsEvent {}

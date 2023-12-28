@@ -16,6 +16,11 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   bool notifications = true;
+  @override
+  void initState() {
+    context.read<SettingsBloc>().add(SettingsLoadUserInfoEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +43,28 @@ class _SettingsPageState extends State<SettingsPage> {
                 style: theme.textTheme.bodyLarge,
               ),
             ),
-            const SliverToBoxAdapter(
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://ichef.bbci.co.uk/news/976/cpsprodpb/16620/production/_91408619_55df76d5-2245-41c1-8031-07a4da3f313f.jpg'),
-                radius: 60,
-              ),
+            SliverToBoxAdapter(
+              child: state.image.isEmpty
+                  ? CircleAvatar(
+                      backgroundColor: Colors.blue,
+                      radius: 60,
+                      child: Container(
+                        child: Text(
+                          state.name[0].toUpperCase(),
+                          style:
+                              theme.textTheme.bodyLarge?.copyWith(fontSize: 62),
+                        ),
+                      ),
+                    )
+                  : CircleAvatar(
+                      radius: 60,
+                      child: ClipOval(
+                        child: Image.network(
+                          state.image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
             ),
             SliverToBoxAdapter(
               child: Padding(
@@ -60,26 +81,35 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: CardInfo(
                     info: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('User Name'),
-                          Text('Tyler Durden'),
+                          const Text('User Name:'),
+                          Text(
+                            state.name,
+                          ),
                         ],
                       ),
                     ),
                     Divider(
                       color: theme.dividerColor,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Email'),
-                          Text('rostik310222222222@gmail.com'),
+                          const Text('Email:'),
+                          Flexible(
+                            child: Text(
+                              state.email,
+                              textAlign: TextAlign.end,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
                         ],
                       ),
                     ),

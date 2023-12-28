@@ -86,8 +86,9 @@ class AuthRepository implements AbstractAuthRepository {
   }
 
   @override
-  Future<void> signOut() {
-    throw firebaseAuthInstance.signOut();
+  Future<void> signOut() async {
+    await firebaseAuthInstance.signOut();
+    await GoogleSignIn().signOut();
   }
 
   @override
@@ -118,35 +119,71 @@ class AuthRepository implements AbstractAuthRepository {
   }
 
   @override
-  Future singInWithGoogle() async {
+  Future<UserDetails> getUserInfo() async {
+    final currentUser = firebaseAuthInstance.currentUser;
+
+    if (currentUser != null) {
+      final isGoogleSignIn = currentUser.providerData
+          .any((info) => info.providerId == GoogleAuthProvider.PROVIDER_ID);
+
+      if (isGoogleSignIn) {
+        final googleUserInfo =
+            await firebaseStore.collection('users').doc(currentUser.uid).get();
+        if (googleUserInfo.exists) {
+          return UserDetails.fromJson(googleUserInfo.data()!);
+        } else {
+          throw 'User data not found.';
+        }
+      } else {
+        final userDoc =
+            await firebaseStore.collection('users').doc(currentUser.uid).get();
+        if (userDoc.exists) {
+          return UserDetails.fromJson(userDoc.data()!);
+        } else {
+          throw 'User data not found.';
+        }
+      }
+    } else {
+      throw 'The user is not authorized.';
+    }
+  }
+
+  @override
+  Future<void> singInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       if (googleUser == null) {
-        throw 'You cancel authentication with Google';
+        throw 'You canceled authentication with Google';
       } else {
-        final userDoc = firebaseStore.collection('users').doc(googleUser.id);
-        final existingDoc = await userDoc.get();
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
 
-        if (!existingDoc.exists) {
-          final GoogleSignInAuthentication googleAuth =
-              await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
-          final credential = GoogleAuthProvider.credential(
-              accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
 
-          await FirebaseAuth.instance.signInWithCredential(credential);
+        final User? firebaseUser = userCredential.user;
 
-          UserDetails userDetails = UserDetails(
-            portfolioName: 'My Portfolio',
-            email: googleUser.email,
-            username: googleUser.displayName ?? '',
-            uid: googleUser.id,
-            portfolio: const [],
-            profileImage: googleUser.photoUrl,
-          );
+        if (firebaseUser != null) {
+          final String uid = firebaseUser.uid;
+          final userDoc = firebaseStore.collection('users').doc(uid);
+          final existingDoc = await userDoc.get();
 
-          await userDoc.set(userDetails.toJson());
+          if (!existingDoc.exists) {
+            UserDetails userDetails = UserDetails(
+              portfolioName: 'My Portfolio',
+              email: googleUser.email,
+              username: googleUser.displayName ?? '',
+              uid: uid,
+              portfolio: const [],
+              profileImage: googleUser.photoUrl,
+            );
+
+            await userDoc.set(userDetails.toJson());
+          }
         }
       }
     } on FirebaseAuthException catch (e) {
