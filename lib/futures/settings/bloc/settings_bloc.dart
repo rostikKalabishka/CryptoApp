@@ -41,7 +41,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     await abstractDataStorageRepository.setTheme(swithBool: true);
     final switchValuePref = await abstractDataStorageRepository.getTheme();
     emit(state.copyWith(switchValue: switchValuePref));
-    print(state.switchValue.toString());
   }
 
   Future<void> _switchOff(
@@ -49,6 +48,5 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     await abstractDataStorageRepository.setTheme(swithBool: false);
     final switchValuePref = await abstractDataStorageRepository.getTheme();
     emit(state.copyWith(switchValue: switchValuePref));
-    print(state.switchValue.toString());
   }
 }

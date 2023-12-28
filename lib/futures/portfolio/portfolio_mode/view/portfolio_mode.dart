@@ -43,10 +43,11 @@ class _PortfolioModeState extends State<PortfolioMode> {
                           style: theme.textTheme.labelMedium,
                         ),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              await openDialog(context);
+                            },
                             icon: const Icon(
                               Icons.more_vert,
-                              color: Colors.white,
                               size: 20,
                             ))
                       ],
@@ -81,6 +82,28 @@ class _PortfolioModeState extends State<PortfolioMode> {
       ],
     );
   }
+
+  Future openDialog(BuildContext context) => showDialog(
+      context: context,
+      builder: (context) {
+        final theme = Theme.of(context);
+        return AlertDialog(
+          backgroundColor: theme.dialogBackgroundColor,
+          title: Text(
+            'Portfolio name',
+            style: theme.textTheme.bodyLarge,
+          ),
+          content: TextFormField(
+              style: theme.textTheme.bodySmall,
+              decoration: InputDecoration(
+                  hintText: 'Enter your name of the portfolio',
+                  hintStyle: TextStyle(color: theme.hintColor),
+                  border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16))),
+                  enabledBorder:
+                      const OutlineInputBorder(borderSide: BorderSide.none))),
+        );
+      });
 }
 
 List<CoinUserData> getChartData() {

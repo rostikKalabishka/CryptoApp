@@ -73,9 +73,11 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.02,
                           ),
-                          Text(
-                            state.coin.name,
-                            style: theme.textTheme.bodyLarge,
+                          Expanded(
+                            child: Text(state.coin.name,
+                                style: theme.textTheme.bodyLarge,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1),
                           )
                         ],
                       ),

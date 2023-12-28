@@ -23,12 +23,15 @@ class _SettingsPageState extends State<SettingsPage> {
     final settingsBloc = context.read<SettingsBloc>();
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
-        // if (state is SettingsLoaded) {
         return Scaffold(
           body: CustomScrollView(slivers: [
             SliverAppBar(
               actions: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
+                IconButton(
+                    onPressed: () async {
+                      await openDialog(context);
+                    },
+                    icon: const Icon(Icons.edit))
               ],
               title: Text(
                 'Settings',
@@ -191,7 +194,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   onPressed: () {
                     settingsBloc.add(SettingsSignOutEvent());
-                    AutoRouter.of(context).push(const LoginRoute());
+                    AutoRouter.of(context).pushAndPopUntil(const LoginRoute(),
+                        predicate: (route) => false);
                   },
                 ),
               ),
@@ -201,4 +205,25 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
   }
+
+  Future openDialog(BuildContext context) => showDialog(
+      context: context,
+      builder: (context) {
+        final theme = Theme.of(context);
+        return AlertDialog(
+          backgroundColor: theme.dialogBackgroundColor,
+          title: Text(
+            'Make a username',
+            style: theme.textTheme.bodyLarge,
+          ),
+          content: TextFormField(
+              style: theme.textTheme.bodySmall,
+              decoration: InputDecoration(
+                  hintStyle: TextStyle(color: theme.hintColor),
+                  border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16))),
+                  enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16.0))))),
+        );
+      });
 }

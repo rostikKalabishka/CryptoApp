@@ -7,12 +7,14 @@ class UserDetails extends Equatable {
   final String uid;
   final String email;
   final String username;
+  final String portfolioName;
   final List portfolio;
   final String? profileImage;
 
   const UserDetails({
     required this.email,
     required this.username,
+    required this.portfolioName,
     required this.uid,
     required this.portfolio,
     required this.profileImage,
@@ -24,5 +26,6 @@ class UserDetails extends Equatable {
   Map<String, dynamic> toJson() => _$UserDetailsToJson(this);
 
   @override
-  List<Object?> get props => [uid, email, username, portfolio, profileImage];
+  List<Object?> get props =>
+      [uid, email, username, portfolio, profileImage, portfolioName];
 }

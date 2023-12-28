@@ -10,15 +10,17 @@ final darkTheme = ThemeData.dark().copyWith(
   indicatorColor: accentColor,
   tabBarTheme: const TabBarTheme(unselectedLabelColor: Colors.white),
   appBarTheme: const AppBarTheme(
-      centerTitle: true,
-      surfaceTintColor: Colors.transparent,
-      color: scaffoldBackground,
-      iconTheme: IconThemeData(color: Colors.blue)),
+    centerTitle: true,
+    surfaceTintColor: Colors.transparent,
+    color: scaffoldBackground,
+    iconTheme: IconThemeData(color: Colors.white),
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: const Color.fromARGB(255, 31, 45, 151),
-          backgroundColor: const Color.fromARGB(255, 1, 13, 100),
-          foregroundColor: Colors.white)),
+    style: ElevatedButton.styleFrom(
+        disabledBackgroundColor: const Color.fromARGB(255, 31, 45, 151),
+        backgroundColor: const Color.fromARGB(255, 1, 13, 100),
+        foregroundColor: Colors.white),
+  ),
   scaffoldBackgroundColor: scaffoldBackground,
   primaryColor: splineColor,
   iconTheme: const IconThemeData(color: Color.fromARGB(255, 1, 13, 100)),
@@ -33,24 +35,31 @@ final darkTheme = ThemeData.dark().copyWith(
     bodySmall: TextStyle(fontSize: 14),
     labelMedium: TextStyle(fontSize: 20),
   ),
+  dialogBackgroundColor: splineColor,
+  iconButtonTheme: IconButtonThemeData(
+    style: IconButton.styleFrom(foregroundColor: Colors.white),
+  ),
 );
 
 final lightTheme = ThemeData.light().copyWith(
-  cardColor: Colors.white12,
+  cardColor: Colors.grey,
+  dialogBackgroundColor: Colors.grey,
   dividerColor: Colors.black,
   colorScheme: ColorScheme.fromSeed(seedColor: splineColor),
   hintColor: Colors.black,
   tabBarTheme: const TabBarTheme(unselectedLabelColor: Colors.black),
   appBarTheme: const AppBarTheme(
-      centerTitle: true,
-      surfaceTintColor: Colors.transparent,
-      color: Colors.white,
-      iconTheme: IconThemeData(color: Colors.black)),
+    centerTitle: true,
+    surfaceTintColor: Colors.transparent,
+    color: Colors.white,
+    iconTheme: IconThemeData(color: Colors.black),
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: Colors.grey[300],
-          backgroundColor: Colors.grey[500],
-          foregroundColor: Colors.black45)),
+    style: ElevatedButton.styleFrom(
+        disabledBackgroundColor: Colors.grey[300],
+        backgroundColor: Colors.grey[500],
+        foregroundColor: Colors.black45),
+  ),
   scaffoldBackgroundColor: Colors.white,
   indicatorColor: const Color.fromARGB(255, 9, 31, 172),
   primaryColor: Colors.white12,
@@ -63,5 +72,8 @@ final lightTheme = ThemeData.light().copyWith(
     bodySmall: TextStyle(fontSize: 14, color: Colors.black),
     labelMedium: TextStyle(fontSize: 20, color: Colors.black),
     bodyMedium: TextStyle(fontSize: 14, color: Colors.black),
+  ),
+  iconButtonTheme: IconButtonThemeData(
+    style: IconButton.styleFrom(foregroundColor: Colors.black),
   ),
 );

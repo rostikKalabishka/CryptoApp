@@ -101,7 +101,10 @@ class RowInCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(text),
-        Text(textInfo),
+        Expanded(
+          child: Text(textInfo,
+              overflow: TextOverflow.ellipsis, textAlign: TextAlign.end),
+        ),
       ],
     );
   }
