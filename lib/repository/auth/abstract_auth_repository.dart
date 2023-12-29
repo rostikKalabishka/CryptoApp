@@ -1,4 +1,3 @@
-import 'package:crypto_app/repository/auth/model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract interface class AbstractAuthRepository {
@@ -14,12 +13,11 @@ abstract interface class AbstractAuthRepository {
 
   Future<void> signOut();
 
-  Future<UserDetails> getUserInfo();
-
   Future<void> addUserDetails({
     required String username,
     required String email,
     required String uid,
+    required String profileImage,
   });
 
   Stream<User?> get user;

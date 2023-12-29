@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto_app/futures/portfolio/model/coin_user_data.dart';
 import 'package:crypto_app/repository/auth/model/model.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,7 +33,8 @@ class AuthRepository implements AbstractAuthRepository {
 
       final uid = firebaseAuthInstance.currentUser?.uid;
       if (uid != null) {
-        await addUserDetails(email: email, username: username, uid: uid);
+        await addUserDetails(
+            email: email, username: username, uid: uid, profileImage: '');
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -92,11 +94,11 @@ class AuthRepository implements AbstractAuthRepository {
   }
 
   @override
-  Future<void> addUserDetails({
-    required String username,
-    required String email,
-    required String uid,
-  }) async {
+  Future<void> addUserDetails(
+      {required String username,
+      required String email,
+      required String uid,
+      required String? profileImage}) async {
     if (uid.isNotEmpty) {
       final userDoc = firebaseStore.collection('users').doc(uid);
       UserDetails userDetails = UserDetails(
@@ -104,8 +106,8 @@ class AuthRepository implements AbstractAuthRepository {
         email: email,
         username: username,
         uid: uid,
-        portfolio: const [],
-        profileImage: '',
+        portfolio: const <CoinUserData>[],
+        profileImage: profileImage,
       );
       await userDoc.set(userDetails.toJson());
     }
@@ -116,36 +118,6 @@ class AuthRepository implements AbstractAuthRepository {
     return firebaseAuthInstance.authStateChanges().map((firebaseUser) {
       return firebaseUser;
     });
-  }
-
-  @override
-  Future<UserDetails> getUserInfo() async {
-    final currentUser = firebaseAuthInstance.currentUser;
-
-    if (currentUser != null) {
-      final isGoogleSignIn = currentUser.providerData
-          .any((info) => info.providerId == GoogleAuthProvider.PROVIDER_ID);
-
-      if (isGoogleSignIn) {
-        final googleUserInfo =
-            await firebaseStore.collection('users').doc(currentUser.uid).get();
-        if (googleUserInfo.exists) {
-          return UserDetails.fromJson(googleUserInfo.data()!);
-        } else {
-          throw 'User data not found.';
-        }
-      } else {
-        final userDoc =
-            await firebaseStore.collection('users').doc(currentUser.uid).get();
-        if (userDoc.exists) {
-          return UserDetails.fromJson(userDoc.data()!);
-        } else {
-          throw 'User data not found.';
-        }
-      }
-    } else {
-      throw 'The user is not authorized.';
-    }
   }
 
   @override

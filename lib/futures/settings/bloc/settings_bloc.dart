@@ -26,12 +26,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         await _loadSettingsUserInfo(event, emit);
       }
     }, transformer: sequential());
-
-    // on<SettingsSignOutEvent>(_signOut);
-    // on<SettingsSwitchOnEvent>(_switchOn);
-    // on<SettingsSwitchOffEvent>(_switchOff);
-    // on<SettingsLoadEvent>(_loadSettings);
-    // on<SettingsLoadUserInfoEvent>(_loadSettingsUserInfo);
   }
 
   Future<void> _signOut(
@@ -63,8 +57,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   Future<void> _loadSettingsUserInfo(
       SettingsLoadUserInfoEvent event, Emitter<SettingsState> emit) async {
-    final userInfo = await abstractAuthRepository.getUserInfo();
+    final userInfo = await abstractDataStorageRepository.getUserInfo();
     final newState = state.copyWith(
+        charForAvatar: userInfo.username[0].toUpperCase(),
         email: userInfo.email,
         name: userInfo.username,
         image: userInfo.profileImage);

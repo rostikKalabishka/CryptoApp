@@ -38,7 +38,11 @@ void main() async {
         firebaseStore: firebaseStore,
       ));
   GetIt.I.registerLazySingleton<AbstractDataStorageRepository>(
-      () => DataStorageRepository(sharedPreferences: sharedPreferences));
+      () => DataStorageRepository(
+            sharedPreferences: sharedPreferences,
+            firebaseAuthInstance: firebaseAuthInstance,
+            firebaseStore: firebaseStore,
+          ));
 
   GetIt.I.registerLazySingleton<AbstractPortfolioRepository>(() =>
       PortfolioRepository(

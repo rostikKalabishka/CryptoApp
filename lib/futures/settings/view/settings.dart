@@ -48,12 +48,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   ? CircleAvatar(
                       backgroundColor: Colors.blue,
                       radius: 60,
-                      child: Container(
-                        child: Text(
-                          state.name[0].toUpperCase(),
-                          style:
-                              theme.textTheme.bodyLarge?.copyWith(fontSize: 62),
-                        ),
+                      child: Text(
+                        state.charForAvatar,
+                        style:
+                            theme.textTheme.bodyLarge?.copyWith(fontSize: 62),
                       ),
                     )
                   : CircleAvatar(

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'portfolio_bloc.dart';
 
 sealed class PortfolioState extends Equatable {
@@ -9,7 +10,23 @@ sealed class PortfolioState extends Equatable {
 
 final class PortfolioInitial extends PortfolioState {}
 
-class PortfolioLoaded extends PortfolioState {}
+class PortfolioLoaded extends PortfolioState {
+  final String portfolioName;
+  final List<CoinUserData> portfolioList;
+
+  const PortfolioLoaded(
+      {required this.portfolioName, required this.portfolioList});
+
+  @override
+  List<Object> get props => super.props..addAll([portfolioName]);
+
+  PortfolioLoaded copyWith(
+      {String? portfolioName, List<CoinUserData>? portfolioList}) {
+    return PortfolioLoaded(
+        portfolioName: portfolioName ?? this.portfolioName,
+        portfolioList: portfolioList ?? this.portfolioList);
+  }
+}
 
 class PortfolioLoading extends PortfolioState {}
 
