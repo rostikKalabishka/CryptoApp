@@ -34,7 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
               actions: [
                 IconButton(
                     onPressed: () async {
-                      await openDialog(context);
+                      await openDialog(context, state);
                     },
                     icon: const Icon(Icons.edit))
               ],
@@ -234,24 +234,88 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Future openDialog(BuildContext context) => showDialog(
+  Future openDialog(BuildContext context, SettingsState state) => showDialog(
       context: context,
       builder: (context) {
         final theme = Theme.of(context);
         return AlertDialog(
-          backgroundColor: theme.dialogBackgroundColor,
+          backgroundColor: theme.scaffoldBackgroundColor,
           title: Text(
-            'Make a username',
+            'Make a change',
             style: theme.textTheme.bodyLarge,
           ),
-          content: TextFormField(
-              style: theme.textTheme.bodySmall,
-              decoration: InputDecoration(
-                  hintStyle: TextStyle(color: theme.hintColor),
-                  border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16))),
-                  enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16.0))))),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red[700]),
+                  onPressed: () {
+                    AutoRouter.of(context).pop();
+                  },
+                  child: Text(
+                    'Close',
+                    style: theme.textTheme.labelMedium?.copyWith(fontSize: 14),
+                  ),
+                ),
+                ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Add change',
+                      style:
+                          theme.textTheme.labelMedium?.copyWith(fontSize: 14),
+                    ))
+              ],
+            )
+          ],
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: Column(
+              children: [
+                InkWell(
+                  radius: 60,
+                  onTap: () {},
+                  child: state.image.isEmpty
+                      ? CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          radius: 60,
+                          child: Text(
+                            state.charForAvatar,
+                            style: theme.textTheme.bodyLarge
+                                ?.copyWith(fontSize: 62),
+                          ),
+                        )
+                      : CircleAvatar(
+                          radius: 60,
+                          child: ClipOval(
+                            child: Image.network(
+                              state.image,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                TextFormField(
+                  style: theme.textTheme.bodySmall,
+                  decoration: InputDecoration(
+                    hintStyle: TextStyle(color: theme.hintColor),
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(16.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       });
 }

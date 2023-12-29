@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto_app/futures/portfolio/model/coin_user_data.dart';
 import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth/model/user.dart';
+
+enum PortfolioAction { add, remove }
 
 class DataStorageRepository implements AbstractDataStorageRepository {
   final SharedPreferences sharedPreferences;
@@ -69,6 +72,62 @@ class DataStorageRepository implements AbstractDataStorageRepository {
       final userDoc = firebaseStore.collection('users').doc(currentUser!.uid);
 
       await userDoc.update({'portfolio_name': newPortfolioName});
+    } catch (e) {
+      throw '$e';
+    }
+  }
+
+  @override
+  Future<bool> checkCryptoCurrencyInPortfolio({
+    required CoinUserData coinUserData,
+  }) async {
+    final currentUser = firebaseAuthInstance.currentUser;
+    try {
+      final userPortfolio = await portfolioList(user: currentUser);
+      return userPortfolio.contains(coinUserData);
+    } catch (e) {
+      throw '$e';
+    }
+  }
+
+  Future<List<CoinUserData>> portfolioList({User? user}) async {
+    if (user == null) {
+      throw 'currentUser is null';
+    }
+    final userDoc = firebaseStore.collection('users').doc(user.uid);
+    final userData = await userDoc.get();
+
+    final List<CoinUserData> userPortfolio = List<CoinUserData>.from(
+        userData.data()?['portfolio'] ?? [] as List<CoinUserData>);
+    return userPortfolio;
+  }
+
+  @override
+  Future<void> addOrRemoveCryptoCurrencyToPortfolio({
+    required CoinUserData coinUserData,
+    required PortfolioAction action,
+  }) async {
+    final currentUser = firebaseAuthInstance.currentUser;
+    try {
+      if (currentUser == null) {
+        throw 'currentUser is null';
+      }
+      final userDoc = firebaseStore.collection('users').doc(currentUser.uid);
+      final userData = await userDoc.get();
+
+      final List<CoinUserData> userPortfolio = List<CoinUserData>.from(
+          userData.data()?['portfolio'] ?? [] as List<CoinUserData>);
+      if (action == PortfolioAction.add) {
+        if (userPortfolio.contains(coinUserData)) {
+          userPortfolio.add(coinUserData);
+        }
+      } else if (action == PortfolioAction.remove) {
+        if (userPortfolio.contains(coinUserData)) {
+          userPortfolio.remove(coinUserData);
+        }
+      }
+
+      userDoc.update({'portfolio': userPortfolio});
     } catch (e) {
       throw '$e';
     }

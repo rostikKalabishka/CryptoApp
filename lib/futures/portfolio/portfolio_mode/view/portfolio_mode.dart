@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/portfolio/bloc/portfolio_bloc.dart';
 import 'package:crypto_app/futures/portfolio/portfolio_mode/widgets/circular_chart.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,12 @@ class _PortfolioModeState extends State<PortfolioMode> {
     _tooltipBehavior = TooltipBehavior(enable: true);
     context.read<PortfolioBloc>().add(const PortfolioInfoLoadedEvent());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    updatePortfolioNameController.dispose();
+    super.dispose();
   }
 
   @override
@@ -142,6 +149,8 @@ class _PortfolioModeState extends State<PortfolioMode> {
                 onPressed: () {
                   context.read<PortfolioBloc>().add(UpdatePortfolioNameEvent(
                       updatePortfolioName: updatePortfolioNameController.text));
+                  updatePortfolioNameController.clear();
+                  AutoRouter.of(context).pop();
                 },
                 child: const Text('Update'))
           ],
@@ -161,13 +170,55 @@ class _PortfolioModeState extends State<PortfolioMode> {
 
 List<CoinUserData> getChartData() {
   final List<CoinUserData> chartData = [
-    const CoinUserData(cryptocurrencyName: 'BTC', priceCurrent: 12012.2),
-    const CoinUserData(cryptocurrencyName: 'ETH', priceCurrent: 2012.2),
-    const CoinUserData(cryptocurrencyName: 'PEPE', priceCurrent: 112.2),
-    const CoinUserData(cryptocurrencyName: 'USDT', priceCurrent: 8012.2),
-    const CoinUserData(cryptocurrencyName: 'SOL', priceCurrent: 3012.2),
-    const CoinUserData(cryptocurrencyName: 'BNB', priceCurrent: 502.2),
-    const CoinUserData(cryptocurrencyName: 'DOGE', priceCurrent: 1012.2),
+    const CoinUserData(
+        cryptocurrencyName: 'BTC',
+        priceCurrent: 12012.2,
+        id: 'BTC',
+        image: '',
+        rank: 1,
+        priceWhichBought: 1000),
+    const CoinUserData(
+        cryptocurrencyName: 'ETH',
+        priceCurrent: 2012.2,
+        id: '',
+        image: '',
+        rank: 2,
+        priceWhichBought: 1000),
+    const CoinUserData(
+        cryptocurrencyName: 'PEPE',
+        priceCurrent: 112.2,
+        id: '',
+        image: '',
+        rank: 3,
+        priceWhichBought: 1000),
+    const CoinUserData(
+        cryptocurrencyName: 'USDT',
+        priceCurrent: 8012.2,
+        id: '',
+        image: '',
+        rank: 4,
+        priceWhichBought: 1000),
+    const CoinUserData(
+        cryptocurrencyName: 'SOL',
+        priceCurrent: 3012.2,
+        id: '',
+        image: '',
+        rank: 5,
+        priceWhichBought: 1000),
+    const CoinUserData(
+        cryptocurrencyName: 'BNB',
+        priceCurrent: 502.2,
+        id: '',
+        image: '',
+        rank: 6,
+        priceWhichBought: 1000),
+    const CoinUserData(
+        cryptocurrencyName: 'DOGE',
+        priceCurrent: 1012.2,
+        id: '',
+        image: '',
+        rank: 7,
+        priceWhichBought: 1000),
   ];
   return chartData;
 }

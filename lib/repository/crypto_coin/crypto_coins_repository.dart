@@ -28,7 +28,7 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
       List<CryptoCoin> coins = responseData
           .map((e) => CryptoCoin.fromJson(e as Map<String, dynamic>))
           .toList();
-      // log('$coins');
+
       return coins;
     } else if (response.statusCode == 429) {
       throw Exception('You\'ve exceeded the Rate Limit');
@@ -49,7 +49,7 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
         Map<String, dynamic> responseData =
             response.data as Map<String, dynamic>;
         CryptoCoinDetails coin = CryptoCoinDetails.fromJson(responseData);
-        // log('${coin.marketData.currentPrice.toJson()['btc']}');
+
         return coin;
       } else if (response.statusCode == 429) {
         throw Exception('You\'ve exceeded the Rate Limit');
@@ -73,14 +73,14 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData =
             response.data as Map<String, dynamic>;
-        // log('$responseData');
+
         final coins = responseData['coins'] as List<dynamic>;
-        // log('$coins');
+
         List<CryptocurrencySearchCoin> queryResponseList = coins
             .map((e) =>
                 CryptocurrencySearchCoin.fromJson(e as Map<String, dynamic>))
             .toList();
-        // log('$queryResponseList');
+
         return queryResponseList;
       } else if (response.statusCode == 429) {
         throw Exception('You\'ve exceeded the Rate Limit');
@@ -101,15 +101,14 @@ class CryptoCoinsRepository implements AbstractCoinRepository {
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData =
             response.data as Map<String, dynamic>;
-        // log('$responseData');
+
         final coins = responseData['coins'] as List<dynamic>;
-        // log('$coins');
 
         List<TrendingCoin> trendingCryptoList = coins
             .map(
                 (e) => TrendingCoin.fromJson(e['item'] as Map<String, dynamic>))
             .toList();
-        // log('$trendingCryptoList');
+
         return trendingCryptoList;
       } else if (response.statusCode == 429) {
         throw Exception('You\'ve exceeded the Rate Limit');
