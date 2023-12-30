@@ -24,6 +24,6 @@ abstract interface class AbstractDataStorageRepository {
     required PortfolioAction action,
   });
   Future<bool> checkCryptoCurrencyInPortfolio({
-    required CoinUserData coinUserData,
+    required String id,
   });
 }

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -19,7 +20,8 @@ class CryptoCoinDetailsScreen extends StatefulWidget {
 }
 
 class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
-  final _blocDetails = CryptoCoinDetailsBloc(GetIt.I<AbstractCoinRepository>());
+  final _blocDetails = CryptoCoinDetailsBloc(GetIt.I<AbstractCoinRepository>(),
+      GetIt.I<AbstractDataStorageRepository>());
   bool starBool = false;
   late String selectedItem;
   late String price;
@@ -54,10 +56,12 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
       child: Scaffold(
         body: BlocBuilder<CryptoCoinDetailsBloc, CryptoCoinDetailsState>(
           builder: (context, state) {
+            final cryptoCoinDetailsBloc = context.read<CryptoCoinDetailsBloc>();
             if (state is CryptoCoinDetailsLoaded) {
               return RefreshIndicator.adaptive(
                 onRefresh: () async {
-                  _blocDetails.add(CryptoCoinDetailsLoadEvent(id: widget.id));
+                  cryptoCoinDetailsBloc
+                      .add(CryptoCoinDetailsLoadEvent(id: widget.id));
                 },
                 child: CustomScrollView(
                   slivers: [
@@ -83,7 +87,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                       ),
                       actions: [
                         IconButton(
-                          icon: starBool == true
+                          icon: state.inPortfolio
                               ? const Icon(
                                   Icons.star,
                                   color: Colors.yellow,
@@ -92,8 +96,13 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                                   Icons.star_outline,
                                 ),
                           onPressed: () {
-                            starBool = !starBool;
-                            setState(() {});
+                            if (state.inPortfolio == false) {
+                              cryptoCoinDetailsBloc
+                                  .add(CryptoCoinAddToPortfolio());
+                            } else if (state.inPortfolio == true) {
+                              cryptoCoinDetailsBloc
+                                  .add(CryptoCoinRemoveFromPortfolio());
+                            }
                           },
                         )
                       ],
@@ -109,7 +118,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
 
                     SliverToBoxAdapter(
                       child: CryptoCalculator(
-                        blocDetails: _blocDetails,
+                        blocDetails: cryptoCoinDetailsBloc,
                         coin: state.coin,
                         price: price,
                         dropDownList: state.dropDownList,
@@ -165,7 +174,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                         ),
                         OutlinedButton(
                             onPressed: () async {
-                              _blocDetails.add(
+                              cryptoCoinDetailsBloc.add(
                                   CryptoCoinDetailsLoadEvent(id: widget.id));
                             },
                             child: Text(

@@ -150,7 +150,7 @@ class AuthRepository implements AbstractAuthRepository {
               email: googleUser.email,
               username: googleUser.displayName ?? '',
               uid: uid,
-              portfolio: const <CoinUserData>[],
+              portfolio: const <Map<String, dynamic>>[],
               profileImage: googleUser.photoUrl,
             );
 

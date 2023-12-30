@@ -1,25 +1,29 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
+import 'package:crypto_app/futures/portfolio/model/coin_user_data.dart';
 import 'package:crypto_app/repository/crypto_coin/abstract_coin_repository.dart';
+import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
+import 'package:crypto_app/repository/data_storage_repository/data_storage_repository.dart';
 import 'package:equatable/equatable.dart';
-
 import '../../../repository/crypto_coin/models/crypto_coin_details.dart';
 import '../model/chart_data.dart';
-
 part 'crypto_coin_details_event.dart';
 part 'crypto_coin_details_state.dart';
 
 class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
   final AbstractCoinRepository abstractCoinRepository;
+  final AbstractDataStorageRepository abstractDataStorageRepository;
 
-  CryptoCoinDetailsBloc(this.abstractCoinRepository)
+  CryptoCoinDetailsBloc(
+      this.abstractCoinRepository, this.abstractDataStorageRepository)
       : super(CryptoCoinDetailsInitial()) {
     on<CryptoCoinDetailsLoadEvent>(_getCoinDetailsLoad);
     on<CryptoCoinSaveValueInTextFieldEvent>(_currency);
     on<CryptoCoinConvertCoinToCurrencyEvent>(_coinCount);
     on<CryptoCoinCurrencySelectedEvent>(_getSelectedItem);
+    on<CryptoCoinAddToPortfolio>(_addToPortfolio);
+    on<CryptoCoinRemoveFromPortfolio>(_removeFromPortfolio);
   }
 
   Future<void> _getCoinDetailsLoad(
@@ -43,7 +47,7 @@ class CryptoCoinDetailsBloc
       final selectedCurrency = dropDownList.first.toLowerCase();
       final price =
           coin.marketData.currentPrice.toJson()[selectedCurrency].toString();
-      // basePrice = price;
+
       final String coinDetailsPrice =
           coin.marketData.currentPrice.usd.toString();
       final currentPriceInUsd = coin.marketData.currentPrice.usd.toString();
@@ -61,7 +65,10 @@ class CryptoCoinDetailsBloc
 
       final counterCoin =
           (double.parse(price) / double.parse(price)).toString();
+      final inPortfolio = await abstractDataStorageRepository
+          .checkCryptoCurrencyInPortfolio(id: coin.id);
       emit(CryptoCoinDetailsLoaded(
+          inPortfolio: inPortfolio,
           max: max + (max * 0.05),
           min: min - (min * 0.05),
           sparkLine: sparkLine,
@@ -90,6 +97,59 @@ class CryptoCoinDetailsBloc
             currentState.copyWith(price: price, counterCoin: count);
 
         emit(updateState);
+      }
+    } catch (e) {
+      emit(CryptoCoinDetailsFailure(error: e));
+    }
+  }
+
+  Future<void> _addToPortfolio(CryptoCoinAddToPortfolio event,
+      Emitter<CryptoCoinDetailsState> emit) async {
+    final currentState = state;
+    try {
+      if (currentState is CryptoCoinDetailsLoaded) {
+        final currentCoin = currentState.coin;
+        final currentPriceInUsd =
+            double.parse(currentCoin.marketData.currentPrice.usd.toString());
+        await abstractDataStorageRepository
+            .addOrRemoveCryptoCurrencyToPortfolio(
+                coinUserData: CoinUserData(
+                    cryptocurrencyName: currentCoin.name,
+                    priceCurrent: currentPriceInUsd,
+                    id: currentCoin.id,
+                    image: currentCoin.image.small,
+                    rank: currentCoin.marketData.marketCapRank,
+                    priceWhichBought: currentPriceInUsd),
+                action: PortfolioAction.add);
+        final newState = currentState;
+        emit(newState.copyWith(inPortfolio: true));
+      }
+    } catch (e) {
+      emit(CryptoCoinDetailsFailure(error: e));
+    }
+  }
+
+  Future<void> _removeFromPortfolio(CryptoCoinRemoveFromPortfolio event,
+      Emitter<CryptoCoinDetailsState> emit) async {
+    final currentState = state;
+    try {
+      if (currentState is CryptoCoinDetailsLoaded) {
+        final currentCoin = currentState.coin;
+        final currentPriceInUsd =
+            double.parse(currentCoin.marketData.currentPrice.usd.toString());
+        await abstractDataStorageRepository
+            .addOrRemoveCryptoCurrencyToPortfolio(
+                coinUserData: CoinUserData(
+                    cryptocurrencyName: currentCoin.name,
+                    priceCurrent: currentPriceInUsd,
+                    id: currentCoin.id,
+                    image: currentCoin.image.small,
+                    rank: currentCoin.marketData.marketCapRank,
+                    priceWhichBought: currentPriceInUsd),
+                action: PortfolioAction.remove);
+
+        final newState = currentState;
+        emit(newState.copyWith(inPortfolio: false));
       }
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));

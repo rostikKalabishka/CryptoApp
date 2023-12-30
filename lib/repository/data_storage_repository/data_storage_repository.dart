@@ -82,27 +82,23 @@ class DataStorageRepository implements AbstractDataStorageRepository {
 
   @override
   Future<bool> checkCryptoCurrencyInPortfolio({
-    required CoinUserData coinUserData,
+    required String id,
   }) async {
     final currentUser = firebaseAuthInstance.currentUser;
     try {
-      final userPortfolio = await portfolioList(user: currentUser);
-      return userPortfolio.contains(coinUserData);
+      if (currentUser == null) {
+        throw 'currentUser is null';
+      }
+      final userDoc = firebaseStore.collection('users').doc(currentUser.uid);
+      final userData = await userDoc.get();
+
+      final List<Map<String, dynamic>> userPortfolio =
+          List<Map<String, dynamic>>.from(userData.data()?['portfolio'] ??
+              [] as List<Map<String, dynamic>>);
+      return userPortfolio.any((element) => element['id'] == id);
     } catch (e) {
       throw '$e';
     }
-  }
-
-  Future<List<CoinUserData>> portfolioList({User? user}) async {
-    if (user == null) {
-      throw 'currentUser is null';
-    }
-    final userDoc = firebaseStore.collection('users').doc(user.uid);
-    final userData = await userDoc.get();
-
-    final List<CoinUserData> userPortfolio = List<CoinUserData>.from(
-        userData.data()?['portfolio'] ?? [] as List<CoinUserData>);
-    return userPortfolio;
   }
 
   @override
@@ -118,16 +114,16 @@ class DataStorageRepository implements AbstractDataStorageRepository {
       final userDoc = firebaseStore.collection('users').doc(currentUser.uid);
       final userData = await userDoc.get();
 
-      final List<CoinUserData> userPortfolio = List<CoinUserData>.from(
-          userData.data()?['portfolio'] ?? [] as List<CoinUserData>);
+      final List<Map<String, dynamic>> userPortfolio =
+          List<Map<String, dynamic>>.from(userData.data()?['portfolio'] ??
+              [] as List<Map<String, dynamic>>);
       if (action == PortfolioAction.add) {
-        if (userPortfolio.contains(coinUserData)) {
-          userPortfolio.add(coinUserData);
+        if (!userPortfolio.contains(coinUserData.toJson())) {
+          userPortfolio.add(coinUserData.toJson());
         }
       } else if (action == PortfolioAction.remove) {
-        if (userPortfolio.contains(coinUserData)) {
-          userPortfolio.remove(coinUserData);
-        }
+        userPortfolio
+            .removeWhere((element) => element['id'] == coinUserData.id);
       }
 
       userDoc.update({'portfolio': userPortfolio});

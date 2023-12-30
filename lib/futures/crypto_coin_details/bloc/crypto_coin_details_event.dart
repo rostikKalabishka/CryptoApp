@@ -20,6 +20,10 @@ class CryptoCoinDropDownMenuEvent extends CryptoCoinDetailsEvent {
   const CryptoCoinDropDownMenuEvent();
 }
 
+class CryptoCoinAddToPortfolio extends CryptoCoinDetailsEvent {}
+
+class CryptoCoinRemoveFromPortfolio extends CryptoCoinDetailsEvent {}
+
 class CryptoCoinConvertCoinToCurrencyEvent extends CryptoCoinDetailsEvent {
   final String coinCount;
   final String price;
