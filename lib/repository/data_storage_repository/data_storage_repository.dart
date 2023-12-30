@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_app/futures/portfolio/model/coin_user_data.dart';
 import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth/model/user.dart';
@@ -134,8 +137,37 @@ class DataStorageRepository implements AbstractDataStorageRepository {
   }
 
   @override
-  Future<void> updateSettingsUsersInfo() {
-    // TODO: implement updateSettingsUsersInfo
-    throw UnimplementedError();
+  Future pickImage(ImageSource source) async {
+    final ImagePicker imagePicker = ImagePicker();
+    XFile? file = await imagePicker.pickImage(source: source);
+    if (file != null) {
+      return await file.readAsBytes();
+    }
+    log('no selected image');
+    return;
+  }
+
+  @override
+  Future<void> updateSettingsUsersInfo(
+      {required String username, String? pathImage}) async {
+    final currentUser = firebaseAuthInstance.currentUser;
+    try {
+      if (currentUser == null) {
+        throw 'currentUser is null';
+      }
+      final userDoc = firebaseStore.collection('users').doc(currentUser.uid);
+      if (username.isEmpty && pathImage != null) {
+        await userDoc.update({'profile_image': pathImage});
+      } else if (username.isNotEmpty && pathImage == null) {
+        await userDoc.update({'username': username});
+      } else if (username.isNotEmpty && pathImage != null) {
+        await userDoc
+            .update({'username': username, 'profile_image': pathImage});
+      } else {
+        return;
+      }
+    } catch (e) {
+      throw '$e';
+    }
   }
 }

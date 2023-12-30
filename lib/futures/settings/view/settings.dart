@@ -16,6 +16,10 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   bool notifications = true;
+  final TextEditingController updateUserNameController =
+      TextEditingController();
+
+  late TextEditingController emailController;
   @override
   void initState() {
     context.read<SettingsBloc>().add(SettingsLoadUserInfoEvent());
@@ -23,10 +27,20 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   @override
+  void dispose() {
+    updateUserNameController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final settingsBloc = context.read<SettingsBloc>();
-    return BlocBuilder<SettingsBloc, SettingsState>(
+    return BlocConsumer<SettingsBloc, SettingsState>(
+      listener: (context, state) {
+        emailController = TextEditingController(text: state.email);
+      },
       builder: (context, state) {
         return Scaffold(
           body: CustomScrollView(slivers: [
@@ -260,9 +274,15 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<SettingsBloc>().add(SettingsUpdateUserInfo(
+                          profileImage: null,
+                          username: updateUserNameController.text));
+                      updateUserNameController.clear();
+                      AutoRouter.of(context).pop();
+                    },
                     child: Text(
-                      'Add change',
+                      'Save change',
                       style:
                           theme.textTheme.labelMedium?.copyWith(fontSize: 14),
                     ))
@@ -275,38 +295,73 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Column(
               children: [
                 InkWell(
-                  radius: 60,
-                  onTap: () {},
-                  child: state.image.isEmpty
-                      ? CircleAvatar(
-                          backgroundColor: Colors.blue,
-                          radius: 60,
-                          child: Text(
-                            state.charForAvatar,
-                            style: theme.textTheme.bodyLarge
-                                ?.copyWith(fontSize: 62),
-                          ),
-                        )
-                      : CircleAvatar(
-                          radius: 60,
-                          child: ClipOval(
-                            child: Image.network(
-                              state.image,
-                              fit: BoxFit.cover,
+                    borderRadius: BorderRadius.circular(50),
+                    radius: 60,
+                    onTap: () {
+                      context.read<SettingsBloc>().add(SettingsPickImage());
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.blue,
+                      radius: 60,
+                      child: state.image.isEmpty
+                          ? Text(
+                              state.charForAvatar,
+                              style: theme.textTheme.bodyLarge
+                                  ?.copyWith(fontSize: 62),
+                            )
+                          : ClipOval(
+                              child: Image.network(
+                                state.image,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                        ),
+                    )),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                Text(
+                  'Username',
+                  style: theme.textTheme.labelMedium,
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
                 TextFormField(
+                  controller: updateUserNameController,
                   style: theme.textTheme.bodySmall,
                   decoration: InputDecoration(
                     hintStyle: TextStyle(color: theme.hintColor),
                     border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16))),
                     enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(16.0),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                Text(
+                  'Email',
+                  style: theme.textTheme.labelMedium,
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                TextFormField(
+                  enabled: false,
+                  controller: emailController,
+                  style: theme.textTheme.bodySmall,
+                  decoration: InputDecoration(
+                    disabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
+                    hintStyle: TextStyle(color: theme.hintColor),
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
                       borderRadius: BorderRadius.all(
                         Radius.circular(16.0),
                       ),
