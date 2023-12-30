@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/futures/portfolio/bloc/portfolio_bloc.dart';
 import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -96,6 +97,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                                   Icons.star_outline,
                                 ),
                           onPressed: () {
+                            final portfolioBloc = context.read<PortfolioBloc>();
                             if (state.inPortfolio == false) {
                               cryptoCoinDetailsBloc
                                   .add(CryptoCoinAddToPortfolio());
@@ -103,6 +105,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                               cryptoCoinDetailsBloc
                                   .add(CryptoCoinRemoveFromPortfolio());
                             }
+                            portfolioBloc.add(const PortfolioInfoLoadedEvent());
                           },
                         )
                       ],

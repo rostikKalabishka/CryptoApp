@@ -23,10 +23,10 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
       PortfolioInfoLoadedEvent event, Emitter<PortfolioState> emit) async {
     try {
       final userInfo = await abstractDataStorageRepository.getUserInfo();
+      final List<CoinUserData> portfolioList =
+          userInfo.portfolio.map((e) => CoinUserData.fromJson(e)).toList();
       emit(PortfolioLoaded(
-          portfolioName: userInfo.portfolioName, portfolioList: const []
-          //userInfo.portfolio as List<CoinUserData>,
-          ));
+          portfolioName: userInfo.portfolioName, portfolioList: portfolioList));
     } catch (e) {
       emit(PortfolioFailure(error: e));
     }

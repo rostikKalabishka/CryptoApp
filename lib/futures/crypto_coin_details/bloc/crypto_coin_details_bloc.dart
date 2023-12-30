@@ -114,6 +114,7 @@ class CryptoCoinDetailsBloc
         await abstractDataStorageRepository
             .addOrRemoveCryptoCurrencyToPortfolio(
                 coinUserData: CoinUserData(
+                    symbol: currentCoin.symbol,
                     cryptocurrencyName: currentCoin.name,
                     priceCurrent: currentPriceInUsd,
                     id: currentCoin.id,
@@ -140,6 +141,7 @@ class CryptoCoinDetailsBloc
         await abstractDataStorageRepository
             .addOrRemoveCryptoCurrencyToPortfolio(
                 coinUserData: CoinUserData(
+                    symbol: currentCoin.symbol,
                     cryptocurrencyName: currentCoin.name,
                     priceCurrent: currentPriceInUsd,
                     id: currentCoin.id,

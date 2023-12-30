@@ -10,12 +10,14 @@ class CoinUserData extends Equatable {
   final String image;
   final int rank;
   final double priceWhichBought;
+  final String symbol;
   const CoinUserData({
     required this.cryptocurrencyName,
     required this.priceCurrent,
     required this.id,
     required this.image,
     required this.rank,
+    required this.symbol,
     required this.priceWhichBought,
   });
   @override

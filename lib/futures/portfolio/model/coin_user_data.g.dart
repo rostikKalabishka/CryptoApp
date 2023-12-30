@@ -12,6 +12,7 @@ CoinUserData _$CoinUserDataFromJson(Map<String, dynamic> json) => CoinUserData(
       id: json['id'] as String,
       image: json['image'] as String,
       rank: json['rank'] as int,
+      symbol: json['symbol'] as String,
       priceWhichBought: (json['price_which_bought'] as num).toDouble(),
     );
 
@@ -23,4 +24,5 @@ Map<String, dynamic> _$CoinUserDataToJson(CoinUserData instance) =>
       'image': instance.image,
       'rank': instance.rank,
       'price_which_bought': instance.priceWhichBought,
+      'symbol': instance.symbol,
     };
