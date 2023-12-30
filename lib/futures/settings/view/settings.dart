@@ -23,6 +23,8 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     context.read<SettingsBloc>().add(SettingsLoadUserInfoEvent());
+    emailController =
+        TextEditingController(text: context.read<SettingsBloc>().state.email);
     super.initState();
   }
 
@@ -37,6 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final settingsBloc = context.read<SettingsBloc>();
+
     return BlocConsumer<SettingsBloc, SettingsState>(
       listener: (context, state) {
         emailController = TextEditingController(text: state.email);
