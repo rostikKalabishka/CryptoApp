@@ -11,6 +11,10 @@ class PortfolioInfoLoadedEvent extends PortfolioEvent {
   const PortfolioInfoLoadedEvent();
 }
 
+class PortfolioListUpdateEvent extends PortfolioEvent {
+  const PortfolioListUpdateEvent();
+}
+
 class UpdatePortfolioNameEvent extends PortfolioEvent {
   final String updatePortfolioName;
   const UpdatePortfolioNameEvent({required this.updatePortfolioName});

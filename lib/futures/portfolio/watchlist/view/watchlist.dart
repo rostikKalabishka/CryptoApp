@@ -29,7 +29,7 @@ class _WatchListState extends State<WatchList> {
         final portfolioList = state.portfolioList;
         return RefreshIndicator.adaptive(
           onRefresh: () async {
-            portfolioBloc.add(const PortfolioInfoLoadedEvent());
+            portfolioBloc.add(const PortfolioListUpdateEvent());
           },
           child: CustomScrollView(
             slivers: [

@@ -18,7 +18,7 @@ class PortfolioLoaded extends PortfolioState {
       {required this.portfolioName, required this.portfolioList});
 
   @override
-  List<Object> get props => super.props..addAll([portfolioName]);
+  List<Object> get props => super.props..addAll([portfolioName, portfolioList]);
 
   PortfolioLoaded copyWith(
       {String? portfolioName, List<CoinUserData>? portfolioList}) {

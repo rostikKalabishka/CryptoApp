@@ -97,7 +97,6 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                                   Icons.star_outline,
                                 ),
                           onPressed: () {
-                            final portfolioBloc = context.read<PortfolioBloc>();
                             if (state.inPortfolio == false) {
                               cryptoCoinDetailsBloc
                                   .add(CryptoCoinAddToPortfolio());
@@ -105,7 +104,9 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                               cryptoCoinDetailsBloc
                                   .add(CryptoCoinRemoveFromPortfolio());
                             }
-                            portfolioBloc.add(const PortfolioInfoLoadedEvent());
+                            context
+                                .read<PortfolioBloc>()
+                                .add(const PortfolioListUpdateEvent());
                           },
                         )
                       ],
