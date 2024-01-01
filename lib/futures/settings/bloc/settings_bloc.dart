@@ -1,4 +1,4 @@
-// import 'dart:typed_data';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
@@ -76,15 +76,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   Future<void> _pickImage(
       SettingsPickImage event, Emitter<SettingsState> emit) async {
-    // Uint8List images =
+    // String images =
     await abstractDataStorageRepository.pickImage(ImageSource.gallery);
-    // return images;
-    //  final userInfo = await abstractDataStorageRepository.getUserInfo();
-    //  final newState = state.copyWith(
-    //     charForAvatar: userInfo.username[0].toUpperCase(),
-
-    //     name: userInfo.username,
-    //     image: userInfo.profileImage);
+    // final newState = state.copyWith(image: images);
+    // emit(newState);
   }
 
   Future<void> _updateUserDate(
@@ -96,7 +91,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     final newState = state.copyWith(
       charForAvatar: userInfo.username[0].toUpperCase(),
       name: userInfo.username,
-      // image: userInfo.profileImage
     );
 
     emit(newState);
