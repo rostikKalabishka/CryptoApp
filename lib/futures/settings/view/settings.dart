@@ -20,6 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
       TextEditingController();
 
   late TextEditingController emailController;
+  late String image;
   @override
   void initState() {
     context.read<SettingsBloc>().add(SettingsLoadUserInfoEvent());
@@ -43,6 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return BlocConsumer<SettingsBloc, SettingsState>(
       listener: (context, state) {
         emailController = TextEditingController(text: state.email);
+        image = state.image;
       },
       builder: (context, state) {
         return Scaffold(
@@ -76,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: ClipOval(
                         child: Image.network(
                           state.image,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
@@ -279,7 +281,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ElevatedButton(
                     onPressed: () {
                       context.read<SettingsBloc>().add(SettingsUpdateUserInfo(
-                          profileImage: null,
+                          // profileImage: null,
                           username: updateUserNameController.text));
                       updateUserNameController.clear();
                       AutoRouter.of(context).pop();
@@ -314,8 +316,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             )
                           : ClipOval(
                               child: Image.network(
-                                state.image,
-                                fit: BoxFit.cover,
+                                image,
+                                fit: BoxFit.fill,
                               ),
                             ),
                     )),

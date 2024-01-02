@@ -4,8 +4,6 @@ import 'package:crypto_app/repository/data_storage_repository/data_storage_repos
 import 'package:image_picker/image_picker.dart';
 
 abstract interface class AbstractDataStorageRepository {
-  Future<String> getPortfolioName();
-
   Future<bool> getTheme();
 
   Future<void> setTheme({required bool swithBool});

@@ -1,9 +1,12 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_app/futures/portfolio/model/coin_user_data.dart';
 import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,11 +25,6 @@ class DataStorageRepository implements AbstractDataStorageRepository {
       required this.firebaseStore});
 
   static const themeKey = 'theme_key';
-
-  @override
-  Future<String> getPortfolioName() {
-    throw UnimplementedError();
-  }
 
   @override
   Future<bool> getTheme() async {
@@ -133,14 +131,23 @@ class DataStorageRepository implements AbstractDataStorageRepository {
   }
 
   @override
-  Future pickImage(ImageSource source) async {
-    final ImagePicker imagePicker = ImagePicker();
-    XFile? file = await imagePicker.pickImage(source: source);
-    if (file != null) {
-      return await file.readAsBytes();
+  Future<String?> pickImage(ImageSource source) async {
+    try {
+      final currentUser = firebaseAuthInstance.currentUser;
+      final ImagePicker imagePicker = ImagePicker();
+      XFile? file = await imagePicker.pickImage(source: source);
+      final Reference ref = FirebaseStorage.instance
+          .ref()
+          .child('${currentUser!.uid}_profileimage.jpg');
+      if (file != null) {
+        await ref.putFile(File(file.path));
+        final downloadUrl = await ref.getDownloadURL();
+        return downloadUrl;
+      }
+      throw ('No selected image');
+    } catch (e) {
+      throw '$e';
     }
-    log('no selected image');
-    return;
   }
 
   @override
