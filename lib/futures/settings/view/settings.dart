@@ -254,128 +254,131 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future openDialog(BuildContext context, SettingsState state) => showDialog(
-      context: context,
-      builder: (context) {
-        final theme = Theme.of(context);
-        return AlertDialog(
-          backgroundColor: theme.scaffoldBackgroundColor,
-          title: Text(
-            'Make a change',
-            style: theme.textTheme.bodyLarge,
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red[700]),
-                  onPressed: () {
-                    AutoRouter.of(context).pop();
-                  },
-                  child: Text(
-                    'Close',
-                    style: theme.textTheme.labelMedium?.copyWith(fontSize: 14),
-                  ),
-                ),
-                ElevatedButton(
+        context: context,
+        builder: (context) {
+          final theme = Theme.of(context);
+          final image = context.read<SettingsBloc>().state.image;
+          return AlertDialog(
+            backgroundColor: theme.scaffoldBackgroundColor,
+            title: Text(
+              'Make a change',
+              style: theme.textTheme.bodyLarge,
+            ),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red[700]),
                     onPressed: () {
-                      context.read<SettingsBloc>().add(SettingsUpdateUserInfo(
-                          // profileImage: null,
-                          username: updateUserNameController.text));
-                      updateUserNameController.clear();
                       AutoRouter.of(context).pop();
                     },
                     child: Text(
-                      'Save change',
+                      'Close',
                       style:
                           theme.textTheme.labelMedium?.copyWith(fontSize: 14),
-                    ))
-              ],
-            )
-          ],
-          content: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            height: MediaQuery.of(context).size.height * 0.5,
-            child: Column(
-              children: [
-                InkWell(
-                    borderRadius: BorderRadius.circular(50),
-                    radius: 60,
-                    onTap: () {
-                      context.read<SettingsBloc>().add(SettingsPickImage());
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        context.read<SettingsBloc>().add(SettingsUpdateUserInfo(
+                            profileImage: image,
+                            username: updateUserNameController.text));
+                        updateUserNameController.clear();
+                        AutoRouter.of(context).pop();
+                      },
+                      child: Text(
+                        'Save change',
+                        style:
+                            theme.textTheme.labelMedium?.copyWith(fontSize: 14),
+                      ))
+                ],
+              )
+            ],
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: Column(
+                children: [
+                  InkWell(
+                      borderRadius: BorderRadius.circular(50),
                       radius: 60,
-                      child: state.image.isEmpty
-                          ? Text(
-                              state.charForAvatar,
-                              style: theme.textTheme.bodyLarge
-                                  ?.copyWith(fontSize: 62),
-                            )
-                          : ClipOval(
-                              child: Image.network(
-                                image,
-                                fit: BoxFit.fill,
+                      onTap: () {
+                        context.read<SettingsBloc>().add(SettingsPickImage());
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        radius: 60,
+                        child: image.isEmpty
+                            ? Text(
+                                state.charForAvatar,
+                                style: theme.textTheme.bodyLarge
+                                    ?.copyWith(fontSize: 62),
+                              )
+                            : ClipOval(
+                                child: Image.network(
+                                  image,
+                                  fit: BoxFit.fill,
+                                ),
                               ),
-                            ),
-                    )),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                Text(
-                  'Username',
-                  style: theme.textTheme.labelMedium,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                TextFormField(
-                  controller: updateUserNameController,
-                  style: theme.textTheme.bodySmall,
-                  decoration: InputDecoration(
-                    hintStyle: TextStyle(color: theme.hintColor),
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16))),
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16.0),
+                      )),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
+                  Text(
+                    'Username',
+                    style: theme.textTheme.labelMedium,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
+                  TextFormField(
+                    controller: updateUserNameController,
+                    style: theme.textTheme.bodySmall,
+                    decoration: InputDecoration(
+                      hintStyle: TextStyle(color: theme.hintColor),
+                      border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16))),
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                Text(
-                  'Email',
-                  style: theme.textTheme.labelMedium,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                TextFormField(
-                  enabled: false,
-                  controller: emailController,
-                  style: theme.textTheme.bodySmall,
-                  decoration: InputDecoration(
-                    disabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16))),
-                    hintStyle: TextStyle(color: theme.hintColor),
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16))),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16.0),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
+                  Text(
+                    'Email',
+                    style: theme.textTheme.labelMedium,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
+                  ),
+                  TextFormField(
+                    enabled: false,
+                    controller: emailController,
+                    style: theme.textTheme.bodySmall,
+                    decoration: InputDecoration(
+                      disabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16))),
+                      hintStyle: TextStyle(color: theme.hintColor),
+                      border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16))),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      });
+          );
+        },
+      );
 }

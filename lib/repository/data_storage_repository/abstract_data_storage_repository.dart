@@ -11,11 +11,11 @@ abstract interface class AbstractDataStorageRepository {
   Future<void> updatePortfolioName({required String newPortfolioName});
 
   Future<void> updateSettingsUsersInfo(
-      {required String username, String? pathImage});
+      {required String username, required String image});
 
   Future<UserDetails> getUserInfo();
 
-  Future pickImage(ImageSource source);
+  Future<XFile?> pickImage();
 
   Future<void> addOrRemoveCryptoCurrencyToPortfolio({
     required CoinUserData coinUserData,

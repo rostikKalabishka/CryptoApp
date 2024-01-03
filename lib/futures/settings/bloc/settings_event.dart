@@ -15,14 +15,12 @@ class SettingsSignOutEvent extends SettingsEvent {}
 
 class SettingsUpdateUserInfo extends SettingsEvent {
   final String username;
-  // final String? profileImage;
+  final String profileImage;
 
-  const SettingsUpdateUserInfo({
-    required this.username,
-    //required this.profileImage
-  });
-  // @override
-  // List<Object> get props => super.props..addAll([username, profileImage]);
+  const SettingsUpdateUserInfo(
+      {required this.username, required this.profileImage});
+  @override
+  List<Object> get props => super.props..addAll([username, profileImage]);
 }
 
 class SettingsSwitchOnEvent extends SettingsEvent {}

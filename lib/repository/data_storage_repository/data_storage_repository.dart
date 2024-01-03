@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -131,20 +130,12 @@ class DataStorageRepository implements AbstractDataStorageRepository {
   }
 
   @override
-  Future<String?> pickImage(ImageSource source) async {
+  Future<XFile?> pickImage() async {
     try {
-      final currentUser = firebaseAuthInstance.currentUser;
       final ImagePicker imagePicker = ImagePicker();
-      XFile? file = await imagePicker.pickImage(source: source);
-      final Reference ref = FirebaseStorage.instance
-          .ref()
-          .child('${currentUser!.uid}_profileimage.jpg');
-      if (file != null) {
-        await ref.putFile(File(file.path));
-        final downloadUrl = await ref.getDownloadURL();
-        return downloadUrl;
-      }
-      throw ('No selected image');
+      XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+      return file;
+      // throw ('No selected image');
     } catch (e) {
       throw '$e';
     }
@@ -152,22 +143,30 @@ class DataStorageRepository implements AbstractDataStorageRepository {
 
   @override
   Future<void> updateSettingsUsersInfo(
-      {required String username, String? pathImage}) async {
+      {required String username, required String image}) async {
     final currentUser = firebaseAuthInstance.currentUser;
     try {
       if (currentUser == null) {
         throw 'currentUser is null';
       }
       final userDoc = firebaseStore.collection('users').doc(currentUser.uid);
-      if (username.isEmpty && pathImage != null) {
-        await userDoc.update({'profile_image': pathImage});
-      } else if (username.isNotEmpty && pathImage == null) {
-        await userDoc.update({'username': username});
-      } else if (username.isNotEmpty && pathImage != null) {
-        await userDoc
-            .update({'username': username, 'profile_image': pathImage});
-      } else {
-        return;
+
+      final Reference ref = FirebaseStorage.instance
+          .ref()
+          .child('${currentUser.uid}_profileimage.jpg');
+      if (image.isNotEmpty) {
+        await ref.putFile(File(image));
+        final downloadUrl = await ref.getDownloadURL();
+        if (username.isEmpty && downloadUrl.isNotEmpty) {
+          await userDoc.update({'profile_image': downloadUrl});
+        } else if (username.isNotEmpty && downloadUrl.isEmpty) {
+          await userDoc.update({'username': username});
+        } else if (username.isNotEmpty && downloadUrl.isNotEmpty) {
+          await userDoc
+              .update({'username': username, 'profile_image': downloadUrl});
+        } else {
+          return;
+        }
       }
     } catch (e) {
       throw '$e';

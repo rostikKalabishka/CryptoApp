@@ -77,30 +77,23 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   Future<void> _pickImage(
       SettingsPickImage event, Emitter<SettingsState> emit) async {
     final selectedImage = await _selectedImageFromGallery();
-    if (selectedImage.isNotEmpty) {
-      emit(state.copyWith(image: selectedImage));
+    if (selectedImage!.path.isNotEmpty) {
+      emit(state.copyWith(image: selectedImage.path));
     }
   }
 
-  Future<String> _selectedImageFromGallery() async {
-    String images =
-        await abstractDataStorageRepository.pickImage(ImageSource.gallery);
+  Future<XFile?> _selectedImageFromGallery() async {
+    final XFile? images = await abstractDataStorageRepository.pickImage();
     return images;
   }
 
   Future<void> _updateUserDate(
       SettingsUpdateUserInfo event, Emitter<SettingsState> emit) async {
-    final profileImage = await _selectedImageFromGallery();
+    // final profileImage = await _selectedImageFromGallery();
     await abstractDataStorageRepository.updateSettingsUsersInfo(
-        username: event.username, pathImage: profileImage);
-
-    // Если в состоянии есть изображение, сохраняем его в Firebase
-    if (state.image != null && state.image.isNotEmpty) {
-      await abstractDataStorageRepository.updateSettingsUsersInfo(
-        username: event.username,
-        pathImage: state.image,
-      );
-    }
+      username: event.username,
+      image: event.profileImage,
+    );
 
     // Создаем новое состояние с обновленной информацией о пользователе
     final userInfo = await abstractDataStorageRepository.getUserInfo();
