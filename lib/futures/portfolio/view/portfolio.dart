@@ -21,6 +21,9 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
+              actions: [
+                IconButton(onPressed: () {}, icon: const Icon(Icons.add))
+              ],
               title: Text(
                 'Portfolio',
                 style: theme.textTheme.bodyLarge,

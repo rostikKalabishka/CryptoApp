@@ -78,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: ClipOval(
                         child: Image.network(
                           state.image,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -319,7 +319,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             : ClipOval(
                                 child: Image.network(
                                   image,
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                       )),

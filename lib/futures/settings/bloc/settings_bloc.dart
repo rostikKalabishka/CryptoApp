@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:crypto_app/futures/settings/bloc/settings_state.dart';
@@ -78,7 +76,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       SettingsPickImage event, Emitter<SettingsState> emit) async {
     final selectedImage = await _selectedImageFromGallery();
     if (selectedImage!.path.isNotEmpty) {
-      emit(state.copyWith(image: selectedImage.path));
+      emit(state.copyWith(image: selectedImage.name));
     }
   }
 
@@ -89,13 +87,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   Future<void> _updateUserDate(
       SettingsUpdateUserInfo event, Emitter<SettingsState> emit) async {
-    // final profileImage = await _selectedImageFromGallery();
     await abstractDataStorageRepository.updateSettingsUsersInfo(
       username: event.username,
       image: event.profileImage,
     );
 
-    // Создаем новое состояние с обновленной информацией о пользователе
     final userInfo = await abstractDataStorageRepository.getUserInfo();
     final newState = state.copyWith(
       charForAvatar: userInfo.username[0].toUpperCase(),
@@ -103,7 +99,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       image: userInfo.profileImage,
     );
 
-    emit(newState); // Отправляем новое состояние в ваш BLoC
+    emit(newState);
   }
 
   Future<void> _switchOff(

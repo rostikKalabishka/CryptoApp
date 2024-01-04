@@ -2,13 +2,10 @@ import 'package:crypto_app/futures/auth/login/bloc/login_bloc.dart';
 import 'package:crypto_app/futures/auth/login/view/login.dart';
 import 'package:crypto_app/futures/auth/registration/view/registration.dart';
 import 'package:crypto_app/futures/portfolio/bloc/portfolio_bloc.dart';
-
 import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
 import 'futures/auth/registration/bloc/registration_bloc.dart';
 import 'futures/settings/bloc/settings_bloc.dart';
 import 'futures/settings/bloc/settings_state.dart';
