@@ -66,12 +66,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD2Qi6PD8OOknQk2T6heEC-OYNlhhUN5k4',
-    appId: '1:477905921693:ios:45f4ee72715ad411e45674',
+    appId: '1:477905921693:ios:85577f5c72a8d266e45674',
     messagingSenderId: '477905921693',
     projectId: 'crypto-app-c1e1b',
     storageBucket: 'crypto-app-c1e1b.appspot.com',
-    androidClientId: '477905921693-misvliv9bkmpbot35rrspm12i39c7sps.apps.googleusercontent.com',
-    iosClientId: '477905921693-dgf97k0arsepic0uhimdm28hpu5p747h.apps.googleusercontent.com',
-    iosBundleId: 'com.example.cryptoApp',
+    androidClientId: '477905921693-km22puq9mv09fa3vdlg10t7j388tq0k5.apps.googleusercontent.com',
+    iosClientId: '477905921693-ftt9n58acc58uup1r603r5f53miv78pc.apps.googleusercontent.com',
+    iosBundleId: 'com.example.ios',
   );
 }

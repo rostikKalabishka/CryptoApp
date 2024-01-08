@@ -69,8 +69,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       radius: 60,
                       child: Text(
                         state.charForAvatar,
-                        style:
-                            theme.textTheme.bodyLarge?.copyWith(fontSize: 62),
+                        style: theme.textTheme.bodyLarge
+                            ?.copyWith(fontSize: 62, color: Colors.white),
                       ),
                     )
                   : CircleAvatar(
