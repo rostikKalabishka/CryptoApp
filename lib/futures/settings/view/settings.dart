@@ -103,43 +103,57 @@ class _SettingsPageState extends State<SettingsPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('User Name:'),
+                          Text(
+                            'User Name:',
+                            style: theme.textTheme.displaySmall,
+                          ),
                           Text(
                             state.name,
+                            style: theme.textTheme.displaySmall,
                           ),
                         ],
                       ),
                     ),
-                    Divider(
-                      color: theme.dividerColor,
+                    const Divider(
+                      color: Colors.white,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Email:'),
+                          Text(
+                            'Email:',
+                            style: theme.textTheme.displaySmall,
+                          ),
                           Flexible(
                             child: Text(
                               state.email,
                               textAlign: TextAlign.end,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
+                              style: theme.textTheme.displaySmall,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Divider(
-                      color: theme.dividerColor,
+                    const Divider(
+                      color: Colors.white,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Balance'),
-                          Text('\$500000'),
+                          Text(
+                            'Balance',
+                            style: theme.textTheme.displaySmall,
+                          ),
+                          Text(
+                            '\$500000',
+                            style: theme.textTheme.displaySmall,
+                          ),
                         ],
                       ),
                     ),
@@ -167,7 +181,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Dark Mode'),
+                          Text(
+                            'Dark Mode',
+                            style: theme.textTheme.displaySmall,
+                          ),
                           Transform.scale(
                             scale: 0.8,
                             child: Switch.adaptive(
@@ -182,22 +199,25 @@ class _SettingsPageState extends State<SettingsPage> {
                           )
                         ],
                       ),
-                      Divider(
-                        color: theme.dividerColor,
+                      const Divider(
+                        color: Colors.white,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Row(
+                          Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.notifications,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
-                              Text('Notification')
+                              Text(
+                                'Notification',
+                                style: theme.textTheme.displaySmall,
+                              )
                             ],
                           ),
                           Transform.scale(
@@ -211,16 +231,22 @@ class _SettingsPageState extends State<SettingsPage> {
                           )
                         ],
                       ),
-                      Divider(
-                        color: theme.dividerColor,
+                      const Divider(
+                        color: Colors.white,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Language'),
-                            Text('English'),
+                            Text(
+                              'Language',
+                              style: theme.textTheme.displaySmall,
+                            ),
+                            Text(
+                              'English',
+                              style: theme.textTheme.displaySmall,
+                            ),
                           ],
                         ),
                       ),
@@ -236,8 +262,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: ElevatedButton(
                   child: Text(
                     'Sign Out',
-                    style: theme.textTheme.bodySmall
-                        ?.copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+                    style: theme.textTheme.labelMedium,
                   ),
                   onPressed: () {
                     settingsBloc.add(SettingsSignOutEvent());

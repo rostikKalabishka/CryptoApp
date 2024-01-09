@@ -71,21 +71,43 @@ class _PortfolioModeState extends State<PortfolioMode> {
                                   icon: const Icon(
                                     Icons.more_vert,
                                     size: 20,
+                                    color: Colors.white,
                                   ))
                             ],
                           ),
                           const Divider(),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [Text('Balance'), Text('500000\$')],
-                          ),
-                          const Divider(),
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('Total Profit/Loss'),
+                              Text(
+                                'Balance:',
+                                style: theme.textTheme.displaySmall,
+                              ),
+                              Text(
+                                '500000\$',
+                                style: theme.textTheme.displaySmall,
+                              )
+                            ],
+                          ),
+                          const Divider(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total Profit/Loss',
+                                style: theme.textTheme.displaySmall,
+                              ),
                               Row(
-                                children: [Text('0.00'), Text('(0.00%)')],
+                                children: [
+                                  Text(
+                                    '0.00',
+                                    style: theme.textTheme.displaySmall,
+                                  ),
+                                  Text(
+                                    '(0.00%)',
+                                    style: theme.textTheme.displaySmall,
+                                  )
+                                ],
                               )
                             ],
                           )

@@ -28,12 +28,17 @@ final darkTheme = ThemeData.dark().copyWith(
       const BottomNavigationBarThemeData(backgroundColor: scaffoldBackground),
   hintColor: Colors.white,
   textTheme: const TextTheme(
+    headlineMedium: TextStyle(fontSize: 20, color: Colors.white),
+    headlineSmall: TextStyle(
+        fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
     bodyLarge: TextStyle(
       fontSize: 26,
       fontWeight: FontWeight.bold,
     ),
+    displaySmall: TextStyle(fontSize: 14, color: Colors.white),
     bodySmall: TextStyle(fontSize: 14),
-    labelMedium: TextStyle(fontSize: 20),
+    labelMedium: TextStyle(
+        fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
   ),
   dialogBackgroundColor: splineColor,
   iconButtonTheme: IconButtonThemeData(
@@ -42,7 +47,7 @@ final darkTheme = ThemeData.dark().copyWith(
 );
 
 final lightTheme = ThemeData.light().copyWith(
-  cardColor: Colors.grey,
+  cardColor: Colors.black54,
   dialogBackgroundColor: Colors.grey,
   dividerColor: Colors.black,
   colorScheme: ColorScheme.fromSeed(seedColor: splineColor),
@@ -56,23 +61,27 @@ final lightTheme = ThemeData.light().copyWith(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-        disabledBackgroundColor: Colors.grey[300],
-        backgroundColor: Colors.grey[500],
-        foregroundColor: Colors.black45),
+        disabledBackgroundColor: Colors.black38,
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white),
   ),
   scaffoldBackgroundColor: Colors.white,
-  indicatorColor: const Color.fromARGB(255, 9, 31, 172),
-  primaryColor: Colors.white12,
+  indicatorColor: Colors.black,
+  primaryColor: Colors.black,
   iconTheme: const IconThemeData(color: Colors.black),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Colors.grey, unselectedItemColor: Colors.black),
+      backgroundColor: Colors.black87, unselectedItemColor: Colors.black),
   textTheme: const TextTheme(
-    bodyLarge: TextStyle(
-        fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black),
-    bodySmall: TextStyle(fontSize: 14, color: Colors.black),
-    labelMedium: TextStyle(fontSize: 20, color: Colors.black),
-    bodyMedium: TextStyle(fontSize: 14, color: Colors.black),
-  ),
+      headlineMedium: TextStyle(fontSize: 20, color: Colors.black),
+      bodyLarge: TextStyle(
+          fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black),
+      labelMedium: TextStyle(
+          fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
+      bodySmall: TextStyle(fontSize: 14, color: Colors.black),
+      bodyMedium: TextStyle(fontSize: 14, color: Colors.black),
+      headlineSmall: TextStyle(
+          fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+      displaySmall: TextStyle(fontSize: 14, color: Colors.white)),
   iconButtonTheme: IconButtonThemeData(
     style: IconButton.styleFrom(foregroundColor: Colors.black),
   ),

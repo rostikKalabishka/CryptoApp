@@ -65,7 +65,8 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
                       ),
                       contentPadding: const EdgeInsets.symmetric(vertical: 8),
                     ),
-                    style: const TextStyle(fontSize: 14),
+                    style: theme.textTheme.displaySmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -84,7 +85,10 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
                       height: 20,
                     ),
                     const SizedBox(width: 10),
-                    Text(widget.coin.symbol.toUpperCase()),
+                    Text(
+                      widget.coin.symbol.toUpperCase(),
+                      style: theme.textTheme.displaySmall,
+                    ),
                   ],
                 ),
               ),
@@ -117,7 +121,8 @@ class _CryptoCalculatorState extends State<CryptoCalculator> {
                       ),
                       contentPadding: EdgeInsets.symmetric(vertical: 8),
                     ),
-                    style: const TextStyle(fontSize: 14),
+                    style: theme.textTheme.displaySmall
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

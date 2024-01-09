@@ -27,29 +27,29 @@ class CardDateWidget extends StatelessWidget {
             text: 'Market Cap Rank',
             textInfo: '#${coinDetails.marketCapRank}',
           ),
-          Divider(
-            color: theme.dividerColor,
+          const Divider(
+            color: Colors.white,
           ),
           RowInCard(
             text: 'Price Change 24h',
             textInfo: '\$${coinDetails.marketData.priceChange24h}',
           ),
-          Divider(
-            color: theme.dividerColor,
+          const Divider(
+            color: Colors.white,
           ),
           RowInCard(
             text: 'Market Cap',
             textInfo: '\$${coinDetails.marketData.marketCap.usd}',
           ),
-          Divider(
-            color: theme.dividerColor,
+          const Divider(
+            color: Colors.white,
           ),
           RowInCard(
             text: 'Home Page',
             textInfo: coinDetails.links.homepage.first,
           ),
-          Divider(
-            color: theme.dividerColor,
+          const Divider(
+            color: Colors.white,
           ),
           coinDetails.links.reposUrl.github.isNotEmpty
               ? RowInCard(
@@ -58,23 +58,23 @@ class CardDateWidget extends StatelessWidget {
                 )
               : const SizedBox.shrink(),
           coinDetails.links.reposUrl.github.isNotEmpty
-              ? Divider(
-                  color: theme.dividerColor,
+              ? const Divider(
+                  color: Colors.white,
                 )
               : const SizedBox.shrink(),
           RowInCard(
             text: 'Max Supply',
             textInfo: '${coinDetails.marketData.maxSupply ?? '?'}',
           ),
-          Divider(
-            color: theme.dividerColor,
+          const Divider(
+            color: Colors.white,
           ),
           RowInCard(
             text: 'Total Supply',
             textInfo: '${coinDetails.marketData.totalSupply ?? '?'}',
           ),
-          Divider(
-            color: theme.dividerColor,
+          const Divider(
+            color: Colors.white,
           ),
           RowInCard(
             text: 'Added to Watchlist',
@@ -97,13 +97,19 @@ class RowInCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(text),
+        Text(
+          text,
+          style: theme.textTheme.displaySmall,
+        ),
         Expanded(
           child: Text(textInfo,
-              overflow: TextOverflow.ellipsis, textAlign: TextAlign.end),
+              style: theme.textTheme.displaySmall,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.end),
         ),
       ],
     );

@@ -143,8 +143,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       padding: const EdgeInsets.all(12),
                       child: Text(
                         'Registration',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                            fontSize: 20, fontWeight: FontWeight.w700),
+                        style: theme.textTheme.labelMedium,
                       ),
                     ),
                   ),
@@ -166,7 +165,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(width: 8),
                       Text(
                         'OR',
-                        style: theme.textTheme.labelMedium,
+                        style: theme.textTheme.headlineMedium,
                       ),
                       const SizedBox(width: 8),
                       Expanded(

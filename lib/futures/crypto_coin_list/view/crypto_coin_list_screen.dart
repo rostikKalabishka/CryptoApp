@@ -89,10 +89,7 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                           buttonStateEnum.topFifty)
                                       : null,
                                   child: Text('Top 50',
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold)),
+                                      style: theme.textTheme.headlineSmall),
                                 ),
                               ),
                               Padding(
@@ -106,10 +103,7 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                           buttonStateEnum.topHundred)
                                       : null,
                                   child: Text('Top 100',
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold)),
+                                      style: theme.textTheme.headlineSmall),
                                 ),
                               ),
                               Padding(
@@ -123,10 +117,7 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                           buttonStateEnum.topTwoHundredFifty)
                                       : null,
                                   child: Text('Top 250',
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold)),
+                                      style: theme.textTheme.headlineSmall),
                                 ),
                               ),
                               Padding(
@@ -138,10 +129,7 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                   onPressed: () => _cryptoListBloc
                                       .add(CryptoCoinListSorByRankEvent()),
                                   child: Text('Sort By Rank',
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold)),
+                                      style: theme.textTheme.headlineSmall),
                                 ),
                               ),
                               Padding(
@@ -153,10 +141,7 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                   onPressed: () => _cryptoListBloc
                                       .add(CryptoCoinListSorByMarketCupEvent()),
                                   child: Text('Sort By Market Cap',
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold)),
+                                      style: theme.textTheme.headlineSmall),
                                 ),
                               ),
                               Padding(
@@ -168,10 +153,7 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                   onPressed: () => _cryptoListBloc.add(
                                       CryptoCoinListSorByPercentChangeEvent()),
                                   child: Text('Sort By % Change',
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold)),
+                                      style: theme.textTheme.headlineSmall),
                                 ),
                               ),
                               Padding(
@@ -183,10 +165,7 @@ class _CryptoCoinListScreenState extends State<CryptoCoinListScreen> {
                                   onPressed: () => _cryptoListBloc
                                       .add(CryptoCoinListSorByPriceEvent()),
                                   child: Text('Sort By Price',
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold)),
+                                      style: theme.textTheme.headlineSmall),
                                 ),
                               ),
                             ]),

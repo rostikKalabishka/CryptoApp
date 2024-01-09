@@ -32,11 +32,7 @@ class CustomButtonAuth extends StatelessWidget {
             const SizedBox(
               width: 7,
             ),
-            Text(text,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ))
+            Text(text, style: theme.textTheme.labelMedium)
           ],
         )),
       ),
