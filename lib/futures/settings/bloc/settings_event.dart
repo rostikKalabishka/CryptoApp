@@ -25,6 +25,8 @@ class SettingsUpdateUserInfo extends SettingsEvent {
 
 class SettingsSwitchOnEvent extends SettingsEvent {}
 
+class SettingsCloseDialogEvent extends SettingsEvent {}
+
 class SettingsPickImage extends SettingsEvent {}
 
 class SettingsSwitchOffEvent extends SettingsEvent {}

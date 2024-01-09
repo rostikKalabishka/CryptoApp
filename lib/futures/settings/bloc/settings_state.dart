@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SettingsState extends Equatable {
   const SettingsState(
@@ -9,6 +10,7 @@ class SettingsState extends Equatable {
       this.name = '',
       this.email = '',
       this.image = '',
+      this.selectedImage,
       this.error = ''});
   final bool switchValue;
   final bool inProcess;
@@ -18,6 +20,7 @@ class SettingsState extends Equatable {
   final String email;
   final String image;
   final String charForAvatar;
+  final XFile? selectedImage;
 
   @override
   List<Object> get props => [
@@ -28,7 +31,8 @@ class SettingsState extends Equatable {
         email,
         error,
         image,
-        charForAvatar
+        charForAvatar,
+        selectedImage ?? XFile('')
       ];
 
   SettingsState copyWith(
@@ -39,8 +43,10 @@ class SettingsState extends Equatable {
       String? name,
       String? email,
       String? image,
+      XFile? selectedImage,
       String? charForAvatar}) {
     return SettingsState(
+        selectedImage: selectedImage ?? this.selectedImage,
         switchValue: switchValue ?? this.switchValue,
         inProcess: inProcess ?? this.inProcess,
         isSuccess: isSuccess ?? this.isSuccess,

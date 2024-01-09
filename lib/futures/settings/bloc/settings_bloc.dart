@@ -29,6 +29,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         await _updateUserDate(event, emit);
       } else if (event is SettingsPickImage) {
         await _pickImage(event, emit);
+      } else if (event is SettingsCloseDialogEvent) {
+        await _closeDialog(event, emit);
       }
     }, transformer: sequential());
   }
@@ -42,6 +44,13 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(state.copyWith(error: e));
     }
+  }
+
+  Future<void> _closeDialog(
+      SettingsCloseDialogEvent event, Emitter<SettingsState> emit) async {
+    emit(state.copyWith(
+      selectedImage: XFile(''),
+    ));
   }
 
   Future<void> _loadSettings(
@@ -75,8 +84,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   Future<void> _pickImage(
       SettingsPickImage event, Emitter<SettingsState> emit) async {
     final selectedImage = await _selectedImageFromGallery();
-    if (selectedImage!.path.isNotEmpty) {
-      emit(state.copyWith(image: selectedImage.name));
+    if (selectedImage != null) {
+      emit(state.copyWith(selectedImage: selectedImage));
     }
   }
 

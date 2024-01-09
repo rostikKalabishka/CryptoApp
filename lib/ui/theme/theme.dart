@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 enum AppTheme { darkTheme, lightTheme }
 
-final darkTheme = ThemeData.dark().copyWith(
+final ThemeData darkTheme = ThemeData.dark().copyWith(
   cardColor: splineColor.withAlpha(100),
   dividerColor: Colors.white,
   colorScheme: ColorScheme.fromSeed(seedColor: splineColor),
@@ -46,7 +46,7 @@ final darkTheme = ThemeData.dark().copyWith(
   ),
 );
 
-final lightTheme = ThemeData.light().copyWith(
+final ThemeData lightTheme = ThemeData.light().copyWith(
   cardColor: Colors.black54,
   dialogBackgroundColor: Colors.grey,
   dividerColor: Colors.black,
