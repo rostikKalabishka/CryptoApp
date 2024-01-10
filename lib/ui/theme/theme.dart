@@ -42,7 +42,9 @@ final ThemeData darkTheme = ThemeData.dark().copyWith(
   ),
   dialogBackgroundColor: splineColor,
   iconButtonTheme: IconButtonThemeData(
-    style: IconButton.styleFrom(foregroundColor: Colors.white),
+    style: IconButton.styleFrom(
+      foregroundColor: Colors.white,
+    ),
   ),
 );
 
@@ -72,16 +74,17 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.black87, unselectedItemColor: Colors.black),
   textTheme: const TextTheme(
-      headlineMedium: TextStyle(fontSize: 20, color: Colors.black),
-      bodyLarge: TextStyle(
-          fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black),
-      labelMedium: TextStyle(
-          fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
-      bodySmall: TextStyle(fontSize: 14, color: Colors.black),
-      bodyMedium: TextStyle(fontSize: 14, color: Colors.black),
-      headlineSmall: TextStyle(
-          fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
-      displaySmall: TextStyle(fontSize: 14, color: Colors.white)),
+    headlineMedium: TextStyle(fontSize: 20, color: Colors.black),
+    bodyLarge: TextStyle(
+        fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black),
+    labelMedium: TextStyle(
+        fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
+    bodySmall: TextStyle(fontSize: 14, color: Colors.black),
+    bodyMedium: TextStyle(fontSize: 14, color: Colors.black),
+    headlineSmall: TextStyle(
+        fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
+    displaySmall: TextStyle(fontSize: 14, color: Colors.white),
+  ),
   iconButtonTheme: IconButtonThemeData(
     style: IconButton.styleFrom(foregroundColor: Colors.black),
   ),

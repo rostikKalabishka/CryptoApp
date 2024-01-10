@@ -8,10 +8,12 @@ class CoinUserData extends Equatable {
   final double priceCurrent;
   final String id;
   final String image;
+  final double emountCoins;
   final int rank;
   final double priceWhichBought;
   final String symbol;
   const CoinUserData({
+    required this.emountCoins,
     required this.cryptocurrencyName,
     required this.priceCurrent,
     required this.id,
@@ -21,8 +23,15 @@ class CoinUserData extends Equatable {
     required this.priceWhichBought,
   });
   @override
-  List<Object?> get props =>
-      [cryptocurrencyName, priceCurrent, image, rank, priceWhichBought, id];
+  List<Object?> get props => [
+        cryptocurrencyName,
+        priceCurrent,
+        image,
+        rank,
+        priceWhichBought,
+        id,
+        emountCoins
+      ];
 
   factory CoinUserData.fromJson(Map<String, dynamic> json) =>
       _$CoinUserDataFromJson(json);

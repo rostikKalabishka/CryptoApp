@@ -17,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final Utils utils = Utils();
+
   final _formKey = GlobalKey<FormState>();
   bool obscurePassword = true;
   final Utils customFieldValidator = Utils();
@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       listener: (context, state) {
         if (state is LoginFailure) {
           _errorMsg = state.error.toString();
-          utils.errorSnackBar(context, theme, _errorMsg);
+          customFieldValidator.errorSnackBar(context, theme, _errorMsg);
           setState(() {});
         } else {
           _errorMsg = '';

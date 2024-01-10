@@ -17,7 +17,7 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
         await _updatePortfolioName(event, emit);
       } else if (event is PortfolioListUpdateEvent) {
         await _updatePortfolioList(event, emit);
-      }
+      } else if (event is PortfolioAddedCoinEvent) {}
     });
   }
 
@@ -60,6 +60,22 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
             newPortfolioName: event.updatePortfolioName);
         final userInfo = await abstractDataStorageRepository.getUserInfo();
         emit(updateState.copyWith(portfolioName: userInfo.portfolioName));
+      }
+    } catch (e) {
+      emit(PortfolioFailure(error: e));
+    }
+  }
+
+  Future<void> _addEmountCoin(
+      PortfolioAddedCoinEvent event, Emitter<PortfolioState> emit) async {
+    final newState = state;
+    try {
+      if (newState is PortfolioLoaded) {
+        final updateState = newState;
+
+        final userInfo = await abstractDataStorageRepository.getUserInfo();
+
+        // emit(updateState.copyWith(portfolioName: userInfo.portfolioName));
       }
     } catch (e) {
       emit(PortfolioFailure(error: e));

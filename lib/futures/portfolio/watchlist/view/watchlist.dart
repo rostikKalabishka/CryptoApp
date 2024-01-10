@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:crypto_app/futures/portfolio/bloc/portfolio_bloc.dart';
 import 'package:crypto_app/router/router.dart';
+import 'package:crypto_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,6 +13,9 @@ class WatchList extends StatefulWidget {
 }
 
 class _WatchListState extends State<WatchList> {
+  final coinController = TextEditingController();
+  final Utils utils = Utils();
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     context.read<PortfolioBloc>().add(const PortfolioInfoLoadedEvent());
@@ -84,9 +88,26 @@ class _WatchListState extends State<WatchList> {
                                 Expanded(
                                   flex: 1,
                                   child: Text(
-                                    '${currentCryptoCoin.rank}',
-                                    textAlign: TextAlign.end,
+                                    '${currentCryptoCoin.emountCoins}',
                                     style: theme.textTheme.bodyMedium,
+                                    textAlign: TextAlign.end,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left:
+                                            MediaQuery.of(context).size.width *
+                                                0.08),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        openDialog(context);
+                                      },
+                                      icon: const Icon(
+                                        Icons.add,
+                                      ),
+                                    ),
                                   ),
                                 )
                               ],
@@ -140,4 +161,45 @@ class _WatchListState extends State<WatchList> {
       );
     });
   }
+
+  Future openDialog(BuildContext context) => showDialog(
+      context: context,
+      builder: (context) {
+        final theme = Theme.of(context);
+        return AlertDialog(
+          backgroundColor: theme.scaffoldBackgroundColor,
+          title: Text(
+            'Add coins',
+            style: theme.textTheme.bodyLarge,
+          ),
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<PortfolioBloc>().add(PortfolioAddedCoinEvent(
+                        emountCoins: coinController.text));
+                    coinController.clear();
+
+                    AutoRouter.of(context).pop();
+                  }
+                },
+                child: const Text('Add'))
+          ],
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+                validator: (val) => utils.addCoinValidator(val!),
+                keyboardType: TextInputType.number,
+                controller: coinController,
+                style: theme.textTheme.bodySmall,
+                decoration: InputDecoration(
+                    hintText: 'Add coins',
+                    hintStyle: TextStyle(color: theme.hintColor),
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
+                    enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16))))),
+          ),
+        );
+      });
 }

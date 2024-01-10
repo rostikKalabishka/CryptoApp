@@ -7,6 +7,7 @@ part of 'coin_user_data.dart';
 // **************************************************************************
 
 CoinUserData _$CoinUserDataFromJson(Map<String, dynamic> json) => CoinUserData(
+      emountCoins: (json['emount_coins'] as num).toDouble(),
       cryptocurrencyName: json['cryptocurrency_name'] as String,
       priceCurrent: (json['price_current'] as num).toDouble(),
       id: json['id'] as String,
@@ -22,6 +23,7 @@ Map<String, dynamic> _$CoinUserDataToJson(CoinUserData instance) =>
       'price_current': instance.priceCurrent,
       'id': instance.id,
       'image': instance.image,
+      'emount_coins': instance.emountCoins,
       'rank': instance.rank,
       'price_which_bought': instance.priceWhichBought,
       'symbol': instance.symbol,

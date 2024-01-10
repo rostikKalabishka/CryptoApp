@@ -15,6 +15,13 @@ class PortfolioListUpdateEvent extends PortfolioEvent {
   const PortfolioListUpdateEvent();
 }
 
+class PortfolioAddedCoinEvent extends PortfolioEvent {
+  final String emountCoins;
+  const PortfolioAddedCoinEvent({required this.emountCoins});
+  @override
+  List<Object> get props => super.props..add(emountCoins);
+}
+
 class UpdatePortfolioNameEvent extends PortfolioEvent {
   final String updatePortfolioName;
   const UpdatePortfolioNameEvent({required this.updatePortfolioName});

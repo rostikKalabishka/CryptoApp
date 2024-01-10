@@ -36,6 +36,13 @@ class Utils {
     return null;
   }
 
+  String? addCoinValidator(String val) {
+    if (!RegExp(r'^[0-9]').hasMatch(val)) {
+      return 'Please enter only the number of coins you need';
+    }
+    return null;
+  }
+
   void errorSnackBar(BuildContext context, ThemeData theme, String? errorMsg) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
