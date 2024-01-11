@@ -1,6 +1,5 @@
 import 'package:crypto_app/futures/auth/login/bloc/login_bloc.dart';
-import 'package:crypto_app/futures/auth/login/view/login.dart';
-import 'package:crypto_app/futures/auth/registration/view/registration.dart';
+import 'package:crypto_app/futures/loader/bloc/loader_bloc.dart';
 import 'package:crypto_app/futures/portfolio/bloc/portfolio_bloc.dart';
 import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 import 'package:flutter/material.dart';
@@ -44,14 +43,17 @@ class _CryptoAppState extends State<CryptoApp> {
         ),
         BlocProvider(
           create: (_) => _loginBloc,
-          child: const LoginScreen(),
+          // child: const LoginScreen(),
         ),
         BlocProvider(
           create: (_) => _portfolioBloc,
         ),
         BlocProvider(
           create: (_) => _registrationBloc,
-          child: const RegistrationScreen(),
+          // child: const RegistrationScreen(),
+        ),
+        BlocProvider(
+          create: (_) => LoaderBloc(GetIt.I<AbstractAuthRepository>()),
         ),
       ],
       child:

@@ -38,7 +38,7 @@ class _CircularChartState extends State<CircularChart> {
                 radius: '110%',
                 dataSource: widget.chartData,
                 xValueMapper: (CoinUserData data, _) => data.cryptocurrencyName,
-                yValueMapper: (CoinUserData data, _) => data.priceCurrent,
+                yValueMapper: (CoinUserData data, _) => data.coinInUsd,
                 dataLabelSettings: const DataLabelSettings(
                     isVisible: true, textStyle: TextStyle(color: Colors.white)),
                 enableTooltip: true),

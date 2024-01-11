@@ -135,7 +135,67 @@ class DataStorageRepository implements AbstractDataStorageRepository {
       final ImagePicker imagePicker = ImagePicker();
       XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
       return file;
-      // throw ('No selected image');
+    } catch (e) {
+      throw '$e';
+    }
+  }
+
+  @override
+  Future<void> updateCurrentCoinInPortfolio({
+    required String id,
+    required double amountCoins,
+    required double coinInUSD,
+  }) async {
+    final currentUser = firebaseAuthInstance.currentUser;
+    try {
+      if (currentUser == null) {
+        throw 'currentUser is null';
+      }
+
+      final userDoc = firebaseStore.collection('users').doc(currentUser.uid);
+      final userData = await userDoc.get();
+
+      List<Map<String, dynamic>> userPortfolio =
+          List<Map<String, dynamic>>.from(userData.data()?['portfolio'] ?? []);
+
+      final Map<String, dynamic> coinToUpdate = userPortfolio.firstWhere(
+        (element) => element['id'] == id,
+      );
+
+      coinToUpdate['amount_coins'] = amountCoins;
+      coinToUpdate['coin_in_usd'] = coinInUSD;
+
+      await userDoc.update({'portfolio': userPortfolio});
+    } catch (e) {
+      throw '$e';
+    }
+  }
+
+  Future<void> updateCurrentPrice({
+    required String id,
+    required double amountCoins,
+    required double coinInUSD,
+  }) async {
+    final currentUser = firebaseAuthInstance.currentUser;
+    try {
+      if (currentUser == null) {
+        throw 'currentUser is null';
+      }
+
+      final userDoc = firebaseStore.collection('users').doc(currentUser.uid);
+      final userData = await userDoc.get();
+
+      List<Map<String, dynamic>> userPortfolio =
+          List<Map<String, dynamic>>.from(userData.data()?['portfolio'] ?? []);
+
+      final Map<String, dynamic> coinToUpdate = userPortfolio.firstWhere(
+        (element) => element['id'] == id,
+      );
+
+      coinToUpdate['amount_coins'] = amountCoins;
+      coinToUpdate['coin_in_usd'] = coinInUSD;
+
+      await userDoc.update({'portfolio': userPortfolio});
     } catch (e) {
       throw '$e';
     }

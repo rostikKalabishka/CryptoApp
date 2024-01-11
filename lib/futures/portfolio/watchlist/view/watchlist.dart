@@ -80,7 +80,7 @@ class _WatchListState extends State<WatchList> {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                    '\$${currentCryptoCoin.priceWhichBought}',
+                                    '\$${currentCryptoCoin.coinInUsd}',
                                     style: theme.textTheme.bodyMedium,
                                     textAlign: TextAlign.end,
                                   ),
@@ -88,7 +88,7 @@ class _WatchListState extends State<WatchList> {
                                 Expanded(
                                   flex: 1,
                                   child: Text(
-                                    '${currentCryptoCoin.emountCoins}',
+                                    '${currentCryptoCoin.amountCoins}',
                                     style: theme.textTheme.bodyMedium,
                                     textAlign: TextAlign.end,
                                   ),
@@ -102,7 +102,8 @@ class _WatchListState extends State<WatchList> {
                                                 0.08),
                                     child: IconButton(
                                       onPressed: () {
-                                        openDialog(context);
+                                        openDialog(
+                                            context, currentCryptoCoin.id);
                                       },
                                       icon: const Icon(
                                         Icons.add,
@@ -162,7 +163,7 @@ class _WatchListState extends State<WatchList> {
     });
   }
 
-  Future openDialog(BuildContext context) => showDialog(
+  Future openDialog(BuildContext context, String id) => showDialog(
       context: context,
       builder: (context) {
         final theme = Theme.of(context);
@@ -177,7 +178,7 @@ class _WatchListState extends State<WatchList> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     context.read<PortfolioBloc>().add(PortfolioAddedCoinEvent(
-                        emountCoins: coinController.text));
+                        amountCoins: coinController.text, id: id));
                     coinController.clear();
 
                     AutoRouter.of(context).pop();

@@ -17,7 +17,9 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
         await _updatePortfolioName(event, emit);
       } else if (event is PortfolioListUpdateEvent) {
         await _updatePortfolioList(event, emit);
-      } else if (event is PortfolioAddedCoinEvent) {}
+      } else if (event is PortfolioAddedCoinEvent) {
+        await _addAmountCoins(event, emit);
+      }
     });
   }
 
@@ -66,7 +68,7 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
     }
   }
 
-  Future<void> _addEmountCoin(
+  Future<void> _addAmountCoins(
       PortfolioAddedCoinEvent event, Emitter<PortfolioState> emit) async {
     final newState = state;
     try {
@@ -75,7 +77,40 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
 
         final userInfo = await abstractDataStorageRepository.getUserInfo();
 
-        // emit(updateState.copyWith(portfolioName: userInfo.portfolioName));
+        final List<CoinUserData> portfolioList =
+            userInfo.portfolio.map((e) => CoinUserData.fromJson(e)).toList();
+        double amountCoins = 0;
+        double coinInUSD = 0;
+
+        CoinUserData updatedCoin = portfolioList.firstWhere((element) {
+          if (element.id == event.id) {
+            amountCoins = element.amountCoins + double.parse(event.amountCoins);
+            coinInUSD = amountCoins * element.priceWhichBought;
+            return true;
+          }
+          return false;
+        });
+
+        await abstractDataStorageRepository.updateCurrentCoinInPortfolio(
+          id: event.id,
+          amountCoins: amountCoins,
+          coinInUSD: coinInUSD,
+        );
+        updatedCoin = updatedCoin.copyWith(
+          amountCoins: amountCoins,
+          coinInUsd: coinInUSD,
+        );
+        await abstractDataStorageRepository.updateCurrentCoinInPortfolio(
+          id: event.id,
+          amountCoins: amountCoins,
+          coinInUSD: coinInUSD,
+        );
+
+        emit(updateState.copyWith(portfolioList: portfolioList));
+        // final List<CoinUserData> newList =
+        //     userInfo.portfolio.map((e) => CoinUserData.fromJson(e)).toList();
+        // // final newList = await abstractDataStorageRepository.getUserInfo()..portfolio;
+        // emit(updateState.copyWith(portfolioList: newList));
       }
     } catch (e) {
       emit(PortfolioFailure(error: e));

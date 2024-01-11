@@ -1,40 +1,29 @@
-// import 'package:auto_route/auto_route.dart';
-// import 'package:crypto_app/futures/auth/login/view/login.dart';
-// import 'package:crypto_app/futures/home/view/home_screen.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:crypto_app/futures/loader/bloc/loader_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
+@RoutePage()
+class LoaderPage extends StatefulWidget {
+  const LoaderPage({
+    Key? key,
+  }) : super(key: key);
 
-// // example (no bloc)
-// @RoutePage()
-// class Loader extends StatefulWidget {
-//   const Loader({
-//     Key? key,
-//     required this.firebaseAuth,
-//   }) : super(key: key);
-//   final FirebaseAuth firebaseAuth;
+  @override
+  State<LoaderPage> createState() => _LoaderState();
+}
 
-//   @override
-//   State<Loader> createState() => _LoaderState();
-// }
-
-// class _LoaderState extends State<Loader> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder(
-//         stream: widget.firebaseAuth.authStateChanges(),
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const Center(
-//               child: CircularProgressIndicator.adaptive(),
-//             );
-//           } else if (snapshot.hasData) {
-//             // AutoRouter.of(context).push(const HomeRoute());
-//             return const HomeScreen();
-//           } else {
-//             // AutoRouter.of(context).push(const LoginRoute());
-//             return const LoginScreen();
-//           }
-//         });
-//   }
-// }
+class _LoaderState extends State<LoaderPage> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer(builder: (context, state) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator.adaptive(),
+        ),
+      );
+    }, listener: (context, state) {
+      context.read<LoaderBloc>().add(LoadPage(context: context));
+    });
+  }
+}

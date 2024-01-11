@@ -8,6 +8,12 @@ abstract interface class AbstractDataStorageRepository {
 
   Future<void> setTheme({required bool swithBool});
 
+  Future<void> updateCurrentCoinInPortfolio({
+    required String id,
+    required double amountCoins,
+    required double coinInUSD,
+  });
+
   Future<void> updatePortfolioName({required String newPortfolioName});
 
   Future<void> updateSettingsUsersInfo(

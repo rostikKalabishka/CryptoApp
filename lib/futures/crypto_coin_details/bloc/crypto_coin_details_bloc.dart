@@ -121,7 +121,8 @@ class CryptoCoinDetailsBloc
                     image: currentCoin.image.small,
                     rank: currentCoin.marketData.marketCapRank,
                     priceWhichBought: currentPriceInUsd,
-                    emountCoins: 0),
+                    amountCoins: 0,
+                    coinInUsd: 0),
                 action: PortfolioAction.add);
         final newState = currentState;
         emit(newState.copyWith(inPortfolio: true));
@@ -149,7 +150,8 @@ class CryptoCoinDetailsBloc
                     image: currentCoin.image.small,
                     rank: currentCoin.marketData.marketCapRank,
                     priceWhichBought: currentPriceInUsd,
-                    emountCoins: 0),
+                    amountCoins: 0,
+                    coinInUsd: 0),
                 action: PortfolioAction.remove);
 
         final newState = currentState;
