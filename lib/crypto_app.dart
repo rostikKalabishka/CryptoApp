@@ -1,6 +1,7 @@
 import 'package:crypto_app/futures/auth/login/bloc/login_bloc.dart';
 import 'package:crypto_app/futures/loader/bloc/loader_bloc.dart';
 import 'package:crypto_app/futures/portfolio/bloc/portfolio_bloc.dart';
+import 'package:crypto_app/repository/crypto_coin/abstract_coin_repository.dart';
 import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,8 +26,8 @@ class _CryptoAppState extends State<CryptoApp> {
       GetIt.I<AbstractDataStorageRepository>());
   final _loginBloc = LoginBloc(GetIt.I<AbstractAuthRepository>());
   final _registrationBloc = RegistrationBloc(GetIt.I<AbstractAuthRepository>());
-  final _portfolioBloc =
-      PortfolioBloc(GetIt.I<AbstractDataStorageRepository>());
+  final _portfolioBloc = PortfolioBloc(GetIt.I<AbstractDataStorageRepository>(),
+      GetIt.I<AbstractCoinRepository>());
 
   @override
   void initState() {

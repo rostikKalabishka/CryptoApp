@@ -171,6 +171,36 @@ class DataStorageRepository implements AbstractDataStorageRepository {
     }
   }
 
+  @override
+  Future<void> updateCurrentPriceCoin(
+      {required String id,
+      required double coinInUSD,
+      required double currentPrice}) async {
+    final currentUser = firebaseAuthInstance.currentUser;
+    try {
+      if (currentUser == null) {
+        throw 'currentUser is null';
+      }
+
+      final userDoc = firebaseStore.collection('users').doc(currentUser.uid);
+      final userData = await userDoc.get();
+
+      List<Map<String, dynamic>> userPortfolio =
+          List<Map<String, dynamic>>.from(userData.data()?['portfolio'] ?? []);
+
+      final Map<String, dynamic> coinToUpdate = userPortfolio.firstWhere(
+        (element) => element['id'] == id,
+      );
+
+      coinToUpdate['coin_in_usd'] = coinInUSD;
+      coinToUpdate['price_current'] = currentPrice;
+
+      await userDoc.update({'portfolio': userPortfolio});
+    } catch (e) {
+      throw '$e';
+    }
+  }
+
   Future<void> updateCurrentPrice({
     required String id,
     required double amountCoins,

@@ -84,7 +84,7 @@ class _PortfolioModeState extends State<PortfolioMode> {
                                 style: theme.textTheme.displaySmall,
                               ),
                               Text(
-                                '500000\$',
+                                '${state.balance}\$',
                                 style: theme.textTheme.displaySmall,
                               )
                             ],
@@ -100,11 +100,11 @@ class _PortfolioModeState extends State<PortfolioMode> {
                               Row(
                                 children: [
                                   Text(
-                                    '0.00',
+                                    '${state.totalProfitInUsd}\$',
                                     style: theme.textTheme.displaySmall,
                                   ),
                                   Text(
-                                    '(0.00%)',
+                                    '(${state.totalProfitPercentage.toStringAsFixed(3)}%)',
                                     style: theme.textTheme.displaySmall,
                                   )
                                 ],
