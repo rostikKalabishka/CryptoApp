@@ -214,22 +214,27 @@ class DataStorageRepository implements AbstractDataStorageRepository {
       final Reference ref = FirebaseStorage.instance
           .ref()
           .child('${currentUser.uid}_profileimage.jpg');
-      if (image.isNotEmpty) {
-        await ref.putFile(File(image));
-        final downloadUrl = await ref.getDownloadURL();
-        if (username.isEmpty && downloadUrl.isNotEmpty) {
-          await userDoc.update({'profile_image': downloadUrl});
-        } else if (username.isNotEmpty && downloadUrl.isEmpty) {
-          await userDoc.update({'username': username});
-        } else if (username.isNotEmpty && downloadUrl.isNotEmpty) {
-          await userDoc
-              .update({'username': username, 'profile_image': downloadUrl});
-        } else {
-          return;
-        }
+
+      if (username.isEmpty && image.isNotEmpty) {
+        String downloadUrl = await getImageFromStorage(ref, image);
+        await userDoc.update({'profile_image': downloadUrl});
+      } else if (username.isNotEmpty && image.isEmpty) {
+        await userDoc.update({'username': username});
+      } else if (username.isNotEmpty && image.isNotEmpty) {
+        String downloadUrl = await getImageFromStorage(ref, image);
+        await userDoc
+            .update({'username': username, 'profile_image': downloadUrl});
+      } else {
+        return;
       }
     } catch (e) {
       throw '$e';
     }
+  }
+
+  Future<String> getImageFromStorage(Reference ref, String image) async {
+    await ref.putFile(File(image));
+    final downloadUrl = await ref.getDownloadURL();
+    return downloadUrl;
   }
 }
