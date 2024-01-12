@@ -1,11 +1,10 @@
+import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:crypto_app/futures/portfolio/model/coin_user_data.dart';
 import 'package:crypto_app/repository/crypto_coin/abstract_coin_repository.dart';
 import 'package:crypto_app/repository/crypto_coin/models/model.dart';
-
 import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 import 'package:equatable/equatable.dart';
-
 part 'portfolio_event.dart';
 part 'portfolio_state.dart';
 
@@ -33,7 +32,7 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
       final userInfo = await abstractDataStorageRepository.getUserInfo();
       final List<CoinUserData> portfolioList =
           userInfo.portfolio.map((e) => CoinUserData.fromJson(e)).toList();
-      final double balance = portfolioList.fold(
+      double balance = portfolioList.fold(
         0,
         (value, element) => value + element.coinInUsd,
       );
@@ -49,7 +48,9 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
       );
       final double totalProfitInUsd = currentPrice - priceBuy;
       final double totalProfitPercentage = (currentPrice / priceBuy) - 1;
-
+      if (!balance.toString().startsWith('0.')) {
+        balance = roundDouble(balance, 2);
+      }
       emit(PortfolioLoaded(
           portfolioName: userInfo.portfolioName,
           portfolioList: portfolioList,
@@ -76,7 +77,10 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
           final CryptoCoinDetails coin =
               await abstractCoinRepository.getCryptoCoinDetails(id: e.id);
           final double currentPrice = coin.marketData.currentPrice.usd;
-          final double coinInUsd = e.amountCoins * currentPrice;
+          double coinInUsd = e.amountCoins * currentPrice;
+          if (!coinInUsd.toString().startsWith('0.')) {
+            coinInUsd = roundDouble(coinInUsd, 2);
+          }
           await abstractDataStorageRepository.updateCurrentPriceCoin(
               id: e.id, coinInUSD: coinInUsd, currentPrice: currentPrice);
 
@@ -93,6 +97,11 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
     } catch (e) {
       emit(PortfolioFailure(error: e));
     }
+  }
+
+  double roundDouble(double value, int places) {
+    num mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
   }
 
   Future<void> _updatePortfolioName(

@@ -32,16 +32,24 @@ class _CircularChartState extends State<CircularChart> {
         ),
         SfCircularChart(
           tooltipBehavior: widget.tooltipBehavior,
-          // legend: const Legend(isVisible: true),
+          // legend: widget.chartData.isNotEmpty
+          //     ? const Legend(
+          //         isVisible: true,
+          //         overflowMode: LegendItemOverflowMode.wrap,
+          //         toggleSeriesVisibility: true)
+          //     : const Legend(isVisible: false),
           series: <CircularSeries>[
             PieSeries<CoinUserData, String>(
-                radius: '110%',
-                dataSource: widget.chartData,
-                xValueMapper: (CoinUserData data, _) => data.cryptocurrencyName,
-                yValueMapper: (CoinUserData data, _) => data.coinInUsd,
-                dataLabelSettings: const DataLabelSettings(
-                    isVisible: true, textStyle: TextStyle(color: Colors.white)),
-                enableTooltip: true),
+              radius: '110%',
+              dataSource: widget.chartData,
+              xValueMapper: (CoinUserData data, _) => data.cryptocurrencyName,
+              yValueMapper: (CoinUserData data, _) => data.coinInUsd,
+              dataLabelSettings: const DataLabelSettings(
+                isVisible: true,
+                textStyle: TextStyle(color: Colors.white),
+              ),
+              enableTooltip: true,
+            ),
           ],
         )
       ],

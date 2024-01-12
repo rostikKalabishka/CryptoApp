@@ -40,15 +40,16 @@ final ThemeData darkTheme = ThemeData.dark().copyWith(
     labelMedium: TextStyle(
         fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
   ),
+  primaryIconTheme: const IconThemeData(color: Colors.white),
   dialogBackgroundColor: splineColor,
   iconButtonTheme: IconButtonThemeData(
-    style: IconButton.styleFrom(
-      foregroundColor: Colors.white,
+    style: ButtonStyle(
+      iconColor: MaterialStateProperty.all(Colors.white),
     ),
   ),
 );
 
-final ThemeData lightTheme = ThemeData.light().copyWith(
+ThemeData lightTheme = ThemeData.light().copyWith(
   cardColor: Colors.black54,
   dialogBackgroundColor: Colors.grey,
   dividerColor: Colors.black,
@@ -85,7 +86,10 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
         fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold),
     displaySmall: TextStyle(fontSize: 14, color: Colors.white),
   ),
+  primaryIconTheme: const IconThemeData(color: Colors.black),
   iconButtonTheme: IconButtonThemeData(
-    style: IconButton.styleFrom(foregroundColor: Colors.black),
+    style: ButtonStyle(
+      iconColor: MaterialStateProperty.all(Colors.black),
+    ),
   ),
 );

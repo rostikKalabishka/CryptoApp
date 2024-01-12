@@ -15,6 +15,7 @@ class PortfolioMode extends StatefulWidget {
 class _PortfolioModeState extends State<PortfolioMode> {
   late TooltipBehavior _tooltipBehavior;
   final updatePortfolioNameController = TextEditingController();
+
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
@@ -32,10 +33,8 @@ class _PortfolioModeState extends State<PortfolioMode> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final portfolioBloc = context.read<PortfolioBloc>();
+
     return BlocBuilder<PortfolioBloc, PortfolioState>(
-      // buildWhen: (previous, current) {
-      //   return previous != current;
-      // },
       builder: (context, state) {
         if (state is PortfolioLoaded) {
           return CustomScrollView(
@@ -100,7 +99,7 @@ class _PortfolioModeState extends State<PortfolioMode> {
                               Row(
                                 children: [
                                   Text(
-                                    '${state.totalProfitInUsd}\$',
+                                    '${state.totalProfitInUsd.toStringAsFixed(2)}\$',
                                     style: theme.textTheme.displaySmall,
                                   ),
                                   Text(
@@ -118,9 +117,11 @@ class _PortfolioModeState extends State<PortfolioMode> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: CircularChart(
-                  chartData: state.portfolioList,
-                  tooltipBehavior: _tooltipBehavior,
+                child: Expanded(
+                  child: CircularChart(
+                    chartData: state.portfolioList,
+                    tooltipBehavior: _tooltipBehavior,
+                  ),
                 ),
               )
             ],
@@ -160,7 +161,7 @@ class _PortfolioModeState extends State<PortfolioMode> {
       builder: (context) {
         final theme = Theme.of(context);
         return AlertDialog(
-          backgroundColor: theme.dialogBackgroundColor,
+          backgroundColor: theme.scaffoldBackgroundColor,
           title: Text(
             'Portfolio name',
             style: theme.textTheme.bodyLarge,
@@ -183,8 +184,8 @@ class _PortfolioModeState extends State<PortfolioMode> {
                   hintStyle: TextStyle(color: theme.hintColor),
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(16))),
-                  enabledBorder:
-                      const OutlineInputBorder(borderSide: BorderSide.none))),
+                  enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16))))),
         );
       });
 }

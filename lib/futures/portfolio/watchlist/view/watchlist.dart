@@ -85,28 +85,29 @@ class _WatchListState extends State<WatchList> {
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 1,
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width *
+                                          0.05),
                                   child: Text(
                                     '${currentCryptoCoin.amountCoins}',
                                     style: theme.textTheme.bodyMedium,
                                     textAlign: TextAlign.end,
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.width *
-                                                0.08),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width *
+                                          0.01),
+                                  child: Expanded(
                                     child: IconButton(
                                       onPressed: () {
                                         openDialog(
                                             context, currentCryptoCoin.id);
                                       },
-                                      icon: const Icon(
+                                      icon: Icon(
                                         Icons.add,
+                                        color: theme.primaryIconTheme.color,
                                       ),
                                     ),
                                   ),
