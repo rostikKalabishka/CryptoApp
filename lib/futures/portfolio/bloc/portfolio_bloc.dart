@@ -49,7 +49,7 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
       );
       final double totalProfitInUsd = currentPrice - priceBuy;
       final double totalProfitPercentage = (currentPrice / priceBuy) - 1;
-      print(balance.toString());
+
       emit(PortfolioLoaded(
           portfolioName: userInfo.portfolioName,
           portfolioList: portfolioList,
@@ -71,9 +71,7 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
         final userInfo = await abstractDataStorageRepository.getUserInfo();
         final List<CoinUserData> portfolioList =
             userInfo.portfolio.map((e) => CoinUserData.fromJson(e)).toList();
-
-        List<Future<List<CoinUserData>>> futures = [];
-
+        late List<CoinUserData> res;
         await Future.forEach(portfolioList, (e) async {
           final CryptoCoinDetails coin =
               await abstractCoinRepository.getCryptoCoinDetails(id: e.id);
@@ -87,16 +85,10 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
           final updatedPortfolioList = updatedUserInfo.portfolio
               .map((e) => CoinUserData.fromJson(e))
               .toList();
-
-          futures.add(Future.value(updatedPortfolioList));
+          res = List.from(updatedPortfolioList);
         });
 
-        List<CoinUserData> bbb =
-            (await Future.wait<List<CoinUserData>>(futures))
-                .expand((x) => x)
-                .toList();
-
-        emit(updateState.copyWith(portfolioList: bbb.toSet().toList()));
+        emit(updateState.copyWith(portfolioList: res));
       }
     } catch (e) {
       emit(PortfolioFailure(error: e));
