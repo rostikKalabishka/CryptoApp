@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -28,19 +27,24 @@ class _CircularChartState extends State<CircularChart> {
           style: theme.textTheme.bodyLarge?.copyWith(fontSize: 18),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.07,
+          height: MediaQuery.of(context).size.height * 0.02,
         ),
         SfCircularChart(
           tooltipBehavior: widget.tooltipBehavior,
           legend: widget.chartData.isNotEmpty
-              ? const Legend(
+              ? Legend(
+                  textStyle: theme.textTheme.displaySmall,
                   isVisible: true,
+                  position: LegendPosition.bottom,
+                  alignment: ChartAlignment.center,
+                  padding: 10,
+                  // offset: const Offset(0, 10.0),
                   overflowMode: LegendItemOverflowMode.wrap,
                   toggleSeriesVisibility: true)
               : const Legend(isVisible: false),
           series: <CircularSeries>[
             PieSeries<CoinUserData, String>(
-              radius: '110%',
+              radius: '105%',
               dataSource: widget.chartData,
               xValueMapper: (CoinUserData data, _) => data.cryptocurrencyName,
               yValueMapper: (CoinUserData data, _) => data.coinInUsd,
