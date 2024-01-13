@@ -99,16 +99,13 @@ class _WatchListState extends State<WatchList> {
                                   padding: EdgeInsets.only(
                                       left: MediaQuery.of(context).size.width *
                                           0.01),
-                                  child: Expanded(
-                                    child: IconButton(
-                                      onPressed: () {
-                                        openDialog(
-                                            context, currentCryptoCoin.id);
-                                      },
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: theme.primaryIconTheme.color,
-                                      ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      openDialog(context, currentCryptoCoin.id);
+                                    },
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: theme.primaryIconTheme.color,
                                     ),
                                   ),
                                 )

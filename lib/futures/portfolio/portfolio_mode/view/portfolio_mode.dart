@@ -19,7 +19,7 @@ class _PortfolioModeState extends State<PortfolioMode> {
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
-    context.read<PortfolioBloc>().add(const PortfolioInfoLoadedEvent());
+    // context.read<PortfolioBloc>().add(const PortfolioInfoLoadedEvent());
     super.initState();
   }
 
@@ -117,11 +117,9 @@ class _PortfolioModeState extends State<PortfolioMode> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: Expanded(
-                  child: CircularChart(
-                    chartData: state.portfolioList,
-                    tooltipBehavior: _tooltipBehavior,
-                  ),
+                child: CircularChart(
+                  chartData: state.portfolioList,
+                  tooltipBehavior: _tooltipBehavior,
                 ),
               )
             ],

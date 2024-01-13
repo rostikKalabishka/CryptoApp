@@ -32,12 +32,12 @@ class _CircularChartState extends State<CircularChart> {
         ),
         SfCircularChart(
           tooltipBehavior: widget.tooltipBehavior,
-          // legend: widget.chartData.isNotEmpty
-          //     ? const Legend(
-          //         isVisible: true,
-          //         overflowMode: LegendItemOverflowMode.wrap,
-          //         toggleSeriesVisibility: true)
-          //     : const Legend(isVisible: false),
+          legend: widget.chartData.isNotEmpty
+              ? const Legend(
+                  isVisible: true,
+                  overflowMode: LegendItemOverflowMode.wrap,
+                  toggleSeriesVisibility: true)
+              : const Legend(isVisible: false),
           series: <CircularSeries>[
             PieSeries<CoinUserData, String>(
               radius: '110%',

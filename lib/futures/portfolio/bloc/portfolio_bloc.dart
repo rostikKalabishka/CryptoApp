@@ -137,7 +137,7 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
         CoinUserData updatedCoin = portfolioList.firstWhere((element) {
           if (element.id == event.id) {
             amountCoins = element.amountCoins + double.parse(event.amountCoins);
-            coinInUSD = amountCoins * element.priceWhichBought;
+            coinInUSD = roundDouble(amountCoins * element.priceWhichBought, 2);
             return true;
           }
           return false;
