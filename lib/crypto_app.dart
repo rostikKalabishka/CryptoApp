@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'futures/auth/registration/bloc/registration_bloc.dart';
+import 'futures/loader/view/loader.dart';
 import 'futures/settings/bloc/settings_bloc.dart';
 import 'futures/settings/bloc/settings_state.dart';
 import 'repository/auth/abstract_auth_repository.dart';
@@ -55,6 +56,7 @@ class _CryptoAppState extends State<CryptoApp> {
         ),
         BlocProvider(
           create: (_) => LoaderBloc(GetIt.I<AbstractAuthRepository>()),
+          child: const LoaderPage(),
         ),
       ],
       child:

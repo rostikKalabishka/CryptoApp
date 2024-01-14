@@ -1,44 +1,33 @@
 import 'dart:async';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:bloc/bloc.dart';
 import 'package:crypto_app/repository/auth/abstract_auth_repository.dart';
-import 'package:crypto_app/router/router.dart';
+
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
 part 'loader_event.dart';
 part 'loader_state.dart';
 
-class LoaderBloc extends Bloc<LoaderEvent, LoaderState> {
+class LoaderBloc extends Bloc<LoaderEvent, LoaderBlocState> {
   final AbstractAuthRepository abstractAuthRepository;
-  late final StreamSubscription<User?> _userSubscription;
-  LoaderBloc(this.abstractAuthRepository) : super(LoaderInitial()) {
+
+  LoaderBloc(this.abstractAuthRepository) : super(LoaderBlocState.unknown) {
     on<LoadPage>(_loadPage);
   }
 
-  Future<void> _loadPage(LoadPage event, Emitter<LoaderState> emit) async {
-    final autoRouter = AutoRouter.of(event.context);
+  Future<void> _loadPage(LoadPage event, Emitter<LoaderBlocState> emit) async {
     try {
-      _userSubscription = abstractAuthRepository.user.listen((user) {
+      await for (var user in abstractAuthRepository.user) {
         if (user != null) {
-          emit(LoadUserAuthLoader(user: user));
-          autoRouter.pushAndPopUntil(const HomeRoute(),
-              predicate: (route) => false);
+          emit(LoaderBlocState.authorize);
         } else {
-          autoRouter.pushAndPopUntil(const LoginRoute(),
-              predicate: (route) => false);
+          emit(LoaderBlocState.notAuthorize);
         }
-      });
+      }
     } catch (e) {
-      emit(LoaderFailure(error: e));
+      emit(LoaderBlocState.notAuthorize);
     }
-  }
-
-  @override
-  Future<void> close() {
-    _userSubscription.cancel();
-    return super.close();
   }
 }

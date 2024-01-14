@@ -19,20 +19,20 @@ part 'router.gr.dart';
 class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
-        // AutoRoute(page: LoaderRoute.page, path: '/', initial: true),
+        AutoRoute(page: LoaderRoute.page, path: '/'),
         AutoRoute(
           page: LoginRoute.page,
-          path: '/',
+          path: '/login',
         ),
         AutoRoute(
           page: ResetPasswordRoute.page,
-          path: '/reset_password',
+          path: '/login/reset_password',
         ),
         AutoRoute(
           page: RegistrationRoute.page,
-          path: '/registration',
+          path: '/login/registration',
         ),
-        AutoRoute(page: HomeRoute.page, path: '/home', children: [
+        AutoRoute(page: HomeRoute.page, path: '/login/home', children: [
           AutoRoute(
             page: CryptoCoinListRoute.page,
             path: 'crypto_coin_list',

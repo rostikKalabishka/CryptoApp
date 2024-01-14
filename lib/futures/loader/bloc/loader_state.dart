@@ -1,30 +1,6 @@
 part of 'loader_bloc.dart';
 
-sealed class LoaderState extends Equatable {
-  const LoaderState();
-
-  @override
-  List<Object> get props => [];
-}
-
-final class LoaderInitial extends LoaderState {}
-
-class LoadUserAuthLoader extends LoaderState {
-  final User user;
-
-  const LoadUserAuthLoader({required this.user});
-  @override
-  List<Object> get props => super.props..add(user);
-}
-
-class LoaderFailure extends LoaderState {
-  final Object error;
-
-  const LoaderFailure({required this.error});
-
-  @override
-  List<Object> get props => super.props..add(error);
-}
+enum LoaderBlocState { unknown, authorize, notAuthorize }
 
 // enum AuthenticationStatus { authenticated, unauthenticated, unknown }
 
