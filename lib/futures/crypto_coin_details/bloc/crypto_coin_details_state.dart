@@ -20,6 +20,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
   final List<ChartData> sparkLine;
   final List<String> dropDownList;
   final bool inPortfolio;
+  final String siteName;
 
   final String currentPriceInUsd;
   const CryptoCoinDetailsLoaded(
@@ -33,6 +34,7 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
       required this.max,
       required this.min,
       required this.sparkLine,
+      required this.siteName,
       required this.inPortfolio});
   @override
   List<Object> get props => [
@@ -46,22 +48,23 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
         max,
         min,
         sparkLine,
-        inPortfolio
+        inPortfolio,
+        siteName
       ];
 
-  CryptoCoinDetailsLoaded copyWith({
-    CryptoCoinDetails? coin,
-    String? selectedItem,
-    String? counterCoin,
-    String? price,
-    double? max,
-    double? min,
-    List<ChartData>? sparkLine,
-    List<String>? dropDownList,
-    String? currentPriceInUsd,
-    String? coinDetailsPrice,
-    bool? inPortfolio,
-  }) {
+  CryptoCoinDetailsLoaded copyWith(
+      {CryptoCoinDetails? coin,
+      String? selectedItem,
+      String? counterCoin,
+      String? price,
+      double? max,
+      double? min,
+      List<ChartData>? sparkLine,
+      List<String>? dropDownList,
+      String? currentPriceInUsd,
+      String? coinDetailsPrice,
+      bool? inPortfolio,
+      String? siteName}) {
     return CryptoCoinDetailsLoaded(
         coin: coin ?? this.coin,
         selectedItem: selectedItem ?? this.selectedItem,
@@ -73,7 +76,8 @@ class CryptoCoinDetailsLoaded extends CryptoCoinDetailsState {
         dropDownList: dropDownList ?? this.dropDownList,
         currentPriceInUsd: currentPriceInUsd ?? this.currentPriceInUsd,
         coinDetailsPrice: coinDetailsPrice ?? this.coinDetailsPrice,
-        inPortfolio: inPortfolio ?? this.inPortfolio);
+        inPortfolio: inPortfolio ?? this.inPortfolio,
+        siteName: siteName ?? this.siteName);
   }
 }
 

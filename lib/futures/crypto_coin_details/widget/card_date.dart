@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // import 'package:crypto_app/repository/abstract_coin_repository.dart';
+import 'package:crypto_app/futures/crypto_coin_details/bloc/crypto_coin_details_bloc.dart';
 import 'package:crypto_app/repository/crypto_coin/models/crypto_coin_details.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:get_it/get_it.dart';
 
 import '../../../repository/crypto_coin/models/model.dart';
@@ -11,9 +13,11 @@ class CardDateWidget extends StatelessWidget {
   const CardDateWidget({
     Key? key,
     required this.coinDetails,
+    required this.siteName,
   }) : super(key: key);
 
   final CryptoCoinDetails coinDetails;
+  final String siteName;
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +49,25 @@ class CardDateWidget extends StatelessWidget {
             color: Colors.white,
           ),
           RowInCard(
+            onTap: () {
+              context
+                  .read<CryptoCoinDetailsBloc>()
+                  .add(CryptoCoinOpenURL(url: coinDetails.links.homepage[0]));
+            },
             text: 'Home Page',
-            textInfo: coinDetails.links.homepage.first,
+            textInfo: siteName,
           ),
           const Divider(
             color: Colors.white,
           ),
           coinDetails.links.reposUrl.github.isNotEmpty
               ? RowInCard(
+                  onTap: () {
+                    context.read<CryptoCoinDetailsBloc>().add(CryptoCoinOpenURL(
+                        url: coinDetails.links.reposUrl.github[0]));
+                  },
                   text: 'GitHub',
-                  textInfo: coinDetails.links.reposUrl.github[0],
+                  textInfo: 'github',
                 )
               : const SizedBox.shrink(),
           coinDetails.links.reposUrl.github.isNotEmpty
@@ -89,11 +102,13 @@ class CardDateWidget extends StatelessWidget {
 class RowInCard extends StatelessWidget {
   const RowInCard({
     Key? key,
+    this.onTap,
     required this.text,
     required this.textInfo,
   }) : super(key: key);
   final String text;
   final String textInfo;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -106,10 +121,13 @@ class RowInCard extends StatelessWidget {
           style: theme.textTheme.displaySmall,
         ),
         Expanded(
-          child: Text(textInfo,
-              style: theme.textTheme.displaySmall,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.end),
+          child: GestureDetector(
+            onTap: onTap,
+            child: Text(textInfo,
+                style: theme.textTheme.displaySmall,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.end),
+          ),
         ),
       ],
     );

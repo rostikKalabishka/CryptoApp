@@ -150,6 +150,7 @@ class _CryptoCoinDetailsScreenState extends State<CryptoCoinDetailsScreen> {
                         padding: const EdgeInsets.all(12.0),
                         child: CardDateWidget(
                           coinDetails: state.coin,
+                          siteName: state.siteName,
                         ),
                       ),
                     ),

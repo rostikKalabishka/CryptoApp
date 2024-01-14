@@ -50,6 +50,13 @@ class CryptoCoinSaveValueInTextFieldEvent extends CryptoCoinDetailsEvent {
   List<Object> get props => super.props..addAll([saveValue, coinCountTwo]);
 }
 
+class CryptoCoinOpenURL extends CryptoCoinDetailsEvent {
+  final String url;
+  const CryptoCoinOpenURL({required this.url});
+  @override
+  List<Object> get props => super.props..addAll([url]);
+}
+
 class CryptoCoinCurrencySelectedEvent extends CryptoCoinDetailsEvent {
   final String selectedCurrency;
 

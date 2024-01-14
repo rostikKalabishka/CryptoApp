@@ -4,7 +4,9 @@ import 'package:crypto_app/futures/portfolio/model/coin_user_data.dart';
 import 'package:crypto_app/repository/crypto_coin/abstract_coin_repository.dart';
 import 'package:crypto_app/repository/data_storage_repository/abstract_data_storage_repository.dart';
 import 'package:crypto_app/repository/data_storage_repository/data_storage_repository.dart';
+import 'package:crypto_app/utils/utils.dart';
 import 'package:equatable/equatable.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../repository/crypto_coin/models/crypto_coin_details.dart';
 import '../model/chart_data.dart';
 part 'crypto_coin_details_event.dart';
@@ -14,7 +16,7 @@ class CryptoCoinDetailsBloc
     extends Bloc<CryptoCoinDetailsEvent, CryptoCoinDetailsState> {
   final AbstractCoinRepository abstractCoinRepository;
   final AbstractDataStorageRepository abstractDataStorageRepository;
-
+  final utils = Utils();
   CryptoCoinDetailsBloc(
       this.abstractCoinRepository, this.abstractDataStorageRepository)
       : super(CryptoCoinDetailsInitial()) {
@@ -24,6 +26,7 @@ class CryptoCoinDetailsBloc
     on<CryptoCoinCurrencySelectedEvent>(_getSelectedItem);
     on<CryptoCoinAddToPortfolio>(_addToPortfolio);
     on<CryptoCoinRemoveFromPortfolio>(_removeFromPortfolio);
+    on<CryptoCoinOpenURL>(_openURL);
   }
 
   Future<void> _getCoinDetailsLoad(
@@ -67,7 +70,11 @@ class CryptoCoinDetailsBloc
           (double.parse(price) / double.parse(price)).toString();
       final inPortfolio = await abstractDataStorageRepository
           .checkCryptoCurrencyInPortfolio(id: coin.id);
+
+      String siteName = coin.links.homepage[0];
+      siteName = utils.clearUrl(siteName);
       emit(CryptoCoinDetailsLoaded(
+          siteName: siteName,
           inPortfolio: inPortfolio,
           max: max + (max * 0.05),
           min: min - (min * 0.05),
@@ -79,6 +86,23 @@ class CryptoCoinDetailsBloc
           dropDownList: dropDownList,
           counterCoin: counterCoin,
           coinDetailsPrice: coinDetailsPrice));
+    } catch (e) {
+      emit(CryptoCoinDetailsFailure(error: e));
+    }
+  }
+
+  Future<void> _openURL(
+      CryptoCoinOpenURL event, Emitter<CryptoCoinDetailsState> emit) async {
+    final newState = state;
+    try {
+      if (newState is CryptoCoinDetailsLoaded) {
+        if (await canLaunch(event.url)) {
+          await launch(event.url);
+        } else {
+          throw 'Could not launch ${event.url}';
+        }
+      }
+      emit(newState);
     } catch (e) {
       emit(CryptoCoinDetailsFailure(error: e));
     }

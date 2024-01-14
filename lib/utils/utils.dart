@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 
 class Utils {
+  String httpwww = 'https://www.';
+  String httpwwwTwo = 'http:www.';
+  String http = 'https://';
+  String endSlash = '/';
+
   String? usernameValidator(String val) {
     if (val.isEmpty) {
       return 'Please fill in this field';
     }
 
     return null;
+  }
+
+  String clearUrl(String siteName) {
+    if (siteName.contains(httpwww) ||
+        siteName.contains(endSlash) ||
+        siteName.contains(httpwwwTwo)) {
+      siteName = siteName.replaceAll(httpwww, '');
+      siteName = siteName.replaceAll(http, '');
+      siteName = siteName.replaceAll(endSlash, '');
+      siteName = siteName.replaceAll(httpwwwTwo, '');
+    }
+    return siteName;
   }
 
   String? emailValidator(String val) {
