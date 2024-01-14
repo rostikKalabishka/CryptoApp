@@ -20,7 +20,7 @@ class LoaderBloc extends Bloc<LoaderEvent, LoaderBlocState> {
   Future<void> _loadPage(LoadPage event, Emitter<LoaderBlocState> emit) async {
     try {
       await for (var user in abstractAuthRepository.user) {
-        if (user != null) {
+        if (user != null && user.uid.isNotEmpty) {
           emit(LoaderBlocState.authorize);
         } else {
           emit(LoaderBlocState.notAuthorize);

@@ -10,6 +10,7 @@ class SettingsState extends Equatable {
       this.name = '',
       this.email = '',
       this.image = '',
+      this.balance = 0,
       this.selectedImage,
       this.error = ''});
   final bool switchValue;
@@ -19,11 +20,13 @@ class SettingsState extends Equatable {
   final String name;
   final String email;
   final String image;
+  final double balance;
   final String charForAvatar;
   final XFile? selectedImage;
 
   @override
   List<Object> get props => [
+        balance,
         switchValue,
         inProcess,
         isSuccess,
@@ -42,10 +45,12 @@ class SettingsState extends Equatable {
       Object? error,
       String? name,
       String? email,
+      double? balance,
       String? image,
       XFile? selectedImage,
       String? charForAvatar}) {
     return SettingsState(
+        balance: balance ?? this.balance,
         selectedImage: selectedImage ?? this.selectedImage,
         switchValue: switchValue ?? this.switchValue,
         inProcess: inProcess ?? this.inProcess,

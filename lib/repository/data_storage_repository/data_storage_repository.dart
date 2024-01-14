@@ -175,7 +175,8 @@ class DataStorageRepository implements AbstractDataStorageRepository {
   Future<void> updateCurrentPriceCoin(
       {required String id,
       required double coinInUSD,
-      required double currentPrice}) async {
+      required double currentPrice,
+      required double balance}) async {
     final currentUser = firebaseAuthInstance.currentUser;
     try {
       if (currentUser == null) {
@@ -195,7 +196,7 @@ class DataStorageRepository implements AbstractDataStorageRepository {
       coinToUpdate['coin_in_usd'] = coinInUSD;
       coinToUpdate['price_current'] = currentPrice;
 
-      await userDoc.update({'portfolio': userPortfolio});
+      await userDoc.update({'portfolio': userPortfolio, 'balance': balance});
     } catch (e) {
       throw '$e';
     }
@@ -263,8 +264,17 @@ class DataStorageRepository implements AbstractDataStorageRepository {
   }
 
   Future<String> getImageFromStorage(Reference ref, String image) async {
-    await ref.putFile(File(image));
-    final downloadUrl = await ref.getDownloadURL();
-    return downloadUrl;
+    try {
+      if (await File(image).exists()) {
+        await ref.putFile(File(image));
+
+        final downloadUrl = await ref.getDownloadURL();
+        return downloadUrl;
+      } else {
+        throw 'File does not exist at path: $image';
+      }
+    } catch (e) {
+      throw 'Error uploading file: $e';
+    }
   }
 }

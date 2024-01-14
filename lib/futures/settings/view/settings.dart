@@ -51,203 +51,116 @@ class _SettingsPageState extends State<SettingsPage> {
       },
       builder: (context, state) {
         return Scaffold(
-          body: CustomScrollView(slivers: [
-            SliverAppBar(
-              actions: [
-                IconButton(
-                    onPressed: () async {
-                      await openDialog(context, state);
-                    },
-                    icon: const Icon(Icons.edit))
-              ],
-              title: Text(
-                'Settings',
-                style: theme.textTheme.bodyLarge,
+          body: RefreshIndicator(
+            onRefresh: () async {
+              context.read<SettingsBloc>().add(SettingsLoadUserInfoEvent());
+            },
+            child: CustomScrollView(slivers: [
+              SliverAppBar(
+                actions: [
+                  IconButton(
+                      onPressed: () async {
+                        await openDialog(context, state);
+                      },
+                      icon: const Icon(Icons.edit))
+                ],
+                title: Text(
+                  'Settings',
+                  style: theme.textTheme.bodyLarge,
+                ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: state.image.isEmpty
-                  ? CircleAvatar(
-                      backgroundColor: Colors.blue,
-                      radius: 60,
-                      child: Text(
-                        state.charForAvatar,
-                        style: theme.textTheme.bodyLarge
-                            ?.copyWith(fontSize: 62, color: Colors.white),
-                      ),
-                    )
-                  : CircleAvatar(
-                      radius: 60,
-                      child: ClipOval(
-                        child: Image.network(
-                          state.image,
-                          fit: BoxFit.fill,
+              SliverToBoxAdapter(
+                child: state.image.isEmpty
+                    ? CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        radius: 60,
+                        child: Text(
+                          state.charForAvatar,
+                          style: theme.textTheme.bodyLarge
+                              ?.copyWith(fontSize: 62, color: Colors.white),
+                        ),
+                      )
+                    : CircleAvatar(
+                        radius: 60,
+                        child: ClipOval(
+                          child: Image.network(
+                            state.image,
+                            fit: BoxFit.cover,
+                            width: 120,
+                            height: 120,
+                          ),
                         ),
                       ),
-                    ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Account',
-                  style: theme.textTheme.labelMedium,
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    'Account',
+                    style: theme.textTheme.labelMedium,
+                  ),
                 ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CardInfo(
-                    info: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'User Name:',
-                            style: theme.textTheme.displaySmall,
-                          ),
-                          Text(
-                            state.name,
-                            style: theme.textTheme.displaySmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(
-                      color: Colors.white,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Email:',
-                            style: theme.textTheme.displaySmall,
-                          ),
-                          Flexible(
-                            child: Text(
-                              state.email,
-                              textAlign: TextAlign.end,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: theme.textTheme.displaySmall,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Divider(
-                      color: Colors.white,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Balance',
-                            style: theme.textTheme.displaySmall,
-                          ),
-                          Text(
-                            '\$500000',
-                            style: theme.textTheme.displaySmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'Settings',
-                  style: theme.textTheme.labelMedium,
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: RefreshIndicator(
-                onRefresh: () async {},
+              SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CardInfo(
                       info: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Dark Mode',
-                            style: theme.textTheme.displaySmall,
-                          ),
-                          Transform.scale(
-                            scale: 0.8,
-                            child: Switch.adaptive(
-                                value: state.switchValue,
-                                onChanged: (bool value) {
-                                  value
-                                      ? settingsBloc
-                                          .add(SettingsSwitchOnEvent())
-                                      : settingsBloc
-                                          .add(SettingsSwitchOffEvent());
-                                }),
-                          )
-                        ],
-                      ),
-                      const Divider(
-                        color: Colors.white,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.notifications,
-                                color: Colors.white,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'Notification',
-                                style: theme.textTheme.displaySmall,
-                              )
-                            ],
-                          ),
-                          Transform.scale(
-                            scale: 0.8,
-                            child: Switch.adaptive(
-                                value: notifications,
-                                onChanged: (bool value) {
-                                  notifications = value;
-                                  setState(() {});
-                                }),
-                          )
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'User Name:',
+                              style: theme.textTheme.displaySmall,
+                            ),
+                            Text(
+                              state.name,
+                              style: theme.textTheme.displaySmall,
+                            ),
+                          ],
+                        ),
                       ),
                       const Divider(
                         color: Colors.white,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        padding: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Language',
+                              'Email:',
+                              style: theme.textTheme.displaySmall,
+                            ),
+                            Flexible(
+                              child: Text(
+                                state.email,
+                                textAlign: TextAlign.end,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: theme.textTheme.displaySmall,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Divider(
+                        color: Colors.white,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Balance',
                               style: theme.textTheme.displaySmall,
                             ),
                             Text(
-                              'English',
+                              '\$${state.balance}',
                               style: theme.textTheme.displaySmall,
                             ),
                           ],
@@ -257,25 +170,119 @@ class _SettingsPageState extends State<SettingsPage> {
                   )),
                 ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 120),
-                child: ElevatedButton(
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    'Sign Out',
+                    'Settings',
                     style: theme.textTheme.labelMedium,
                   ),
-                  onPressed: () {
-                    settingsBloc.add(SettingsSignOutEvent());
-                    AutoRouter.of(context).pushAndPopUntil(const LoginRoute(),
-                        predicate: (route) => false);
-                  },
                 ),
               ),
-            )
-          ]),
+              SliverToBoxAdapter(
+                child: RefreshIndicator(
+                  onRefresh: () async {},
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CardInfo(
+                        info: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Dark Mode',
+                              style: theme.textTheme.displaySmall,
+                            ),
+                            Transform.scale(
+                              scale: 0.8,
+                              child: Switch.adaptive(
+                                  value: state.switchValue,
+                                  onChanged: (bool value) {
+                                    value
+                                        ? settingsBloc
+                                            .add(SettingsSwitchOnEvent())
+                                        : settingsBloc
+                                            .add(SettingsSwitchOffEvent());
+                                  }),
+                            )
+                          ],
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.notifications,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Notification',
+                                  style: theme.textTheme.displaySmall,
+                                )
+                              ],
+                            ),
+                            Transform.scale(
+                              scale: 0.8,
+                              child: Switch.adaptive(
+                                  value: notifications,
+                                  onChanged: (bool value) {
+                                    notifications = value;
+                                    setState(() {});
+                                  }),
+                            )
+                          ],
+                        ),
+                        const Divider(
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Language',
+                                style: theme.textTheme.displaySmall,
+                              ),
+                              Text(
+                                'English',
+                                style: theme.textTheme.displaySmall,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 120),
+                  child: ElevatedButton(
+                    child: Text(
+                      'Sign Out',
+                      style: theme.textTheme.labelMedium,
+                    ),
+                    onPressed: () {
+                      settingsBloc.add(SettingsSignOutEvent());
+                      AutoRouter.of(context).pushAndPopUntil(const LoginRoute(),
+                          predicate: (route) => false);
+                    },
+                  ),
+                ),
+              )
+            ]),
+          ),
         );
       },
     );
@@ -356,14 +363,18 @@ class _SettingsPageState extends State<SettingsPage> {
                             ? ClipOval(
                                 child: Image.file(
                                   File(selectedImage.path),
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
                                 ),
                               )
                             : (image.isNotEmpty)
                                 ? ClipOval(
                                     child: Image.network(
                                       image,
-                                      fit: BoxFit.fill,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: double.infinity,
                                     ),
                                   )
                                 : Text(

@@ -81,8 +81,18 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
           if (!coinInUsd.toString().startsWith('0.')) {
             coinInUsd = roundDouble(coinInUsd, 2);
           }
+          double balance = portfolioList.fold(
+            0,
+            (value, element) => value + element.coinInUsd,
+          );
+          if (!balance.toString().startsWith('0.')) {
+            balance = roundDouble(balance, 2);
+          }
           await abstractDataStorageRepository.updateCurrentPriceCoin(
-              id: e.id, coinInUSD: coinInUsd, currentPrice: currentPrice);
+              balance: balance,
+              id: e.id,
+              coinInUSD: coinInUsd,
+              currentPrice: currentPrice);
 
           final updatedUserInfo =
               await abstractDataStorageRepository.getUserInfo();

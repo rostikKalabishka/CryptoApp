@@ -73,6 +73,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       SettingsLoadUserInfoEvent event, Emitter<SettingsState> emit) async {
     final userInfo = await abstractDataStorageRepository.getUserInfo();
     final newState = state.copyWith(
+        balance: userInfo.balance,
         charForAvatar: userInfo.username[0].toUpperCase(),
         email: userInfo.email,
         name: userInfo.username,

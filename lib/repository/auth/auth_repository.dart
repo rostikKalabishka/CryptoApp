@@ -102,6 +102,7 @@ class AuthRepository implements AbstractAuthRepository {
     if (uid.isNotEmpty) {
       final userDoc = firebaseStore.collection('users').doc(uid);
       UserDetails userDetails = UserDetails(
+        balance: 0,
         portfolioName: 'My Portfolio',
         email: email,
         username: username,
@@ -146,6 +147,7 @@ class AuthRepository implements AbstractAuthRepository {
 
           if (!existingDoc.exists) {
             UserDetails userDetails = UserDetails(
+              balance: 0,
               portfolioName: 'My Portfolio',
               email: googleUser.email,
               username: googleUser.displayName ?? '',

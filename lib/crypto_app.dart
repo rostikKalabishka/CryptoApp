@@ -45,14 +45,12 @@ class _CryptoAppState extends State<CryptoApp> {
         ),
         BlocProvider(
           create: (_) => _loginBloc,
-          // child: const LoginScreen(),
         ),
         BlocProvider(
           create: (_) => _portfolioBloc,
         ),
         BlocProvider(
           create: (_) => _registrationBloc,
-          // child: const RegistrationScreen(),
         ),
         BlocProvider(
           create: (_) => LoaderBloc(GetIt.I<AbstractAuthRepository>()),

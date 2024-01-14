@@ -13,6 +13,7 @@ UserDetails _$UserDetailsFromJson(Map<String, dynamic> json) => UserDetails(
       uid: json['uid'] as String,
       portfolio: json['portfolio'] as List<dynamic>,
       profileImage: json['profile_image'] as String?,
+      balance: (json['balance'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$UserDetailsToJson(UserDetails instance) =>
@@ -23,4 +24,5 @@ Map<String, dynamic> _$UserDetailsToJson(UserDetails instance) =>
       'portfolio_name': instance.portfolioName,
       'portfolio': instance.portfolio,
       'profile_image': instance.profileImage,
+      'balance': instance.balance,
     };

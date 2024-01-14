@@ -31,7 +31,8 @@ abstract interface class AbstractDataStorageRepository {
   Future<void> updateCurrentPriceCoin(
       {required String id,
       required double coinInUSD,
-      required double currentPrice});
+      required double currentPrice,
+      required double balance});
 
   Future<bool> checkCryptoCurrencyInPortfolio({
     required String id,
