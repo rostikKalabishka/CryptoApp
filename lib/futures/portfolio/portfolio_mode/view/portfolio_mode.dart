@@ -19,7 +19,7 @@ class _PortfolioModeState extends State<PortfolioMode> {
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
-    // context.read<PortfolioBloc>().add(const PortfolioInfoLoadedEvent());
+    context.read<PortfolioBloc>().add(const PortfolioInfoLoadedEvent());
     super.initState();
   }
 
@@ -37,92 +37,99 @@ class _PortfolioModeState extends State<PortfolioMode> {
     return BlocBuilder<PortfolioBloc, PortfolioState>(
       builder: (context, state) {
         if (state is PortfolioLoaded) {
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                  child: Card(
-                    color: theme.cardColor,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          bottom: 12, left: 12, right: 12),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  state.portfolioName.isNotEmpty
-                                      ? state.portfolioName
-                                      : 'My Portfolio',
-                                  style: theme.textTheme.labelMedium,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              IconButton(
-                                  onPressed: () async {
-                                    await openDialog(context);
-                                  },
-                                  icon: const Icon(
-                                    Icons.more_vert,
-                                    size: 20,
-                                    color: Colors.white,
-                                  ))
-                            ],
-                          ),
-                          const Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Balance:',
-                                style: theme.textTheme.displaySmall,
-                              ),
-                              Text(
-                                '${state.balance}\$',
-                                style: theme.textTheme.displaySmall,
-                              )
-                            ],
-                          ),
-                          const Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Total Profit/Loss',
-                                style: theme.textTheme.displaySmall,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    '${state.totalProfitInUsd.toStringAsFixed(2)}\$',
-                                    style: theme.textTheme.displaySmall,
+          return RefreshIndicator.adaptive(
+            onRefresh: () async {
+              context
+                  .read<PortfolioBloc>()
+                  .add(const PortfolioInfoLoadedEvent());
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 12),
+                    child: Card(
+                      color: theme.cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 12, left: 12, right: 12),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    state.portfolioName.isNotEmpty
+                                        ? state.portfolioName
+                                        : 'My Portfolio',
+                                    style: theme.textTheme.labelMedium,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  Text(
-                                    '(${state.totalProfitPercentage.toStringAsFixed(3)}%)',
-                                    style: theme.textTheme.displaySmall,
-                                  )
-                                ],
-                              )
-                            ],
-                          )
-                        ],
+                                ),
+                                IconButton(
+                                    onPressed: () async {
+                                      await openDialog(context);
+                                    },
+                                    icon: const Icon(
+                                      Icons.more_vert,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ))
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Balance:',
+                                  style: theme.textTheme.displaySmall,
+                                ),
+                                Text(
+                                  '${state.balance}\$',
+                                  style: theme.textTheme.displaySmall,
+                                )
+                              ],
+                            ),
+                            const Divider(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Total Profit/Loss',
+                                  style: theme.textTheme.displaySmall,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${state.totalProfitInUsd.toStringAsFixed(2)}\$',
+                                      style: theme.textTheme.displaySmall,
+                                    ),
+                                    Text(
+                                      '(${state.totalProfitPercentage.toStringAsFixed(3)}%)',
+                                      style: theme.textTheme.displaySmall,
+                                    )
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: CircularChart(
-                  chartData: state.portfolioList,
-                  tooltipBehavior: _tooltipBehavior,
-                ),
-              )
-            ],
+                SliverToBoxAdapter(
+                  child: CircularChart(
+                    chartData: state.portfolioList,
+                    tooltipBehavior: _tooltipBehavior,
+                  ),
+                )
+              ],
+            ),
           );
         } else if (state is PortfolioFailure) {
           return CustomScrollView(

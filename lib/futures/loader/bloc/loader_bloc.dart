@@ -5,8 +5,6 @@ import 'package:crypto_app/repository/auth/abstract_auth_repository.dart';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:flutter/material.dart';
-
 part 'loader_event.dart';
 part 'loader_state.dart';
 

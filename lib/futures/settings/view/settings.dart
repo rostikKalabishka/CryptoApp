@@ -51,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
       },
       builder: (context, state) {
         return Scaffold(
-          body: RefreshIndicator(
+          body: RefreshIndicator.adaptive(
             onRefresh: () async {
               context.read<SettingsBloc>().add(SettingsLoadUserInfoEvent());
             },
@@ -180,8 +180,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: RefreshIndicator(
-                  onRefresh: () async {},
+                child: RefreshIndicator.adaptive(
+                  onRefresh: () async {
+                    context
+                        .read<SettingsBloc>()
+                        .add(SettingsLoadUserInfoEvent());
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CardInfo(

@@ -72,7 +72,7 @@ class PortfolioBloc extends Bloc<PortfolioEvent, PortfolioState> {
         final userInfo = await abstractDataStorageRepository.getUserInfo();
         final List<CoinUserData> portfolioList =
             userInfo.portfolio.map((e) => CoinUserData.fromJson(e)).toList();
-        late List<CoinUserData> res;
+        late List<CoinUserData> res = [];
         await Future.forEach(portfolioList, (e) async {
           final CryptoCoinDetails coin =
               await abstractCoinRepository.getCryptoCoinDetails(id: e.id);

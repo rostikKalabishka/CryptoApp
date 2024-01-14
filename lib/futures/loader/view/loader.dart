@@ -18,7 +18,7 @@ class _LoaderState extends State<LoaderPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoaderBloc, LoaderBlocState>(builder: (context, state) {
-      context.read<LoaderBloc>().add(LoadPage(context: context));
+      context.read<LoaderBloc>().add(LoadPage());
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator.adaptive(),
