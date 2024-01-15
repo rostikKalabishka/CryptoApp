@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Utils {
-  String httpwww = 'https://www.';
-  String httpwwwTwo = 'http:www.';
-  String http = 'https://';
-  String endSlash = '/';
+  static const String httpwww = 'https://www.';
+  static const String httpwwwTwo = 'http:www.';
+  static const String http = 'https://';
+  static const String endSlash = '/';
 
   String? usernameValidator(String val) {
     if (val.isEmpty) {

@@ -35,6 +35,7 @@ class _CryptoChartState extends State<CryptoChart> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SfCartesianChart(
       margin: const EdgeInsets.all(0),
       borderWidth: 0,
@@ -68,6 +69,7 @@ class _CryptoChartState extends State<CryptoChart> {
           ),
         ),
         SplineSeries<ChartData, int>(
+          enableTooltip: false,
           color: accentColor,
           dataSource: data,
           xValueMapper: (ChartData data, _) => data.index,
@@ -78,6 +80,23 @@ class _CryptoChartState extends State<CryptoChart> {
         enable: true,
         lineType: TrackballLineType.vertical,
         tooltipSettings: const InteractiveTooltip(enable: true),
+        builder: (BuildContext context, TrackballDetails details) {
+          if (details.pointIndex == 0) {
+            return Container(
+              decoration: BoxDecoration(
+                color: theme.cardColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                details.point!.y!.toStringAsFixed(8),
+                style: theme.textTheme.displaySmall,
+              ),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
       ),
     );
   }
