@@ -1,16 +1,24 @@
-# crypto_app
+# CryptoApp
 
-A new Flutter project.
+This Flutter-based cryptocurrency portfolio application allows users to manage their digital assets, view live data from the CoinGecko API, and store their portfolio securely in Firebase. The app supports Google authorization for easy user login and profile management.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **User Authentication**: Google sign-in powered by Firebase.
+- **Portfolio Management**: Store and track your cryptocurrency portfolio with Firebase Firestore.
+- **Avatar Customization**: Users can upload their avatars using Firebase Storage.
+- **Live Cryptocurrency Data**: Real-time data fetched from the CoinGecko API.
+- **Charts**: Visualize portfolio trends using Syncfusion Flutter Charts.
+- **Persistent Storage**: User preferences are stored locally using Shared Preferences.
 
-A few resources to get you started if this is your first Flutter project:
+## Tech Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Firebase**: Used for user authentication (Google Sign-In), storing the user portfolio in Firestore, and managing avatars with Firebase Storage.
+- **CoinGecko API**: Provides real-time cryptocurrency market data.
+- **Bloc**: Manages the app's state efficiently using the Bloc pattern.
+- **AutoRouter**: Handles route management and navigation.
+- **Shared Preferences**: Used for storing small amounts of user data locally.
+- **Syncfusion Flutter Charts**: Displays charts and graphs for portfolio analysis.
+- **Dio**: Makes API requests to fetch live cryptocurrency data.
+- **GetIt**: Provides dependency injection for better project structure.
+- **Image Picker**: Allows users to select images from their gallery for their profile avatars.
