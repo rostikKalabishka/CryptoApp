@@ -32,20 +32,24 @@ class SearchListTile extends StatelessWidget {
       ),
       title: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                symbol,
-                style: theme.textTheme.bodySmall,
-                textAlign: TextAlign.start,
-              ),
-              Text(
-                name,
-                style: theme.textTheme.bodySmall,
-                textAlign: TextAlign.start,
-              ),
-            ],
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  symbol,
+                  style: theme.textTheme.bodySmall,
+                  textAlign: TextAlign.start,
+                ),
+                Text(
+                  name,
+                  style: theme.textTheme.bodySmall,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
         ],
       ),

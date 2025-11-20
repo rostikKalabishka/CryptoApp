@@ -9,7 +9,7 @@ final ThemeData darkTheme = ThemeData.dark().copyWith(
   dividerColor: Colors.white,
   colorScheme: ColorScheme.fromSeed(seedColor: splineColor),
   indicatorColor: accentColor,
-  tabBarTheme: const TabBarTheme(unselectedLabelColor: Colors.white),
+  tabBarTheme: const TabBarThemeData(unselectedLabelColor: Colors.white),
   appBarTheme: const AppBarTheme(
     centerTitle: true,
     surfaceTintColor: Colors.transparent,
@@ -57,7 +57,7 @@ ThemeData lightTheme = ThemeData.light().copyWith(
   dividerColor: Colors.black,
   colorScheme: ColorScheme.fromSeed(seedColor: splineColor),
   hintColor: Colors.black,
-  tabBarTheme: const TabBarTheme(unselectedLabelColor: Colors.black),
+  tabBarTheme: const TabBarThemeData(unselectedLabelColor: Colors.black),
   appBarTheme: const AppBarTheme(
     centerTitle: true,
     surfaceTintColor: Colors.transparent,

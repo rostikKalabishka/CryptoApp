@@ -90,7 +90,7 @@ class AuthRepository implements AbstractAuthRepository {
   @override
   Future<void> signOut() async {
     await firebaseAuthInstance.signOut();
-    await GoogleSignIn().signOut();
+    await GoogleSignIn.instance.signOut();
   }
 
   @override
@@ -124,7 +124,8 @@ class AuthRepository implements AbstractAuthRepository {
   @override
   Future<void> singInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAccount? googleUser =
+          await GoogleSignIn.instance.authenticate();
 
       if (googleUser == null) {
         throw 'You canceled authentication with Google';
@@ -133,7 +134,7 @@ class AuthRepository implements AbstractAuthRepository {
             await googleUser.authentication;
 
         final credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+            accessToken: googleAuth.idToken, idToken: googleAuth.idToken);
 
         final UserCredential userCredential =
             await FirebaseAuth.instance.signInWithCredential(credential);

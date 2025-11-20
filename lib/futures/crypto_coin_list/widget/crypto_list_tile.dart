@@ -71,6 +71,8 @@ class CryptoListTile extends StatelessWidget {
               '\$${coin.marketCap}',
               textAlign: TextAlign.end,
               style: theme.textTheme.bodyMedium,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           )
         ],

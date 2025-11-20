@@ -33,6 +33,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>GIDClientID</key>
+<string>477905921693-dgf97k0arsepic0uhimdm28hpu5p747h.apps.googleusercontent.com</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
